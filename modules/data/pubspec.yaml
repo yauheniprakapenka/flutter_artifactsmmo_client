@@ -1,0 +1,14 @@
+name: data
+publish_to: "none"
+
+environment:
+  sdk: ">=3.3.4"
+
+dependencies:
+  domain:
+    path: ../domain
+
+  dio: 5.5.0
+
+dev_dependencies:
+  flutter_lints: 3.0.1
