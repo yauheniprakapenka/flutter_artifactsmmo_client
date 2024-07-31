@@ -1,18 +1,14 @@
-name: di
+name: config
 publish_to: "none"
 
 environment:
   sdk: ">=3.3.4"
 
 dependencies:
-  config:
-    path: ../config
-  data:
-    path: ../data
+  flutter_dotenv: 5.1.0
+
   domain:
     path: ../domain
-
-  get_it: 7.7.0
 
 dev_dependencies:
   flutter_lints: 3.0.1
