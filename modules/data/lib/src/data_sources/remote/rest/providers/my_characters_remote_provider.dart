@@ -18,12 +18,6 @@ final class MyCharactersRemoteProvider {
         'x': position.x,
         'y': position.y,
       },
-      options: Options(
-        headers: {
-          'accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-      ),
     );
     return response;
   }
