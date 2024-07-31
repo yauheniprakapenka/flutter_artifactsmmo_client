@@ -1,0 +1,16 @@
+name: di
+publish_to: "none"
+
+environment:
+  sdk: ">=3.3.4"
+
+dependencies:
+  data:
+    path: ../data
+  domain:
+    path: ../domain
+
+  get: 4.6.6
+
+dev_dependencies:
+  flutter_lints: 3.0.1
