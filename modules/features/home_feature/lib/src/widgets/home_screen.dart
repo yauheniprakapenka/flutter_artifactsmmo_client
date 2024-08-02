@@ -33,6 +33,20 @@ class _HomeScreen extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+              width: 300,
+              height: 300,
+              color: Colors.amber[200],
+              child: const Column(
+                children: [
+                  Row(
+                    children: [
+                      Text('Position'),
+                    ],
+                  )
+                ],
+              ),
+            ),
             TextButton(
               onPressed: () {
                 context

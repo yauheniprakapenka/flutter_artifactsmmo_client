@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 
+import '../../../../dto/game_data_dto.dart';
+
 final class MyCharactersRemoteProvider {
   final Dio _dio;
   final String _baseUrl;
@@ -12,16 +14,15 @@ final class MyCharactersRemoteProvider {
   })  : _dio = dio,
         _baseUrl = baseUrl;
 
-  Future<Response> moveCharacter(String characterName, Point<int> position) async {
-    final String url = 'https://$_baseUrl/my/$characterName/action/move';
-
+  Future<GameDataDto> moveCharacter(String characterName, Point<int> position) async {
+    final Uri url = Uri.https(_baseUrl, '/my/$characterName/action/move');
     final Response response = await _dio.post(
-      url,
+      url.toString(),
       data: {
         'x': position.x,
         'y': position.y,
       },
     );
-    return response;
+    return GameDataDto.fromJson(response.data['data']);
   }
 }
