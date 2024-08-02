@@ -4,9 +4,22 @@ abstract interface class HomeEvent {
   const HomeEvent();
 }
 
-final class ChangePositionEvent implements HomeEvent {
-  final String characterName;
-  final Point<int> position;
+final class ChangePositionXIncrementEvent implements HomeEvent {
+  const ChangePositionXIncrementEvent();
+}
 
-  const ChangePositionEvent(this.characterName, this.position);
+final class ChangePositionXDecrementEvent implements HomeEvent {
+  const ChangePositionXDecrementEvent();
+}
+
+final class ChangePositionYIncrementEvent implements HomeEvent {
+  const ChangePositionYIncrementEvent();
+}
+
+final class ChangePositionYDecrementEvent implements HomeEvent {
+  const ChangePositionYDecrementEvent();
+}
+
+final class ChangePositionMoveEvent implements HomeEvent {
+  const ChangePositionMoveEvent();
 }
