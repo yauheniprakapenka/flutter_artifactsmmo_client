@@ -4,6 +4,14 @@ abstract interface class HomeEvent {
   const HomeEvent();
 }
 
+final class InitialEvent implements HomeEvent {
+  const InitialEvent();
+}
+
+final class ChangePositionMoveEvent implements HomeEvent {
+  const ChangePositionMoveEvent();
+}
+
 final class ChangePositionXIncrementEvent implements HomeEvent {
   const ChangePositionXIncrementEvent();
 }
@@ -18,8 +26,4 @@ final class ChangePositionYIncrementEvent implements HomeEvent {
 
 final class ChangePositionYDecrementEvent implements HomeEvent {
   const ChangePositionYDecrementEvent();
-}
-
-final class ChangePositionMoveEvent implements HomeEvent {
-  const ChangePositionMoveEvent();
 }

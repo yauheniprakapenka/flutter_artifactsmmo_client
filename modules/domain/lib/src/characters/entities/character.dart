@@ -1,4 +1,4 @@
-import 'inventory_item.dart';
+import '../../my_characters/entities/inventory_item.dart';
 
 class Character {
   final int attackAir;

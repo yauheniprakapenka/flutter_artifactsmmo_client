@@ -8,17 +8,37 @@ part 'home_state.dart';
 part 'home_event.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  final CharactersRepository _charactersRepository;
   final MyCharacterRepository _myCharacterRepository;
 
   HomeBloc({
+    required CharactersRepository charactersRepository,
     required MyCharacterRepository myCharacterRepository,
-  })  : _myCharacterRepository = myCharacterRepository,
+  })  : _charactersRepository = charactersRepository,
+        _myCharacterRepository = myCharacterRepository,
         super(HomeState.initial()) {
     on<ChangePositionMoveEvent>(_changePositionMove);
     on<ChangePositionXIncrementEvent>(_changePositionXIncrement);
     on<ChangePositionXDecrementEvent>(_changePositionXDecrement);
     on<ChangePositionYIncrementEvent>(_changePositionYIncrement);
     on<ChangePositionYDecrementEvent>(_changePositionYDecrement);
+    on<InitialEvent>(_initial);
+    add(const InitialEvent());
+  }
+
+  Future<void> _initial(InitialEvent event, Emitter emit) async {
+    try {
+      final Character character = await _charactersRepository.getCharactersByName('johnwick');
+      final Point<int> newPosition = Point(character.x, character.y);
+      emit(state.copyWith(
+        gameData: () => GameData(character: character),
+        newPosition: () => newPosition,
+      ));
+    } on Exception catch (e) {
+      emit(state.copyWith(error: () => e.toString()));
+    } finally {
+      emit(state.copyWith(isLoading: false, error: () => null));
+    }
   }
 
   Future<void> _changePositionMove(ChangePositionMoveEvent event, Emitter emit) async {
@@ -27,7 +47,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       return;
     }
 
-    final String? characterName = state.gameData?.character.name;
+    final String? characterName = state.gameData?.character?.name;
     if (characterName == null) {
       return;
     }

@@ -1,4 +1,3 @@
-export 'entities/character.dart';
 export 'entities/cooldown.dart';
 export 'entities/destination.dart';
 export 'entities/game_data.dart';

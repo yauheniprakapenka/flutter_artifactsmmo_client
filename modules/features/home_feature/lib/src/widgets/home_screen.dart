@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
     return BlocProvider<HomeBloc>(
       create: (BuildContext context) {
         return HomeBloc(
+          charactersRepository: getIt<CharactersRepository>(),
           myCharacterRepository: getIt<MyCharacterRepository>(),
         );
       },
@@ -32,7 +33,10 @@ class _HomeScreen extends StatelessWidget {
         listener: (BuildContext context, HomeState state) {
           if (state.error != null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.error ?? '')),
+              SnackBar(
+                content: Text(state.error ?? ''),
+                backgroundColor: Colors.blue,
+              ),
             );
           }
         },

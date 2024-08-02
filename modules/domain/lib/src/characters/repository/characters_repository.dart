@@ -1,5 +1,8 @@
+import '../entities/character.dart';
+
 abstract interface class CharactersRepository {
   const CharactersRepository();
 
-  Future<void> getCharactersByName(String name);
+  /// Retrieve the details of a character.
+  Future<Character> getCharactersByName(String name);
 }
