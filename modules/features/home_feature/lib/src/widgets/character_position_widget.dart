@@ -1,15 +1,53 @@
+import 'dart:math';
+
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
 import '../bloc/home_bloc.dart';
 
-class CharacterPositionWidget extends StatelessWidget {
+class CharacterPositionWidget extends StatefulWidget {
   const CharacterPositionWidget();
+
+  @override
+  State<CharacterPositionWidget> createState() => _CharacterPositionWidgetState();
+}
+
+class _CharacterPositionWidgetState extends State<CharacterPositionWidget> {
+  Point<int>? _initialPosition;
+  Point<int> _newPosition = const Point(0, 0);
+
+  @override
+  void didUpdateWidget(covariant CharacterPositionWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final HomeState state = context.read<HomeBloc>().state;
+    if (state.selectedCharacter != null) {
+      final Point<int> selectedCharacterInitialPosition = Point(
+        state.selectedCharacter?.x ?? 0,
+        state.selectedCharacter?.y ?? 0,
+      );
+      if (selectedCharacterInitialPosition != _initialPosition) {
+        _initialPosition = selectedCharacterInitialPosition;
+        _newPosition = selectedCharacterInitialPosition;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (BuildContext context, HomeState state) {
+        if (state.selectedCharacter == null) {
+          return const SizedBox();
+        }
+
+        if (_initialPosition == null) {
+          _initialPosition = Point(
+            state.selectedCharacter?.x ?? 0,
+            state.selectedCharacter?.y ?? 0,
+          );
+          _newPosition = _initialPosition!;
+        }
+
         return Container(
           padding: const EdgeInsets.all(Dimensions.p16),
           decoration: BoxDecoration(
@@ -39,7 +77,7 @@ class CharacterPositionWidget extends StatelessWidget {
                           SizedBox(
                             width: 56,
                             child: Text(
-                              'x: ${state.newPosition?.x}',
+                              'x: ${_newPosition.x}',
                               style: const TextStyle(fontSize: 18, color: AppColors.chineseSilver),
                             ),
                           ),
@@ -47,14 +85,16 @@ class CharacterPositionWidget extends StatelessWidget {
                           AppElevatedButton(
                             title: '-',
                             onPressed: () {
-                              context.read<HomeBloc>().add(const ChangePositionXDecrementEvent());
+                              _newPosition = Point(_newPosition.x - 1, _newPosition.y);
+                              setState(() {});
                             },
                           ),
                           const AppSpacing.w16(),
                           AppElevatedButton(
                             title: '+',
                             onPressed: () {
-                              context.read<HomeBloc>().add(const ChangePositionXIncrementEvent());
+                              _newPosition = Point(_newPosition.x + 1, _newPosition.y);
+                              setState(() {});
                             },
                           ),
                         ],
@@ -66,7 +106,7 @@ class CharacterPositionWidget extends StatelessWidget {
                           SizedBox(
                             width: 56,
                             child: Text(
-                              'y: ${state.newPosition?.y}',
+                              'y: ${_newPosition.y}',
                               style: const TextStyle(fontSize: 18, color: AppColors.chineseSilver),
                             ),
                           ),
@@ -74,14 +114,16 @@ class CharacterPositionWidget extends StatelessWidget {
                           AppElevatedButton(
                             title: '-',
                             onPressed: () {
-                              context.read<HomeBloc>().add(const ChangePositionYDecrementEvent());
+                              _newPosition = Point(_newPosition.x, _newPosition.y - 1);
+                              setState(() {});
                             },
                           ),
                           const AppSpacing.w16(),
                           AppElevatedButton(
                             title: '+',
                             onPressed: () {
-                              context.read<HomeBloc>().add(const ChangePositionYIncrementEvent());
+                              _newPosition = Point(_newPosition.x, _newPosition.y + 1);
+                              setState(() {});
                             },
                           ),
                         ],
@@ -96,7 +138,11 @@ class CharacterPositionWidget extends StatelessWidget {
                         : AppElevatedButton(
                             title: 'MOVE',
                             onPressed: () {
-                              context.read<HomeBloc>().add(const ChangePositionMoveEvent());
+                              final ChangePositionEvent changePositionEvent = ChangePositionEvent(
+                                state.selectedCharacter?.name ?? '',
+                                _newPosition,
+                              );
+                              context.read<HomeBloc>().add(changePositionEvent);
                             },
                           ),
                   ),

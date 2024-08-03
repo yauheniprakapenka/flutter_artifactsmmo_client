@@ -24,6 +24,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - .env_prod
     - assets/images/maps/
     - assets/images/characters/
+    - .env_prod

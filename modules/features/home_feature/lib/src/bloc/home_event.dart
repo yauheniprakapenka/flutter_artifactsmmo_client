@@ -8,22 +8,19 @@ final class InitialEvent implements HomeEvent {
   const InitialEvent();
 }
 
-final class ChangePositionMoveEvent implements HomeEvent {
-  const ChangePositionMoveEvent();
+final class ChangePositionEvent implements HomeEvent {
+  final String characterName;
+  final Point<int> position;
+
+  const ChangePositionEvent(this.characterName, this.position);
 }
 
-final class ChangePositionXIncrementEvent implements HomeEvent {
-  const ChangePositionXIncrementEvent();
+final class SelectCharacterEvent implements HomeEvent {
+  final Character character;
+
+  const SelectCharacterEvent(this.character);
 }
 
-final class ChangePositionXDecrementEvent implements HomeEvent {
-  const ChangePositionXDecrementEvent();
-}
-
-final class ChangePositionYIncrementEvent implements HomeEvent {
-  const ChangePositionYIncrementEvent();
-}
-
-final class ChangePositionYDecrementEvent implements HomeEvent {
-  const ChangePositionYDecrementEvent();
+final class AddCharacterEvent implements HomeEvent {
+  const AddCharacterEvent();
 }

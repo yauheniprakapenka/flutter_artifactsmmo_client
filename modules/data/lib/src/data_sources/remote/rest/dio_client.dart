@@ -5,9 +5,9 @@ final class DioClient {
   final Dio _dio;
 
   DioClient._internal(String token) : _dio = Dio() {
-    _dio.options.headers['Authorization'] = 'Bearer $token';
-    _dio.options.headers['accept'] = 'application/json';
+    _dio.options.headers['Accept'] = 'application/json';
     _dio.options.headers['Content-Type'] = 'application/json';
+    _dio.options.headers['Authorization'] = 'Bearer $token';
   }
 
   factory DioClient({required String token}) {

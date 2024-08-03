@@ -4,8 +4,8 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../bloc/home_bloc.dart';
-import 'character_info.dart';
 import 'character_position_widget.dart';
+import 'character_selection_widget/character_selection_widget.dart';
 import 'random_tiled_background.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -47,28 +47,20 @@ class _HomeScreen extends StatelessWidget {
               return const AppProgressIndicator();
             }
 
-            return RandomTiledBackground(
+            return const RandomTiledBackground(
               tileHeight: 224,
               tileWidth: 224,
-              tileAssetPaths: const [...MapTiles.all],
+              tileAssetPaths: [...MapTiles.all],
               stackChildren: [
-                const Positioned(
-                  bottom: 24,
-                  left: 24,
+                Positioned(
+                  bottom: Dimensions.edgeInset,
+                  left: Dimensions.edgeInset,
                   child: CharacterPositionWidget(),
                 ),
                 Positioned(
-                  bottom: 280,
-                  left: 24,
-                  child: Builder(
-                    builder: (BuildContext context) {
-                      final Character? character = state.gameData?.character;
-                      if (character == null) {
-                        return const SizedBox();
-                      }
-                      return CharacterInfo(character);
-                    },
-                  ),
+                  top: Dimensions.edgeInset,
+                  left: Dimensions.edgeInset,
+                  child: CharacterSelectionWidget(),
                 ),
               ],
             );
