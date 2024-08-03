@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../bloc/home_bloc.dart';
 import 'position_widget.dart';
+import 'random_tiled_background.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen();
@@ -40,16 +41,35 @@ class _HomeScreen extends StatelessWidget {
             );
           }
         },
-        child: const Padding(
-          padding: EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              PositionWidget(),
-            ],
-          ),
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (BuildContext context, HomeState state) {
+            if (state.isLoading) {
+              return const AppProgressIndicator();
+            }
+
+            return const RandomTiledBackground(
+              tileHeight: 224,
+              tileWidth: 224,
+              tileAssetPaths: [
+                'assets/images/forest_1.png',
+                'assets/images/forest_2.png',
+                'assets/images/forest_3.png',
+                'assets/images/forest_4.png',
+              ],
+              stackChildren: [
+                Positioned(
+                  top: Dimensions.edgeInset,
+                  left: Dimensions.edgeInset,
+                  child: PositionWidget(),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 }
+
+
+// https://api.artifactsmmo.com/images/characters/men1.png

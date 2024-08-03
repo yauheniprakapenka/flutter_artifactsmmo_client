@@ -10,8 +10,7 @@ Future<Config> loadEnvironment() async {
 }
 
 EnvironmentType _getEnvironmentType() {
-  final environment = String.fromEnvironment(_EnvironmentKeys.environmentArgument,
-      defaultValue: EnvironmentType.prod.name);
+  const String environment = String.fromEnvironment(_EnvironmentKeys.environmentArgument);
   return EnvironmentType.fromName(environment);
 }
 

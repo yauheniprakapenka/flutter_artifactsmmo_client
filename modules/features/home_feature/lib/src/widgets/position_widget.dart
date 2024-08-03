@@ -11,7 +11,7 @@ class PositionWidget extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (BuildContext context, HomeState state) {
         return Container(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(Dimensions.p16),
           color: Colors.grey[200],
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,7 +23,7 @@ class PositionWidget extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 16),
+              const AppSpacing.h16(),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -39,14 +39,14 @@ class PositionWidget extends StatelessWidget {
                               style: const TextStyle(fontSize: 14),
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          const AppSpacing.w16(),
                           AppElevatedButton(
                             title: '-',
                             onPressed: () {
                               context.read<HomeBloc>().add(const ChangePositionXDecrementEvent());
                             },
                           ),
-                          const SizedBox(width: 16),
+                          const AppSpacing.w16(),
                           AppElevatedButton(
                             title: '+',
                             onPressed: () {
@@ -55,7 +55,7 @@ class PositionWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      const AppSpacing.h16(),
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -66,14 +66,14 @@ class PositionWidget extends StatelessWidget {
                               style: const TextStyle(fontSize: 14),
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          const AppSpacing.w16(),
                           AppElevatedButton(
                             title: '-',
                             onPressed: () {
                               context.read<HomeBloc>().add(const ChangePositionYDecrementEvent());
                             },
                           ),
-                          const SizedBox(width: 16),
+                          const AppSpacing.w16(),
                           AppElevatedButton(
                             title: '+',
                             onPressed: () {
@@ -84,7 +84,7 @@ class PositionWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(width: 16),
+                  const AppSpacing.w16(),
                   AppElevatedButton(
                     title: 'MOVE',
                     onPressed: () {

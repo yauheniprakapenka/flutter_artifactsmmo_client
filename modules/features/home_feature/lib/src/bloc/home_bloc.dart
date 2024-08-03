@@ -28,7 +28,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _initial(InitialEvent event, Emitter emit) async {
     try {
-      final Character character = await _charactersRepository.getCharactersByName('johnwick');
+      final List<Character> characters = await _myCharacterRepository.getAllMyCharacters();
+      final Character character = characters.first;
       final Point<int> newPosition = Point(character.x, character.y);
       emit(state.copyWith(
         gameData: () => GameData(character: character),
