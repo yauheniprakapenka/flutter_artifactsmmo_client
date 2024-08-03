@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 
+import '../../../../dto/character_dto.dart';
 import '../../../../dto/game_data_dto.dart';
 
 final class MyCharactersRemoteProvider {
@@ -24,5 +25,11 @@ final class MyCharactersRemoteProvider {
       },
     );
     return GameDataDto.fromJson(response.data['data']);
+  }
+
+  Future<List<CharacterDto>> getAllMyCharacters() async {
+    final Uri url = Uri.https(_baseUrl, '/my/characters');
+    final Response response = await _dio.get(url.toString());
+    return (response.data['data'] as List).map((e) => CharacterDto.fromJson(e)).toList();
   }
 }
