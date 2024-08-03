@@ -1,4 +1,5 @@
 library data;
 
-export 'src/data_sources/data_sources.dart';
+export 'src/datasources/remote/rest/dio_client.dart';
+export 'src/datasources/remote/rest/providers/providers.dart';
 export 'src/repositories/repositories.dart';

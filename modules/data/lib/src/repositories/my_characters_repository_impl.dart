@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:domain/domain.dart';
 
-import '../data_sources/remote/rest/providers/my_characters_remote_provider.dart';
+import '../datasources/remote/rest/providers/my_characters_remote_provider.dart';
 import '../dto/character_dto.dart';
 import '../dto/game_data_dto.dart';
 import '../mappers/character_dto_mapper.dart';
