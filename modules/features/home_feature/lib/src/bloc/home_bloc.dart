@@ -8,14 +8,11 @@ part 'home_state.dart';
 part 'home_event.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final CharactersRepository _charactersRepository;
   final MyCharacterRepository _myCharacterRepository;
 
   HomeBloc({
-    required CharactersRepository charactersRepository,
     required MyCharacterRepository myCharacterRepository,
-  })  : _charactersRepository = charactersRepository,
-        _myCharacterRepository = myCharacterRepository,
+  })  : _myCharacterRepository = myCharacterRepository,
         super(HomeState.initial()) {
     on<ChangePositionMoveEvent>(_changePositionMove);
     on<ChangePositionXIncrementEvent>(_changePositionXIncrement);

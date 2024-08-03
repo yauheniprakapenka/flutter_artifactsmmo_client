@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core_ui.dart';
+
 class AppElevatedButton extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
@@ -15,9 +17,9 @@ class AppElevatedButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(Dimensions.radius),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.all(Dimensions.p16),
       ),
       child: Text(
         title,

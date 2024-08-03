@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../bloc/home_bloc.dart';
 
-class PositionWidget extends StatelessWidget {
-  const PositionWidget();
+class CharacterPositionWidget extends StatelessWidget {
+  const CharacterPositionWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,10 @@ class PositionWidget extends StatelessWidget {
       builder: (BuildContext context, HomeState state) {
         return Container(
           padding: const EdgeInsets.all(Dimensions.p16),
-          color: Colors.grey[200],
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Dimensions.radius),
+            color: AppColors.blackLeatherJacket.withOpacity(0.95),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -21,6 +24,7 @@ class PositionWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  color: AppColors.chineseSilver,
                 ),
               ),
               const AppSpacing.h16(),
@@ -33,10 +37,10 @@ class PositionWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(
-                            width: 48,
+                            width: 56,
                             child: Text(
                               'x: ${state.newPosition?.x}',
-                              style: const TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 18, color: AppColors.chineseSilver),
                             ),
                           ),
                           const AppSpacing.w16(),
@@ -60,10 +64,10 @@ class PositionWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(
-                            width: 48,
+                            width: 56,
                             child: Text(
                               'y: ${state.newPosition?.y}',
-                              style: const TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 18, color: AppColors.chineseSilver),
                             ),
                           ),
                           const AppSpacing.w16(),
@@ -85,11 +89,16 @@ class PositionWidget extends StatelessWidget {
                     ],
                   ),
                   const AppSpacing.w16(),
-                  AppElevatedButton(
-                    title: 'MOVE',
-                    onPressed: () {
-                      context.read<HomeBloc>().add(const ChangePositionMoveEvent());
-                    },
+                  SizedBox(
+                    width: 120,
+                    child: state.isChangingPositon
+                        ? const AppProgressIndicator()
+                        : AppElevatedButton(
+                            title: 'MOVE',
+                            onPressed: () {
+                              context.read<HomeBloc>().add(const ChangePositionMoveEvent());
+                            },
+                          ),
                   ),
                 ],
               )

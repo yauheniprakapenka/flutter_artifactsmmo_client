@@ -4,7 +4,8 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../bloc/home_bloc.dart';
-import 'position_widget.dart';
+import 'character_info.dart';
+import 'character_position_widget.dart';
 import 'random_tiled_background.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,7 +16,6 @@ class HomeScreen extends StatelessWidget {
     return BlocProvider<HomeBloc>(
       create: (BuildContext context) {
         return HomeBloc(
-          charactersRepository: getIt<CharactersRepository>(),
           myCharacterRepository: getIt<MyCharacterRepository>(),
         );
       },
@@ -47,15 +47,28 @@ class _HomeScreen extends StatelessWidget {
               return const AppProgressIndicator();
             }
 
-            return const RandomTiledBackground(
+            return RandomTiledBackground(
               tileHeight: 224,
               tileWidth: 224,
-              tileAssetPaths: [...MapTiles.all],
+              tileAssetPaths: const [...MapTiles.all],
               stackChildren: [
+                const Positioned(
+                  bottom: 24,
+                  left: 24,
+                  child: CharacterPositionWidget(),
+                ),
                 Positioned(
-                  top: Dimensions.edgeInset,
-                  left: Dimensions.edgeInset,
-                  child: PositionWidget(),
+                  bottom: 280,
+                  left: 24,
+                  child: Builder(
+                    builder: (BuildContext context) {
+                      final Character? character = state.gameData?.character;
+                      if (character == null) {
+                        return const SizedBox();
+                      }
+                      return CharacterInfo(character);
+                    },
+                  ),
                 ),
               ],
             );
@@ -65,6 +78,3 @@ class _HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
-// https://api.artifactsmmo.com/images/characters/men1.png
