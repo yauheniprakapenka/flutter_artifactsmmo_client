@@ -50,12 +50,7 @@ class _HomeScreen extends StatelessWidget {
             return const RandomTiledBackground(
               tileHeight: 224,
               tileWidth: 224,
-              tileAssetPaths: [
-                'assets/images/forest_1.png',
-                'assets/images/forest_2.png',
-                'assets/images/forest_3.png',
-                'assets/images/forest_4.png',
-              ],
+              tileAssetPaths: [...MapTiles.all],
               stackChildren: [
                 Positioned(
                   top: Dimensions.edgeInset,
