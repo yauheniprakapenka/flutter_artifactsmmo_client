@@ -21,7 +21,7 @@ class CharacterAvatars {
       case 'women3':
         return CharacterAvatars.women3;
       default:
-        throw ArgumentError('Invalid character name: $name');
+        throw Exception('Character not found: $name');
     }
   }
 }

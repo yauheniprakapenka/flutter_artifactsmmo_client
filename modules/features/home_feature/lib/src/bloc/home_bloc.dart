@@ -23,7 +23,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _initial(InitialEvent event, Emitter emit) async {
     try {
       final List<Character> characters = await _myCharacterRepository.getAllMyCharacters();
-      emit(state.copyWith(characters: characters));
+      final Character? selectedCharacter = characters.isEmpty ? null : characters.first;
+      emit(state.copyWith(characters: characters, selectedCharacter: () => selectedCharacter));
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {
