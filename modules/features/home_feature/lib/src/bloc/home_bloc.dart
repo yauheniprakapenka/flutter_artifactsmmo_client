@@ -9,10 +9,13 @@ part 'home_event.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final MyCharacterRepository _myCharacterRepository;
+  final MapsRepository _mapsRepository;
 
   HomeBloc({
     required MyCharacterRepository myCharacterRepository,
+    required MapsRepository mapsRepository,
   })  : _myCharacterRepository = myCharacterRepository,
+        _mapsRepository = mapsRepository,
         super(HomeState.initial()) {
     on<ChangePositionEvent>(_changePositionMove);
     on<InitialEvent>(_initial);
@@ -21,6 +24,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _initial(InitialEvent event, Emitter emit) async {
+    final MapDetails mapDetails = await _mapsRepository.getAllMaps();
+    print(mapDetails);
     try {
       final List<Character> characters = await _myCharacterRepository.getAllMyCharacters();
       final Character? selectedCharacter = characters.isEmpty ? null : characters.first;

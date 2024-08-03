@@ -9,7 +9,7 @@ Open the `.env` file and paste the following lines:
 
 ```
 AUTH_TOKEN=ENTER_YOUR_TOKEN
-API_BASE_URL=api.artifactsmmo.com
+API_BASE_URL=https://api.artifactsmmo.com
 ```
 
 Replace `ENTER_YOUR_TOKEN` with your real authorization token.

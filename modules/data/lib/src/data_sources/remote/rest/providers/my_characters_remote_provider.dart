@@ -16,9 +16,9 @@ final class MyCharactersRemoteProvider {
         _baseUrl = baseUrl;
 
   Future<GameDataDto> moveCharacter(String characterName, Point<int> position) async {
-    final Uri url = Uri.https(_baseUrl, '/my/$characterName/action/move');
+    final String url = '$_baseUrl/my/$characterName/action/move';
     final Response response = await _dio.post(
-      url.toString(),
+      url,
       data: {
         'x': position.x,
         'y': position.y,
@@ -28,8 +28,8 @@ final class MyCharactersRemoteProvider {
   }
 
   Future<List<CharacterDto>> getAllMyCharacters() async {
-    final Uri url = Uri.https(_baseUrl, '/my/characters');
-    final Response response = await _dio.get(url.toString());
+    final String url = '$_baseUrl/my/characters';
+    final Response response = await _dio.get(url);
     return (response.data['data'] as List).map((e) => CharacterDto.fromJson(e)).toList();
   }
 }

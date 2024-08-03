@@ -13,8 +13,8 @@ final class CharactersRemoteProvider {
         _baseUrl = baseUrl;
 
   Future<CharacterDto> getCharactersByName(String characterName) async {
-    final Uri url = Uri.https(_baseUrl, '/characters/$characterName');
-    final Response response = await _dio.get(url.toString());
+    final String url = '$_baseUrl/characters/$characterName';
+    final Response response = await _dio.get(url);
     final CharacterDto characterDto = CharacterDto.fromJson(response.data['data']);
     return characterDto;
   }

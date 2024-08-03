@@ -17,6 +17,7 @@ class HomeScreen extends StatelessWidget {
       create: (BuildContext context) {
         return HomeBloc(
           myCharacterRepository: getIt<MyCharacterRepository>(),
+          mapsRepository: getIt<MapsRepository>(),
         );
       },
       child: const _HomeScreen(),

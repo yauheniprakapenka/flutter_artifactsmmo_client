@@ -27,6 +27,10 @@ Future<void> setupDi() async {
     CharactersRemoteProvider(dio: dio, baseUrl: getIt<Config>().baseUrl),
   );
 
+  getIt.registerSingleton<MapsRemoteProvider>(
+    MapsRemoteProvider(dio: dio, baseUrl: getIt<Config>().baseUrl),
+  );
+
   // Repositories
 
   getIt.registerSingleton<MyCharacterRepository>(
@@ -35,5 +39,9 @@ Future<void> setupDi() async {
 
   getIt.registerSingleton<CharactersRepository>(
     CharactersRepositoryImpl(remoteDataSource: getIt<CharactersRemoteProvider>()),
+  );
+
+  getIt.registerSingleton<MapsRepository>(
+    MapsRepositoryImpl(remoteDataSource: getIt<MapsRemoteProvider>()),
   );
 }
