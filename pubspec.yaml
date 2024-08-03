@@ -14,8 +14,8 @@ dependencies:
   di:
     path: modules/di
 
-  home_feature:
-    path: modules/features/home_feature
+  world_feature:
+    path: modules/features/world_feature
 
 dev_dependencies:
   flutter_lints: 3.0.1

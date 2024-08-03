@@ -8,8 +8,8 @@ import 'character_position_widget.dart';
 import 'character_selection_widget/character_selection_widget.dart';
 import 'random_tiled_background.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen();
+class WorldScreen extends StatelessWidget {
+  const WorldScreen();
 
   @override
   Widget build(BuildContext context) {
