@@ -27,4 +27,5 @@ flutter:
     - assets/images/maps/
     - assets/images/characters/
     - assets/images/items/
+    - assets/images/monsters/
     - .env_prod
