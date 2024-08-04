@@ -5,7 +5,7 @@ import '../dto/tile_dto.dart';
 extension MapDtoMapper on MapDetailsDto {
   MapDetails get asDomain {
     return MapDetails(
-      data: data.map((x) => x.asDomain).toList(),
+      tiles: tiles.map((TileDto tileDto) => tileDto.asDomain).toList(),
       total: total,
       page: page,
       size: size,

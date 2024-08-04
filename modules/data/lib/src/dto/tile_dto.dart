@@ -1,12 +1,12 @@
 class MapDetailsDto {
-  final List<TileDto> data;
+  final List<TileDto> tiles;
   final int total;
   final int page;
   final int size;
   final int pages;
 
   const MapDetailsDto({
-    required this.data,
+    required this.tiles,
     required this.total,
     required this.page,
     required this.size,
@@ -15,7 +15,7 @@ class MapDetailsDto {
 
   factory MapDetailsDto.fromMap(Map<String, dynamic> json) {
     return MapDetailsDto(
-      data: List<TileDto>.from(json['data'].map((x) => TileDto.fromMap(x))),
+      tiles: List<TileDto>.from(json['data'].map((x) => TileDto.fromMap(x))),
       total: json['total'],
       page: json['page'],
       size: json['size'],

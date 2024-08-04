@@ -13,9 +13,29 @@ final class MapsRemoteProvider {
         _baseUrl = baseUrl;
 
   Future<MapDetailsDto> getAllMaps() async {
-    final String url = '$_baseUrl/maps/?page=1&size=50';
-    final Response response = await _dio.get(url);
-    final MapDetailsDto mapDetailsDto = MapDetailsDto.fromMap(response.data);
-    return mapDetailsDto;
+    final List<TileDto> allTiles = [];
+    int currentPage = 1;
+    int totalPages = 1;
+    int total = 0;
+    const int pageSize = 100;
+
+    do {
+      final String url = '$_baseUrl/maps/?page=$currentPage&size=$pageSize';
+      final Response response = await _dio.get(url);
+      final MapDetailsDto pageData = MapDetailsDto.fromMap(response.data);
+
+      allTiles.addAll(pageData.tiles);
+      totalPages = pageData.pages;
+      total = pageData.total;
+      currentPage++;
+    } while (currentPage <= totalPages);
+
+    return MapDetailsDto(
+      tiles: allTiles,
+      total: total,
+      page: 1,
+      size: allTiles.length,
+      pages: 1,
+    );
   }
 }

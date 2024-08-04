@@ -1,12 +1,12 @@
 class MapDetails {
-  final List<Tile> data;
+  final List<Tile> tiles;
   final int total;
   final int page;
   final int size;
   final int pages;
 
   const MapDetails({
-    required this.data,
+    required this.tiles,
     required this.total,
     required this.page,
     required this.size,
@@ -28,6 +28,11 @@ class Tile {
     required this.y,
     this.content,
   });
+
+  @override
+  String toString() {
+    return 'Tile(name: $name, skin: $skin, x: $x, y: $y, content: $content)';
+  }
 }
 
 class TileContent {

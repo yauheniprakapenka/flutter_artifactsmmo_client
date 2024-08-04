@@ -24,12 +24,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _initial(InitialEvent event, Emitter emit) async {
-    final MapDetails mapDetails = await _mapsRepository.getAllMaps();
-    print(mapDetails);
     try {
+      final MapDetails mapDetails = await _mapsRepository.getAllMaps();
       final List<Character> characters = await _myCharacterRepository.getAllMyCharacters();
       final Character? selectedCharacter = characters.isEmpty ? null : characters.first;
-      emit(state.copyWith(characters: characters, selectedCharacter: () => selectedCharacter));
+      emit(state.copyWith(
+        characters: characters,
+        selectedCharacter: () => selectedCharacter,
+        mapDetails: () => mapDetails,
+      ));
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {

@@ -34,9 +34,12 @@ class RandomTiledBackground extends StatelessWidget {
                   top: row * tileHeight,
                   width: tileWidth,
                   height: tileHeight,
-                  child: Image.asset(
-                    tileAssetPaths[Random().nextInt(tileAssetPaths.length)],
-                    fit: BoxFit.cover,
+                  child: ColorFiltered(
+                    colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.saturation),
+                    child: Image.asset(
+                      tileAssetPaths[Random().nextInt(tileAssetPaths.length)],
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 );
               },

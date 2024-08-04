@@ -7,6 +7,7 @@ import '../bloc/home_bloc.dart';
 import 'character_position_widget.dart';
 import 'character_selection_widget/character_selection_widget.dart';
 import 'random_tiled_background.dart';
+import 'world_map.dart';
 
 class WorldScreen extends StatelessWidget {
   const WorldScreen();
@@ -20,17 +21,38 @@ class WorldScreen extends StatelessWidget {
           mapsRepository: getIt<MapsRepository>(),
         );
       },
-      child: const _HomeScreen(),
+      child: const _WorldScreen(),
     );
   }
 }
 
-class _HomeScreen extends StatelessWidget {
-  const _HomeScreen();
+class _WorldScreen extends StatefulWidget {
+  const _WorldScreen();
+
+  @override
+  State<_WorldScreen> createState() => _WorldScreenState();
+}
+
+class _WorldScreenState extends State<_WorldScreen> {
+  late final RandomTiledBackground _randomTiledBackground;
+
+  @override
+  void initState() {
+    super.initState();
+    _randomTiledBackground = RandomTiledBackground(
+      tileAssetPaths: AssetPath.getAllMapAssetPaths(),
+      tileWidth: AssetSize.mapTileSize,
+      tileHeight: AssetSize.mapTileSize,
+      stackChildren: const [
+        Positioned.fill(child: AppProgressIndicator()),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: BlocListener<HomeBloc, HomeState>(
         listener: (BuildContext context, HomeState state) {
           if (state.error != null) {
@@ -45,20 +67,22 @@ class _HomeScreen extends StatelessWidget {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (BuildContext context, HomeState state) {
             if (state.isLoading) {
-              return const AppProgressIndicator();
+              return Stack(
+                children: [
+                  _randomTiledBackground,
+                ],
+              );
             }
 
-            return const RandomTiledBackground(
-              tileHeight: 224,
-              tileWidth: 224,
-              tileAssetPaths: [...MapTiles.all],
-              stackChildren: [
-                Positioned(
+            return Stack(
+              children: [
+                WorldMap(state.mapDetails?.tiles ?? []),
+                const Positioned(
                   bottom: Dimensions.edgeInset,
                   left: Dimensions.edgeInset,
                   child: CharacterPositionWidget(),
                 ),
-                Positioned(
+                const Positioned(
                   top: Dimensions.edgeInset,
                   left: Dimensions.edgeInset,
                   child: CharacterSelectionWidget(),

@@ -5,6 +5,7 @@ class HomeState {
   final bool isLoading;
   final Character? selectedCharacter;
   final List<Character> characters;
+  final MapDetails? mapDetails;
   final String? error;
 
   const HomeState({
@@ -12,6 +13,7 @@ class HomeState {
     required this.error,
     required this.isChangingPositon,
     required this.isLoading,
+    required this.mapDetails,
     required this.selectedCharacter,
   });
 
@@ -21,6 +23,7 @@ class HomeState {
       error: null,
       isChangingPositon: false,
       isLoading: true,
+      mapDetails: null,
       selectedCharacter: null,
     );
   }
@@ -30,6 +33,7 @@ class HomeState {
     bool? isLoading,
     ValueGetter<Character?>? selectedCharacter,
     List<Character>? characters,
+    ValueGetter<MapDetails?>? mapDetails,
     ValueGetter<String?>? error,
   }) {
     return HomeState(
@@ -37,6 +41,7 @@ class HomeState {
       isLoading: isLoading ?? this.isLoading,
       selectedCharacter: selectedCharacter != null ? selectedCharacter() : this.selectedCharacter,
       characters: characters ?? this.characters,
+      mapDetails: mapDetails != null ? mapDetails() : this.mapDetails,
       error: error != null ? error() : this.error,
     );
   }
