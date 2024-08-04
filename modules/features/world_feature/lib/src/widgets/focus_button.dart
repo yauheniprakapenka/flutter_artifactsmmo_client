@@ -13,6 +13,7 @@ class FocusButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onPressed,
       child: Container(
         padding: const EdgeInsets.all(Dimensions.p12),
         decoration: BoxDecoration(

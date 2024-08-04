@@ -41,6 +41,7 @@ class _WorldScreenState extends State<_WorldScreen> {
   @override
   void initState() {
     super.initState();
+    // Для генерации фона только один раз.
     _randomTiledBackground = RandomTiledBackground(
       tileAssetPaths: GameAssets.allMapPaths(),
       tileWidth: AssetSize.mapTileSize,
@@ -72,19 +73,12 @@ class _WorldScreenState extends State<_WorldScreen> {
               return Stack(children: [_randomTiledBackground]);
             }
 
-            final List<Tile> mapTiles = state.mapDetails?.tiles ?? [];
-            final List<Tile> characterTiles = state.characters.map((Character character) {
-              return character.asTile;
-            }).toList();
-
             final Character? selectedCharacter = state.selectedCharacter;
 
             return Stack(
               children: [
                 WorldMap(
-                  mapTiles: mapTiles,
-                  characterTiles: characterTiles,
-                  selectedCharacter: selectedCharacter,
+                  mapTiles: state.mapDetails?.tiles ?? [],
                 ),
                 const Positioned(
                   bottom: Dimensions.edgeInset,
@@ -100,19 +94,23 @@ class _WorldScreenState extends State<_WorldScreen> {
                           experience: selectedCharacter.asCharacterExperience,
                         ),
                       ),
+                selectedCharacter == null
+                    ? const SizedBox()
+                    : Positioned(
+                        left: 436,
+                        bottom: 208,
+                        child: FocusButton(
+                          assetPath: AppIcons.focus.path,
+                          onPressed: () {
+                            context.read<HomeBloc>().add(const FocusToSelectedCharacterEvent());
+                          },
+                        ),
+                      ),
                 const Positioned(
                   top: Dimensions.edgeInset,
                   left: Dimensions.edgeInset,
                   child: CharacterPositionWidget(),
                 ),
-                Positioned(
-                  left: 436,
-                  bottom: 208,
-                  child: FocusButton(
-                    assetPath:AppIcons.focus.path,
-                    onPressed: () {},
-                  ),
-                )
               ],
             );
           },

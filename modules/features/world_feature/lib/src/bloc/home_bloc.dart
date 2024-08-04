@@ -20,6 +20,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ChangePositionEvent>(_changePositionMove);
     on<InitialEvent>(_initial);
     on<SelectCharacterEvent>(_selectCharacter);
+    on<FocusToSelectedCharacterEvent>(_focusToSelectedCharacter);
     add(const InitialEvent());
   }
 
@@ -60,5 +61,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       return;
     }
     emit(state.copyWith(selectedCharacter: () => event.character));
+  }
+
+  void _focusToSelectedCharacter(FocusToSelectedCharacterEvent event, Emitter emit) {
+    emit(state.copyWith(focusToSelectedCharacter: true));
+    emit(state.copyWith(focusToSelectedCharacter: false));
   }
 }

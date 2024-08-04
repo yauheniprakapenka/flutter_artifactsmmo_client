@@ -24,3 +24,7 @@ final class SelectCharacterEvent implements HomeEvent {
 final class AddCharacterEvent implements HomeEvent {
   const AddCharacterEvent();
 }
+
+final class FocusToSelectedCharacterEvent implements HomeEvent {
+  const FocusToSelectedCharacterEvent();
+}

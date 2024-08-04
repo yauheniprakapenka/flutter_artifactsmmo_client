@@ -7,6 +7,7 @@ class HomeState {
   final List<Character> characters;
   final MapDetails? mapDetails;
   final String? error;
+  final bool focusToSelectedCharacter;
 
   const HomeState({
     required this.characters,
@@ -15,6 +16,7 @@ class HomeState {
     required this.isLoading,
     required this.mapDetails,
     required this.selectedCharacter,
+    required this.focusToSelectedCharacter,
   });
 
   factory HomeState.initial() {
@@ -25,6 +27,7 @@ class HomeState {
       isLoading: true,
       mapDetails: null,
       selectedCharacter: null,
+      focusToSelectedCharacter: false,
     );
   }
 
@@ -35,8 +38,10 @@ class HomeState {
     List<Character>? characters,
     ValueGetter<MapDetails?>? mapDetails,
     ValueGetter<String?>? error,
+    bool? focusToSelectedCharacter,
   }) {
     return HomeState(
+      focusToSelectedCharacter: focusToSelectedCharacter ?? this.focusToSelectedCharacter,
       isChangingPositon: isChangingPositon ?? this.isChangingPositon,
       isLoading: isLoading ?? this.isLoading,
       selectedCharacter: selectedCharacter != null ? selectedCharacter() : this.selectedCharacter,
