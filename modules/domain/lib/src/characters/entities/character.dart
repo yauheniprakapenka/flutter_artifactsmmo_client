@@ -1,3 +1,4 @@
+import '../../maps/entities/map_details.dart';
 import '../../my_characters/entities/inventory_item.dart';
 
 class Character {
@@ -146,4 +147,10 @@ class Character {
     required this.inventoryMaxItems,
     required this.inventory,
   });
+}
+
+extension CharacterMapper on Character {
+  Tile get asTile {
+    return Tile(name: name, skin: skin, x: x, y: y);
+  }
 }

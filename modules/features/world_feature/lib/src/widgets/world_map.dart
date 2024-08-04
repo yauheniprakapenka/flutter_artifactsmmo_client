@@ -2,20 +2,28 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
-class WorldMap extends StatelessWidget {
-  final List<Tile> tiles;
+import 'character_widget.dart';
 
-  const WorldMap(this.tiles);
+class WorldMap extends StatelessWidget {
+  final List<Tile> mapTiles;
+  final List<Tile> characterTiles;
+  final Character? selectedCharacter;
+
+  const WorldMap({
+    required this.mapTiles,
+    required this.characterTiles,
+    required this.selectedCharacter,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // Находим границы карты
-    final int minX = tiles.map((Tile t) => t.x).reduce((a, b) => a < b ? a : b);
-    final int maxX = tiles.map((Tile t) => t.x).reduce((a, b) => a > b ? a : b);
-    final int minY = tiles.map((Tile t) => t.y).reduce((a, b) => a < b ? a : b);
-    final int maxY = tiles.map((Tile t) => t.y).reduce((a, b) => a > b ? a : b);
+    // Finding the boundaries of the map
+    final int minX = mapTiles.map((Tile t) => t.x).reduce((a, b) => a < b ? a : b);
+    final int maxX = mapTiles.map((Tile t) => t.x).reduce((a, b) => a > b ? a : b);
+    final int minY = mapTiles.map((Tile t) => t.y).reduce((a, b) => a < b ? a : b);
+    final int maxY = mapTiles.map((Tile t) => t.y).reduce((a, b) => a > b ? a : b);
 
-    // Вычисляем размеры всей карты
+    // Calculating the size of the map
     final double width = (maxX - minX + 1) * AssetSize.mapTileSize;
     final double height = (maxY - minY + 1) * AssetSize.mapTileSize;
 
@@ -27,8 +35,8 @@ class WorldMap extends StatelessWidget {
           height: height,
           child: Stack(
             children: [
-              for (final Tile tile in tiles)
-                Positioned(
+              ...mapTiles.map((Tile tile) {
+                return Positioned(
                   left: (tile.x - minX) * AssetSize.mapTileSize,
                   top: (tile.y - minY) * AssetSize.mapTileSize,
                   width: AssetSize.mapTileSize,
@@ -37,7 +45,28 @@ class WorldMap extends StatelessWidget {
                     AssetPath.getMapAssetPath(tile.skin),
                     fit: BoxFit.cover,
                   ),
-                ),
+                );
+              }),
+              ...characterTiles.map((Tile tile) {
+                return Positioned(
+                  left: (tile.x - minX) * AssetSize.mapTileSize,
+                  top: (tile.y - minY) * AssetSize.mapTileSize,
+                  width: AssetSize.mapTileSize,
+                  height: AssetSize.mapTileSize,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 14),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: CharacterWidget(
+                          tile: tile,
+                          isSelected: selectedCharacter?.name == tile.name,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
             ],
           ),
         ),

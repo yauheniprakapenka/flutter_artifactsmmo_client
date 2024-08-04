@@ -18,7 +18,7 @@ class AddCharacterButton extends StatelessWidget {
         padding: const EdgeInsets.all(Dimensions.p16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Dimensions.radius),
-          color: AppColors.blackLeatherJacket.withOpacity(0.95),
+          color: AppColors.blackLeatherJacket.withOpacity(0.9),
         ),
         child: const Center(
           child: Text(

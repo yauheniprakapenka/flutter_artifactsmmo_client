@@ -67,16 +67,21 @@ class _WorldScreenState extends State<_WorldScreen> {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (BuildContext context, HomeState state) {
             if (state.isLoading) {
-              return Stack(
-                children: [
-                  _randomTiledBackground,
-                ],
-              );
+              return Stack(children: [_randomTiledBackground]);
             }
+
+            final List<Tile> mapTiles = state.mapDetails?.tiles ?? [];
+            final List<Tile> characterTiles = state.characters.map((Character character) {
+              return character.asTile;
+            }).toList();
 
             return Stack(
               children: [
-                WorldMap(state.mapDetails?.tiles ?? []),
+                WorldMap(
+                  mapTiles: mapTiles,
+                  characterTiles: characterTiles,
+                  selectedCharacter: state.selectedCharacter,
+                ),
                 const Positioned(
                   bottom: Dimensions.edgeInset,
                   left: Dimensions.edgeInset,
