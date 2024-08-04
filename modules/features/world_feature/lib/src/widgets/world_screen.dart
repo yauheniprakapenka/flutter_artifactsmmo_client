@@ -4,6 +4,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../bloc/home_bloc.dart';
+import 'character_experience_widget.dart';
 import 'character_position_widget.dart';
 import 'character_selection_widget/character_selection_widget.dart';
 import 'random_tiled_background.dart';
@@ -75,20 +76,31 @@ class _WorldScreenState extends State<_WorldScreen> {
               return character.asTile;
             }).toList();
 
+            final Character? selectedCharacter = state.selectedCharacter;
+
             return Stack(
               children: [
                 WorldMap(
                   mapTiles: mapTiles,
                   characterTiles: characterTiles,
-                  selectedCharacter: state.selectedCharacter,
-                ),
-                const Positioned(
-                  bottom: Dimensions.edgeInset,
-                  left: Dimensions.edgeInset,
-                  child: CharacterPositionWidget(),
+                  selectedCharacter: selectedCharacter,
                 ),
                 const Positioned(
                   top: Dimensions.edgeInset,
+                  left: Dimensions.edgeInset,
+                  child: CharacterPositionWidget(),
+                ),
+                selectedCharacter == null
+                    ? const SizedBox()
+                    : Positioned(
+                        left: Dimensions.edgeInset,
+                        bottom: 180,
+                        child: CharacterExperienceWidget(
+                          experience: selectedCharacter.asCharacterExperience,
+                        ),
+                      ),
+                const Positioned(
+                  bottom: Dimensions.edgeInset,
                   left: Dimensions.edgeInset,
                   child: CharacterSelectionWidget(),
                 ),

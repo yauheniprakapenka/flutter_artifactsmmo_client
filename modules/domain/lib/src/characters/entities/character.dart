@@ -1,5 +1,6 @@
 import '../../maps/entities/map_details.dart';
 import '../../my_characters/entities/inventory_item.dart';
+import 'character_experience.dart';
 
 class Character {
   final int attackAir;
@@ -152,5 +153,9 @@ class Character {
 extension CharacterMapper on Character {
   Tile get asTile {
     return Tile(name: name, skin: skin, x: x, y: y);
+  }
+
+  CharacterExperience get asCharacterExperience {
+    return CharacterExperience(level: level, xp: xp, maxXp: maxXp);
   }
 }

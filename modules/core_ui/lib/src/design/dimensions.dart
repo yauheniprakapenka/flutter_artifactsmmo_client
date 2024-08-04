@@ -6,5 +6,5 @@ class Dimensions {
 
   static const double edgeInset = p24;
 
-  static const double radius = p12;
+  static const double radius = 6.0;
 }
