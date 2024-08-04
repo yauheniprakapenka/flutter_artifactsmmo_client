@@ -7,6 +7,7 @@ import '../bloc/home_bloc.dart';
 import 'character_experience_widget.dart';
 import 'character_position_widget.dart';
 import 'character_selection_widget/character_selection_widget.dart';
+import 'focus_button.dart';
 import 'random_tiled_background.dart';
 import 'world_map.dart';
 
@@ -41,7 +42,7 @@ class _WorldScreenState extends State<_WorldScreen> {
   void initState() {
     super.initState();
     _randomTiledBackground = RandomTiledBackground(
-      tileAssetPaths: AssetPath.getAllMapAssetPaths(),
+      tileAssetPaths: GameAssets.allMapPaths(),
       tileWidth: AssetSize.mapTileSize,
       tileHeight: AssetSize.mapTileSize,
       stackChildren: const [
@@ -86,9 +87,9 @@ class _WorldScreenState extends State<_WorldScreen> {
                   selectedCharacter: selectedCharacter,
                 ),
                 const Positioned(
-                  top: Dimensions.edgeInset,
+                  bottom: Dimensions.edgeInset,
                   left: Dimensions.edgeInset,
-                  child: CharacterPositionWidget(),
+                  child: CharacterSelectionWidget(),
                 ),
                 selectedCharacter == null
                     ? const SizedBox()
@@ -100,10 +101,18 @@ class _WorldScreenState extends State<_WorldScreen> {
                         ),
                       ),
                 const Positioned(
-                  bottom: Dimensions.edgeInset,
+                  top: Dimensions.edgeInset,
                   left: Dimensions.edgeInset,
-                  child: CharacterSelectionWidget(),
+                  child: CharacterPositionWidget(),
                 ),
+                Positioned(
+                  left: 436,
+                  bottom: 208,
+                  child: FocusButton(
+                    assetPath:AppIcons.focus.path,
+                    onPressed: () {},
+                  ),
+                )
               ],
             );
           },

@@ -38,7 +38,7 @@ class CharacterInfo extends StatelessWidget {
             ),
             const AppSpacing.h8(),
             Image.asset(
-              AssetPath.getCharacterAssetPath(character.skin),
+              GameAssets.characterPath(character.skin),
             ),
           ],
         ),

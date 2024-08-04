@@ -39,7 +39,7 @@ class CharacterWidget extends StatelessWidget {
                       colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                       child: Image.asset(
                         scale: 1.4,
-                        AssetPath.getCharacterAssetPath(tile.skin),
+                        GameAssets.characterPath(tile.skin),
                       ),
                     ),
                   )
@@ -47,7 +47,7 @@ class CharacterWidget extends StatelessWidget {
             SizedBox(
               width: AssetSize.characterSize,
               child: Image.asset(
-                AssetPath.getCharacterAssetPath(tile.skin),
+                GameAssets.characterPath(tile.skin),
               ),
             ),
           ],
