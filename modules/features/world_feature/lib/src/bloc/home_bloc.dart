@@ -21,6 +21,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<InitialEvent>(_initial);
     on<SelectCharacterEvent>(_selectCharacter);
     on<FocusToSelectedCharacterEvent>(_focusToSelectedCharacter);
+    on<SelectTileEvent>(_selectTile);
+    on<ShowGridEvent>(_showGrid);
     add(const InitialEvent());
   }
 
@@ -66,5 +68,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void _focusToSelectedCharacter(FocusToSelectedCharacterEvent event, Emitter emit) {
     emit(state.copyWith(focusToSelectedCharacter: true));
     emit(state.copyWith(focusToSelectedCharacter: false));
+  }
+
+  void _selectTile(SelectTileEvent event, Emitter emit) {
+    if (state.selectedTile == event.tile) {
+      emit(state.copyWith(selectedTile: () => null));
+      return;
+    }
+    emit(state.copyWith(selectedTile: () => event.tile));
+  }
+
+  void _showGrid(ShowGridEvent event, Emitter emit) {
+    emit(state.copyWith(showGrid: !state.showGrid));
   }
 }

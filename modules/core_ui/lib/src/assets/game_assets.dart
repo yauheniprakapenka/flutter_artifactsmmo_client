@@ -55,6 +55,7 @@ final List<String> _allMapAssetPaths = [
   GameAssets.mapPath('forest_ogre1'),
   GameAssets.mapPath('forest_ogre2'),
   GameAssets.mapPath('forest_pig1'),
+  GameAssets.mapPath('forest_portal'),
   GameAssets.mapPath('forest_redslime1'),
   GameAssets.mapPath('forest_redslime2'),
   GameAssets.mapPath('forest_skeleton1'),

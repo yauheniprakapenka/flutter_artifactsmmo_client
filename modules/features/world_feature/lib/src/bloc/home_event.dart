@@ -28,3 +28,13 @@ final class AddCharacterEvent implements HomeEvent {
 final class FocusToSelectedCharacterEvent implements HomeEvent {
   const FocusToSelectedCharacterEvent();
 }
+
+final class SelectTileEvent implements HomeEvent {
+  final Tile? tile;
+
+  const SelectTileEvent(this.tile);
+}
+
+final class ShowGridEvent implements HomeEvent {
+  const ShowGridEvent();
+}

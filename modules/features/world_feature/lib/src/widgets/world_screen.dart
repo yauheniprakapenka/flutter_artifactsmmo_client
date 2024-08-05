@@ -4,11 +4,12 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../bloc/home_bloc.dart';
+import '../utils/world_map_calculator.dart';
 import 'character_experience_widget.dart';
 import 'character_position_widget.dart';
 import 'character_selection_widget/character_selection_widget.dart';
-import 'focus_button.dart';
 import 'random_tiled_background.dart';
+import 'small_button.dart';
 import 'world_map.dart';
 
 class WorldScreen extends StatelessWidget {
@@ -41,7 +42,7 @@ class _WorldScreenState extends State<_WorldScreen> {
   @override
   void initState() {
     super.initState();
-    // Для генерации фона только один раз.
+    // Герерируется фон один раз и затем переиспользуется.
     _randomTiledBackground = RandomTiledBackground(
       tileAssetPaths: GameAssets.allMapPaths(),
       tileWidth: AssetSize.mapTileSize,
@@ -78,7 +79,7 @@ class _WorldScreenState extends State<_WorldScreen> {
             return Stack(
               children: [
                 WorldMap(
-                  mapTiles: state.mapDetails?.tiles ?? [],
+                  worldMapCalculator: WorldMapCalculator(state.mapDetails?.tiles ?? []),
                 ),
                 const Positioned(
                   bottom: Dimensions.edgeInset,
@@ -99,7 +100,7 @@ class _WorldScreenState extends State<_WorldScreen> {
                     : Positioned(
                         left: 436,
                         bottom: 208,
-                        child: FocusButton(
+                        child: SmallButton(
                           assetPath: AppIcons.focus.path,
                           onPressed: () {
                             context.read<HomeBloc>().add(const FocusToSelectedCharacterEvent());
@@ -111,6 +112,16 @@ class _WorldScreenState extends State<_WorldScreen> {
                   left: Dimensions.edgeInset,
                   child: CharacterPositionWidget(),
                 ),
+                Positioned(
+                  right: Dimensions.edgeInset,
+                  bottom: Dimensions.edgeInset,
+                  child: SmallButton(
+                    assetPath: AppIcons.gdid.path,
+                    onPressed: () {
+                      context.read<HomeBloc>().add(const ShowGridEvent());
+                    },
+                  ),
+                )
               ],
             );
           },

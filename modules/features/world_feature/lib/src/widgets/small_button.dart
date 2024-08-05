@@ -1,18 +1,18 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
-class FocusButton extends StatelessWidget {
+class SmallButton extends StatelessWidget {
   final String assetPath;
   final VoidCallback onPressed;
 
-  const FocusButton({
+  const SmallButton({
     required this.assetPath,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onPressed,
       child: Container(
         padding: const EdgeInsets.all(Dimensions.p12),

@@ -1,15 +1,20 @@
+import 'dart:math';
+
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../bloc/home_bloc.dart';
+import '../utils/world_map_calculator.dart';
 import 'character_widget.dart';
+import 'tile_details_widget.dart';
+import 'tile_widget.dart';
 
 class WorldMap extends StatefulWidget {
-  final List<Tile> mapTiles;
+  final WorldMapCalculator worldMapCalculator;
 
   const WorldMap({
-    required this.mapTiles,
+    required this.worldMapCalculator,
   });
 
   @override
@@ -19,19 +24,6 @@ class WorldMap extends StatefulWidget {
 class _WorldMapState extends State<WorldMap> {
   final ScrollController _verticalController = ScrollController();
   final ScrollController _horizontalController = ScrollController();
-
-  late final int _minX;
-  late final int _maxX;
-  late final int _minY;
-  late final int _maxY;
-  late final double _mapWidth;
-  late final double _mapHeight;
-
-  @override
-  void initState() {
-    super.initState();
-    _calculateMapDimensions();
-  }
 
   @override
   void dispose() {
@@ -44,46 +36,7 @@ class _WorldMapState extends State<WorldMap> {
   Widget build(BuildContext context) {
     return BlocListener<HomeBloc, HomeState>(
       listener: (BuildContext context, HomeState state) {
-        if (!state.focusToSelectedCharacter) {
-          return;
-        }
-
-        final Character? character = state.selectedCharacter;
-        if (character == null) {
-          return;
-        }
-
-        final int characterX = character.asTile.x;
-        final int characterY = character.asTile.y;
-
-        // Вычисляем позицию персонажа на карте
-        final double characterPositionX = (characterX - _minX) * AssetSize.mapTileSize;
-        final double characterPositionY = (characterY - _minY) * AssetSize.mapTileSize;
-
-        // Получаем размеры экрана
-        final double screenWidth = MediaQuery.of(context).size.width;
-        final double screenHeight = MediaQuery.of(context).size.height;
-
-        // Вычисляем позицию скролла, чтобы персонаж оказался в центре
-        final double scrollX = characterPositionX - (screenWidth / 2) + (AssetSize.mapTileSize / 2);
-        final double scrollY =
-            characterPositionY - (screenHeight / 2) + (AssetSize.mapTileSize / 2);
-
-        // Ограничиваем значения скролла, чтобы не выйти за пределы карты
-        final double maxScrollX = _mapWidth - screenWidth;
-        final double maxScrollY = _mapHeight - screenHeight;
-
-        _horizontalController.animateTo(
-          scrollX.clamp(0, maxScrollX),
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
-
-        _verticalController.animateTo(
-          scrollY.clamp(0, maxScrollY),
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
+        _focusOnSelectedCharacter(state);
       },
       child: BlocBuilder<HomeBloc, HomeState>(builder: (BuildContext context, HomeState state) {
         final List<Tile> characterTiles = state.characters.map((Character character) {
@@ -96,26 +49,29 @@ class _WorldMapState extends State<WorldMap> {
           child: SingleChildScrollView(
             controller: _verticalController,
             child: SizedBox(
-              width: _mapWidth,
-              height: _mapHeight,
+              width: widget.worldMapCalculator.getMapWidth(),
+              height: widget.worldMapCalculator.getMapHeight(),
               child: Stack(
                 children: [
-                  ...widget.mapTiles.map((Tile tile) {
+                  ...widget.worldMapCalculator.mapTiles.map((Tile tile) {
                     return Positioned(
-                      left: (tile.x - _minX) * AssetSize.mapTileSize,
-                      top: (tile.y - _minY) * AssetSize.mapTileSize,
+                      left: (tile.x - widget.worldMapCalculator.getMinX()) * AssetSize.mapTileSize,
+                      top: (tile.y - widget.worldMapCalculator.getMinY()) * AssetSize.mapTileSize,
                       width: AssetSize.mapTileSize,
                       height: AssetSize.mapTileSize,
-                      child: Image.asset(
-                        GameAssets.mapPath(tile.skin),
-                        fit: BoxFit.cover,
+                      child: TileWidget(
+                        tile: tile,
+                        showGrid: state.showGrid,
+                        onPressed: () {
+                          context.read<HomeBloc>().add(SelectTileEvent(tile));
+                        },
                       ),
                     );
                   }),
                   ...characterTiles.map((Tile tile) {
                     return Positioned(
-                      left: (tile.x - _minX) * AssetSize.mapTileSize,
-                      top: (tile.y - _minY) * AssetSize.mapTileSize,
+                      left: (tile.x - widget.worldMapCalculator.getMinX()) * AssetSize.mapTileSize,
+                      top: (tile.y - widget.worldMapCalculator.getMinY()) * AssetSize.mapTileSize,
                       width: AssetSize.mapTileSize,
                       height: AssetSize.mapTileSize,
                       child: Center(
@@ -123,15 +79,33 @@ class _WorldMapState extends State<WorldMap> {
                           padding: const EdgeInsets.only(bottom: 14),
                           child: Align(
                             alignment: Alignment.bottomCenter,
-                            child: CharacterWidget(
-                              tile: tile,
-                              isSelected: state.selectedCharacter?.name == tile.name,
+                            child: IgnorePointer(
+                              child: CharacterWidget(
+                                tile: tile,
+                                isSelected: state.selectedCharacter?.name == tile.name,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     );
                   }),
+                  state.selectedTile == null
+                      ? const SizedBox()
+                      : Positioned(
+                          left: (state.selectedTile!.x - widget.worldMapCalculator.getMinX()) *
+                              AssetSize.mapTileSize,
+                          top: (state.selectedTile!.y - widget.worldMapCalculator.getMinY()) *
+                              AssetSize.mapTileSize,
+                          width: AssetSize.mapTileSize,
+                          height: AssetSize.mapTileSize,
+                          child: TileDetailsWidget(
+                            tile: state.selectedTile!,
+                            onPressed: () {
+                              context.read<HomeBloc>().add(SelectTileEvent(state.selectedTile));
+                            },
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -141,15 +115,53 @@ class _WorldMapState extends State<WorldMap> {
     );
   }
 
-  void _calculateMapDimensions() {
-    // Finding the boundaries of the map
-    _minX = widget.mapTiles.map((Tile t) => t.x).reduce((a, b) => a < b ? a : b);
-    _maxX = widget.mapTiles.map((Tile t) => t.x).reduce((a, b) => a > b ? a : b);
-    _minY = widget.mapTiles.map((Tile t) => t.y).reduce((a, b) => a < b ? a : b);
-    _maxY = widget.mapTiles.map((Tile t) => t.y).reduce((a, b) => a > b ? a : b);
+  void _focusOnSelectedCharacter(HomeState state) {
+    if (!state.focusToSelectedCharacter) {
+      return;
+    }
 
-    // Calculating the size of the map
-    _mapWidth = (_maxX - _minX + 1) * AssetSize.mapTileSize;
-    _mapHeight = (_maxY - _minY + 1) * AssetSize.mapTileSize;
+    final Character? character = state.selectedCharacter;
+    if (character == null) {
+      return;
+    }
+
+    final Point<double> characterPosition = _calculateCharacterPosition(character);
+    final Size screenSize = MediaQuery.of(context).size;
+    final Point<double> scrollPosition = _calculateScrollPosition(characterPosition, screenSize);
+    _animateToPosition(scrollPosition, screenSize);
+  }
+
+  Point<double> _calculateCharacterPosition(Character character) {
+    final double characterX =
+        (character.asTile.x - widget.worldMapCalculator.getMinX()) * AssetSize.mapTileSize;
+    final double characterY =
+        (character.asTile.y - widget.worldMapCalculator.getMinY()) * AssetSize.mapTileSize;
+    return Point(characterX, characterY);
+  }
+
+  Point<double> _calculateScrollPosition(Point characterPosition, Size screenSize) {
+    final double scrollX =
+        characterPosition.x - (screenSize.width / 2) + (AssetSize.mapTileSize / 2);
+    final double scrollY =
+        characterPosition.y - (screenSize.height / 2) + (AssetSize.mapTileSize / 2);
+    return Point(scrollX, scrollY);
+  }
+
+  void _animateToPosition(Point<double> scrollPosition, Size screenSize) {
+    // Ограничиваем значения скролла, чтобы не выйти за пределы карты
+    final double maxScrollX = widget.worldMapCalculator.getMapWidth() - screenSize.width;
+    final double maxScrollY = widget.worldMapCalculator.getMapHeight() - screenSize.height;
+
+    _horizontalController.animateTo(
+      scrollPosition.x.clamp(0, maxScrollX),
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+
+    _verticalController.animateTo(
+      scrollPosition.y.clamp(0, maxScrollY),
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
 }

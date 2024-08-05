@@ -30,8 +30,20 @@ class Tile {
   });
 
   @override
-  String toString() {
-    return 'Tile(name: $name, skin: $skin, x: $x, y: $y, content: $content)';
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Tile &&
+        other.name == name &&
+        other.skin == skin &&
+        other.x == x &&
+        other.y == y &&
+        other.content == content;
+  }
+
+  @override
+  int get hashCode {
+    return name.hashCode ^ skin.hashCode ^ x.hashCode ^ y.hashCode ^ content.hashCode;
   }
 }
 
