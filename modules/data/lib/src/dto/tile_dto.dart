@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class MapDetailsDto {
   final List<TileDto> tiles;
   final int total;
@@ -51,7 +53,7 @@ class TileDto {
 }
 
 class TileContentDto {
-  final String type;
+  final TileContenTypetDto type;
   final String code;
 
   const TileContentDto({
@@ -61,8 +63,31 @@ class TileContentDto {
 
   factory TileContentDto.fromMap(Map<String, dynamic> json) {
     return TileContentDto(
-      type: json['type'],
+      type: TileContenTypetDto.fromType(json['type']),
       code: json['code'],
     );
+  }
+}
+
+enum TileContenTypetDto {
+  bank('bank'),
+  grand_exchange('grand_exchange'),
+  monster('monster'),
+  resource('resource'),
+  tasks_master('tasks_master'),
+  workshop('workshop'),
+  unknown('unknown');
+
+  final String type;
+
+  const TileContenTypetDto(this.type);
+
+  factory TileContenTypetDto.fromType(String type) {
+    return TileContenTypetDto.values.firstWhere((TileContenTypetDto element) {
+      return element.type.toLowerCase() == type.toLowerCase();
+    }, orElse: () {
+      log('Unknown tile content type: $type');
+      return TileContenTypetDto.unknown;
+    });
   }
 }

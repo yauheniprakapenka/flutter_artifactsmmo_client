@@ -107,11 +107,11 @@ class _WorldScreenState extends State<_WorldScreen> {
                           },
                         ),
                       ),
-                const Positioned(
-                  top: Dimensions.edgeInset,
-                  left: Dimensions.edgeInset,
-                  child: CharacterPositionWidget(),
-                ),
+                // const Positioned(
+                //   top: Dimensions.edgeInset,
+                //   left: Dimensions.edgeInset,
+                //   child: CharacterPositionWidget(),
+                // ),
                 Positioned(
                   right: Dimensions.edgeInset,
                   bottom: Dimensions.edgeInset,

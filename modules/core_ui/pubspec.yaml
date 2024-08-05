@@ -1,6 +1,5 @@
 name: core_ui
 publish_to: "none"
-version: 0.0.1
 
 environment:
   sdk: ">=3.3.4"

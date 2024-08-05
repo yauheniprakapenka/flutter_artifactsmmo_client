@@ -8,6 +8,8 @@ class AppSpacing extends StatelessWidget {
 
   const AppSpacing({this.width = 0, this.height = 0});
 
+  const AppSpacing.h4() : this(width: Dimensions.p4);
+  const AppSpacing.w4() : this(width: Dimensions.p4);
   const AppSpacing.w8() : this(width: Dimensions.p8);
   const AppSpacing.w16() : this(width: Dimensions.p16);
   const AppSpacing.h8() : this(height: Dimensions.p8);

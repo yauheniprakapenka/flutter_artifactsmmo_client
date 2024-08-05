@@ -48,11 +48,21 @@ class Tile {
 }
 
 class TileContent {
-  final String type;
+  final TileContentType type;
   final String code;
 
   const TileContent({
     required this.type,
     required this.code,
   });
+}
+
+enum TileContentType {
+  bank,
+  grand_exchange,
+  monster,
+  resource,
+  tasks_master,
+  workshop,
+  unknown;
 }

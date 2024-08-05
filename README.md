@@ -1,4 +1,4 @@
-# flutter_artifactsmmo_client
+# Flutter Artifactsmmo client
 
 ! IN DEVELOPMENT !
 
@@ -17,3 +17,5 @@ Replace `ENTER_YOUR_TOKEN` with your authorization token.
 ### Launch
 
 Use `.vscode/launch.json` to launch the project.
+
+![image](https://github.com/user-attachments/assets/032df8c2-b2ae-4af4-ad76-bffeddd86060)

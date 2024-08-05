@@ -17,7 +17,7 @@ class CharacterWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: const EdgeInsets.all(Dimensions.p8),
+          padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             color: isSelected ? AppColors.white : AppColors.blackLeatherJacket,
           ),
@@ -25,7 +25,7 @@ class CharacterWidget extends StatelessWidget {
             tile.name,
             style: TextStyle(
               color: isSelected ? AppColors.blackLeatherJacket : AppColors.chineseSilver,
-              fontSize: 16,
+              fontSize: 12,
             ),
           ),
         ),
@@ -38,7 +38,7 @@ class CharacterWidget extends StatelessWidget {
                     child: ColorFiltered(
                       colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                       child: Image.asset(
-                        scale: 1.4,
+                        width: AssetSize.characterSize + 3,
                         GameAssets.characterPath(tile.skin),
                       ),
                     ),

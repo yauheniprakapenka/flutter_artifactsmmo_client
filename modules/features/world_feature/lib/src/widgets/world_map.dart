@@ -76,7 +76,7 @@ class _WorldMapState extends State<WorldMap> {
                       height: AssetSize.mapTileSize,
                       child: Center(
                         child: Padding(
-                          padding: const EdgeInsets.only(bottom: 14),
+                          padding: const EdgeInsets.only(bottom: 18),
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: IgnorePointer(
