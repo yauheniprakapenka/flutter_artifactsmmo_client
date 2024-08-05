@@ -3,10 +3,9 @@ import 'package:di/di.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
-import '../bloc/home_bloc.dart';
+import '../bloc/world_bloc.dart';
 import '../utils/world_map_calculator.dart';
 import 'character_experience_widget.dart';
-import 'character_position_widget.dart';
 import 'character_selection_widget/character_selection_widget.dart';
 import 'random_tiled_background.dart';
 import 'small_button.dart';
@@ -17,9 +16,9 @@ class WorldScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeBloc>(
+    return BlocProvider<WorldBloc>(
       create: (BuildContext context) {
-        return HomeBloc(
+        return WorldBloc(
           myCharacterRepository: getIt<MyCharacterRepository>(),
           mapsRepository: getIt<MapsRepository>(),
         );
@@ -57,8 +56,8 @@ class _WorldScreenState extends State<_WorldScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: BlocListener<HomeBloc, HomeState>(
-        listener: (BuildContext context, HomeState state) {
+      body: BlocListener<WorldBloc, WorldState>(
+        listener: (BuildContext context, WorldState state) {
           if (state.error != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -68,8 +67,8 @@ class _WorldScreenState extends State<_WorldScreen> {
             );
           }
         },
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (BuildContext context, HomeState state) {
+        child: BlocBuilder<WorldBloc, WorldState>(
+          builder: (BuildContext context, WorldState state) {
             if (state.isLoading) {
               return Stack(children: [_randomTiledBackground]);
             }
@@ -103,7 +102,7 @@ class _WorldScreenState extends State<_WorldScreen> {
                         child: SmallButton(
                           assetPath: AppIcons.focus.path,
                           onPressed: () {
-                            context.read<HomeBloc>().add(const FocusToSelectedCharacterEvent());
+                            context.read<WorldBloc>().add(const FocusToSelectedCharacterEvent());
                           },
                         ),
                       ),
@@ -118,7 +117,7 @@ class _WorldScreenState extends State<_WorldScreen> {
                   child: SmallButton(
                     assetPath: AppIcons.gdid.path,
                     onPressed: () {
-                      context.read<HomeBloc>().add(const ShowGridEvent());
+                      context.read<WorldBloc>().add(const ShowGridEvent());
                     },
                   ),
                 )

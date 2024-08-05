@@ -1,6 +1,6 @@
-part of 'home_bloc.dart';
+part of 'world_bloc.dart';
 
-class HomeState {
+class WorldState {
   final bool focusToSelectedCharacter;
   final bool isChangingPositon;
   final bool isLoading;
@@ -11,7 +11,7 @@ class HomeState {
   final String? error;
   final Tile? selectedTile;
 
-  const HomeState({
+  const WorldState({
     required this.characters,
     required this.error,
     required this.focusToSelectedCharacter,
@@ -23,8 +23,8 @@ class HomeState {
     required this.showGrid,
   });
 
-  factory HomeState.initial() {
-    return const HomeState(
+  factory WorldState.initial() {
+    return const WorldState(
       characters: [],
       error: null,
       focusToSelectedCharacter: false,
@@ -37,7 +37,7 @@ class HomeState {
     );
   }
 
-  HomeState copyWith({
+  WorldState copyWith({
     bool? focusToSelectedCharacter,
     bool? isChangingPositon,
     bool? isLoading,
@@ -48,7 +48,7 @@ class HomeState {
     ValueGetter<String?>? error,
     ValueGetter<Tile?>? selectedTile,
   }) {
-    return HomeState(
+    return WorldState(
       focusToSelectedCharacter: focusToSelectedCharacter ?? this.focusToSelectedCharacter,
       isChangingPositon: isChangingPositon ?? this.isChangingPositon,
       isLoading: isLoading ?? this.isLoading,

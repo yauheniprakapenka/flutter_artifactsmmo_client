@@ -4,7 +4,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
-import '../bloc/home_bloc.dart';
+import '../bloc/world_bloc.dart';
 import '../utils/world_map_calculator.dart';
 import 'character_widget.dart';
 import 'tile_details_widget.dart';
@@ -34,11 +34,11 @@ class _WorldMapState extends State<WorldMap> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<HomeBloc, HomeState>(
-      listener: (BuildContext context, HomeState state) {
+    return BlocListener<WorldBloc, WorldState>(
+      listener: (BuildContext context, WorldState state) {
         _focusOnSelectedCharacter(state);
       },
-      child: BlocBuilder<HomeBloc, HomeState>(builder: (BuildContext context, HomeState state) {
+      child: BlocBuilder<WorldBloc, WorldState>(builder: (BuildContext context, WorldState state) {
         final List<Tile> characterTiles = state.characters.map((Character character) {
           return character.asTile;
         }).toList();
@@ -63,7 +63,7 @@ class _WorldMapState extends State<WorldMap> {
                         tile: tile,
                         showGrid: state.showGrid,
                         onPressed: () {
-                          context.read<HomeBloc>().add(SelectTileEvent(tile));
+                          context.read<WorldBloc>().add(SelectTileEvent(tile));
                         },
                       ),
                     );
@@ -102,7 +102,7 @@ class _WorldMapState extends State<WorldMap> {
                           child: TileDetailsWidget(
                             tile: state.selectedTile!,
                             onPressed: () {
-                              context.read<HomeBloc>().add(SelectTileEvent(state.selectedTile));
+                              context.read<WorldBloc>().add(SelectTileEvent(state.selectedTile));
                             },
                           ),
                         ),
@@ -115,7 +115,7 @@ class _WorldMapState extends State<WorldMap> {
     );
   }
 
-  void _focusOnSelectedCharacter(HomeState state) {
+  void _focusOnSelectedCharacter(WorldState state) {
     if (!state.focusToSelectedCharacter) {
       return;
     }

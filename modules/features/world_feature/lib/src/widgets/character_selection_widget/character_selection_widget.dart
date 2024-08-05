@@ -2,7 +2,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
-import '../../bloc/home_bloc.dart';
+import '../../bloc/world_bloc.dart';
 import 'add_character_button.dart';
 import 'character_info.dart';
 
@@ -11,8 +11,8 @@ class CharacterSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (BuildContext context, HomeState state) {
+    return BlocBuilder<WorldBloc, WorldState>(
+      builder: (BuildContext context, WorldState state) {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -28,7 +28,7 @@ class CharacterSelectionWidget extends StatelessWidget {
                       character: character,
                       isSelected: state.selectedCharacter?.name == character.name,
                       onPressed: () {
-                        context.read<HomeBloc>().add(SelectCharacterEvent(character));
+                        context.read<WorldBloc>().add(SelectCharacterEvent(character));
                       }),
                 );
               },

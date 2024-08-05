@@ -4,19 +4,19 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
-part 'home_state.dart';
-part 'home_event.dart';
+part 'world_state.dart';
+part 'world_event.dart';
 
-class HomeBloc extends Bloc<HomeEvent, HomeState> {
+class WorldBloc extends Bloc<WorldEvent, WorldState> {
   final MyCharacterRepository _myCharacterRepository;
   final MapsRepository _mapsRepository;
 
-  HomeBloc({
+  WorldBloc({
     required MyCharacterRepository myCharacterRepository,
     required MapsRepository mapsRepository,
   })  : _myCharacterRepository = myCharacterRepository,
         _mapsRepository = mapsRepository,
-        super(HomeState.initial()) {
+        super(WorldState.initial()) {
     on<ChangePositionEvent>(_changePositionMove);
     on<InitialEvent>(_initial);
     on<SelectCharacterEvent>(_selectCharacter);

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
-import '../bloc/home_bloc.dart';
+import '../bloc/world_bloc.dart';
 
 class CharacterPositionWidget extends StatefulWidget {
   const CharacterPositionWidget();
@@ -19,7 +19,7 @@ class _CharacterPositionWidgetState extends State<CharacterPositionWidget> {
   @override
   void didUpdateWidget(covariant CharacterPositionWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    final HomeState state = context.read<HomeBloc>().state;
+    final WorldState state = context.read<WorldBloc>().state;
     if (state.selectedCharacter != null) {
       final Point<int> selectedCharacterInitialPosition = Point(
         state.selectedCharacter?.x ?? 0,
@@ -34,8 +34,8 @@ class _CharacterPositionWidgetState extends State<CharacterPositionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (BuildContext context, HomeState state) {
+    return BlocBuilder<WorldBloc, WorldState>(
+      builder: (BuildContext context, WorldState state) {
         if (state.selectedCharacter == null) {
           return const SizedBox();
         }
@@ -142,7 +142,7 @@ class _CharacterPositionWidgetState extends State<CharacterPositionWidget> {
                                 state.selectedCharacter?.name ?? '',
                                 _newPosition,
                               );
-                              context.read<HomeBloc>().add(changePositionEvent);
+                              context.read<WorldBloc>().add(changePositionEvent);
                             },
                           ),
                   ),
