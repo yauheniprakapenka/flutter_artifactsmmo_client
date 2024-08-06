@@ -15,6 +15,10 @@ class GameAssets {
     return 'assets/images/monsters/$skin.png';
   }
 
+  static String resourcePath(String skin) {
+    return 'assets/images/resources/$skin.png';
+  }
+
   static List<String> allMapPaths() {
     return _allMapAssetPaths;
   }
