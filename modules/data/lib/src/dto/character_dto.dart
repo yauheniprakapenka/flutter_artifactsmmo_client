@@ -1,6 +1,7 @@
 import 'inventory_item_dto.dart';
 
 class CharacterDto {
+  final DateTime cooldownExpiration;
   final int attackAir;
   final int attackEarth;
   final int attackFire;
@@ -61,7 +62,6 @@ class CharacterDto {
   final String bootsSlot;
   final String consumable1Slot;
   final String consumable2Slot;
-  final String cooldownExpiration;
   final String helmetSlot;
   final String legArmorSlot;
   final String name;
@@ -197,7 +197,7 @@ class CharacterDto {
       x: json['x'],
       y: json['y'],
       cooldown: json['cooldown'],
-      cooldownExpiration: json['cooldown_expiration'],
+      cooldownExpiration: DateTime.parse(json['cooldown_expiration']),
       weaponSlot: json['weapon_slot'],
       shieldSlot: json['shield_slot'],
       helmetSlot: json['helmet_slot'],

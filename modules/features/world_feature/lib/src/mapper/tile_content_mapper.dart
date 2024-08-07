@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 
 extension TileContentLocaleMapper on TileContent {
-  String get localizeCode {
+  String get asLocalizeCode {
     switch (type) {
       case TileContentType.bank:
         return '';

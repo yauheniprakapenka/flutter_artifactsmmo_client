@@ -38,3 +38,7 @@ final class SelectTileEvent implements WorldEvent {
 final class ShowGridEvent implements WorldEvent {
   const ShowGridEvent();
 }
+
+final class FightEvent implements WorldEvent {
+  const FightEvent();
+}

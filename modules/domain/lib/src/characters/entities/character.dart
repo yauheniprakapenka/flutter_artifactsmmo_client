@@ -3,6 +3,7 @@ import '../../my_characters/entities/inventory_item.dart';
 import 'character_experience.dart';
 
 class Character {
+  final DateTime cooldownExpiration;
   final int attackAir;
   final int attackEarth;
   final int attackFire;
@@ -63,7 +64,6 @@ class Character {
   final String bootsSlot;
   final String consumable1Slot;
   final String consumable2Slot;
-  final String cooldownExpiration;
   final String helmetSlot;
   final String legArmorSlot;
   final String name;

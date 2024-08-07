@@ -8,6 +8,6 @@ class Destination {
     required this.name,
     required this.x,
     required this.y,
-    this.content,
+    required this.content,
   });
 }

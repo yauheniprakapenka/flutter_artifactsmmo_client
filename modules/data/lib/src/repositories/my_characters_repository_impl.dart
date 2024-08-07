@@ -29,6 +29,12 @@ final class MyCharacterRepositoryImpl implements MyCharacterRepository {
   }
 
   @override
+  Future<GameData> actionFight(String characterName) async {
+    final GameDataDto fetchedGameDataDto = await _remoteDataSource.fightCharacter(characterName);
+    return fetchedGameDataDto.asDomain;
+  }
+
+  @override
   Future<List<Character>> getAllMyCharacters() async {
     final List<CharacterDto> charactersDto = await runCatching(() async {
       final List<CharacterDto> fetchedCharactersDto = await _remoteDataSource.getAllMyCharacters();

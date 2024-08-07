@@ -23,6 +23,7 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     on<FocusToSelectedCharacterEvent>(_focusToSelectedCharacter);
     on<SelectTileEvent>(_selectTile);
     on<ShowGridEvent>(_showGrid);
+    on<FightEvent>(_fight);
     add(const InitialEvent());
   }
 
@@ -54,6 +55,21 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
       emit(state.copyWith(error: () => e.toString()));
     } finally {
       emit(state.copyWith(isChangingPositon: false, error: () => null));
+    }
+  }
+
+  Future<void> _fight(FightEvent event, Emitter emit) async {
+    final String? selectedCharacterName = state.selectedCharacter?.name;
+    if (selectedCharacterName == null) {
+      return;
+    }
+    try {
+      final GameData gameData = await _myCharacterRepository.actionFight(selectedCharacterName);
+      print(gameData);
+    } on Exception catch (e) {
+      print('error: $e');
+    } finally {
+      print('done');
     }
   }
 

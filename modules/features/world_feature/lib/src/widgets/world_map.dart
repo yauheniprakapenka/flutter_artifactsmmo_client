@@ -9,8 +9,8 @@ import '../utils/world_map_calculator.dart';
 import '../utils/world_map_constants.dart';
 import 'buttons/zoom_controls.dart';
 import 'character/character_widget.dart';
-import 'tile/tile_details_widget.dart';
 import 'tile/tile_widget.dart';
+import 'tile_details/tile_details_widget.dart';
 
 class WorldMap extends StatefulWidget {
   final WorldMapCalculator worldMapCalculator;

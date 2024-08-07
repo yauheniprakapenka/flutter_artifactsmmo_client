@@ -3,7 +3,9 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
+import '../../bloc/world_bloc.dart';
 import '../../mapper/tile_content_mapper.dart';
+import 'actions/fight_action_widget.dart';
 
 class TileDetailsWidget extends StatelessWidget {
   final Tile tile;
@@ -51,11 +53,26 @@ class TileDetailsWidget extends StatelessWidget {
             ),
             const AppSpacing.h8(),
             Text(
-              tile.content?.localizeCode ?? '',
+              tile.content?.asLocalizeCode ?? '',
               style: const TextStyle(
-                color: AppColors.chineseSilver,
+                color: AppColors.white,
                 fontSize: 14,
               ),
+            ),
+            const AppSpacing.h16(),
+            Builder(
+              builder: (BuildContext context) {
+                switch (tile.content?.type) {
+                  case TileContentType.monster:
+                    return FightActionWidget(
+                      onFightPressed: () {
+                        context.read<WorldBloc>().add(const FightEvent());
+                      },
+                    );
+                  default:
+                    return const SizedBox();
+                }
+              },
             ),
           ],
         ),
