@@ -5,5 +5,5 @@ class MonsterNotFoundException implements Exception {
   const MonsterNotFoundException(this.message);
 
   @override
-  String toString() => 'MonsterNotFoundException(message: $message)';
+  String toString() => message;
 }

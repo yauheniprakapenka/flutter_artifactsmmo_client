@@ -66,10 +66,11 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     try {
       final GameData gameData = await _myCharacterRepository.actionFight(selectedCharacterName);
       print(gameData);
-    } on Exception catch (e) {
-      print('error: $e');
+    }
+     on Exception catch (e) {
+      emit(state.copyWith(error: () => e.toString()));
     } finally {
-      print('done');
+      emit(state.copyWith(error: () => null));
     }
   }
 

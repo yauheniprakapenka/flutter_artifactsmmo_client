@@ -4,5 +4,5 @@ class CharacterNotFoundException implements Exception {
   const CharacterNotFoundException(this.message);
 
   @override
-  String toString() => 'CharacterNotFoundException(message: $message)';
+  String toString() => message;
 }

@@ -59,12 +59,7 @@ class _WorldScreenState extends State<_WorldScreen> {
       body: BlocListener<WorldBloc, WorldState>(
         listener: (BuildContext context, WorldState state) {
           if (state.error != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.error ?? ''),
-                backgroundColor: Colors.blue,
-              ),
-            );
+            showToast(context, state.error!);
           }
         },
         child: BlocBuilder<WorldBloc, WorldState>(

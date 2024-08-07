@@ -5,5 +5,5 @@ class CharacterAlreadyAtDestinationException implements Exception {
   const CharacterAlreadyAtDestinationException(this.message);
 
   @override
-  String toString() => 'CharacterAlreadyAtDestinationException(message: $message)';
+  String toString() => message;
 }

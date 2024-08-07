@@ -10,16 +10,16 @@ class FightActionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Dimensions.radius),
-        color: AppColors.eerieBlack,
-      ),
-      padding: const EdgeInsets.all(Dimensions.p12),
-      child: InkWell(
-        onTap: () {
-          onFightPressed();
-        },
+    return InkWell(
+      onTap: () {
+        onFightPressed();
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(Dimensions.radius),
+          color: AppColors.eerieBlack,
+        ),
+        padding: const EdgeInsets.all(Dimensions.p12),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

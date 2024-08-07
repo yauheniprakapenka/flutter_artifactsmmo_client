@@ -5,5 +5,5 @@ class InventoryFullException implements Exception {
   const InventoryFullException(this.message);
 
   @override
-  String toString() => 'InventoryFullException(message: $message)';
+  String toString() => message;
 }

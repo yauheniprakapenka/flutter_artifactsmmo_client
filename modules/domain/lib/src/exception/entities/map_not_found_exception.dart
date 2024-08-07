@@ -5,5 +5,5 @@ class MapNotFoundException implements Exception {
   const MapNotFoundException(this.message);
 
   @override
-  String toString() => 'MapNotFoundException(message: $message)';
+  String toString() => message;
 }

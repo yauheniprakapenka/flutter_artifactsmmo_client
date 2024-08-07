@@ -5,5 +5,5 @@ class CharacterLockedException implements Exception {
   const CharacterLockedException(this.message);
 
   @override
-  String toString() => 'CharacterLockedException(message: $message)';
+  String toString() => message;
 }

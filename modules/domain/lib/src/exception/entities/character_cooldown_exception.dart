@@ -5,5 +5,5 @@ class CharacterCooldownException implements Exception {
   const CharacterCooldownException(this.message);
 
   @override
-  String toString() => 'CharacterCooldownException(message: $message)';
+  String toString() => message;
 }

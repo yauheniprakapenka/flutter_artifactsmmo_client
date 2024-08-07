@@ -2,6 +2,7 @@ library core_ui;
 
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_svg/flutter_svg.dart';
+export 'package:toastification/toastification.dart';
 
 export 'src/assets/assets.dart';
 export 'src/design/design.dart';
