@@ -41,12 +41,22 @@ class CharacterExperienceWidget extends StatelessWidget {
             ],
           ),
           const AppSpacing.h8(),
-          LinearProgressIndicator(
-            value: experience.xp / experience.maxXp,
-            minHeight: 16,
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
-            backgroundColor: AppColors.chineseSilver,
-            valueColor: const AlwaysStoppedAnimation<Color>(AppColors.iluminatingEmerald),
+          TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 600),
+            curve: Curves.easeInOut,
+            tween: Tween<double>(
+              begin: 0,
+              end: experience.xp / experience.maxXp,
+            ),
+            builder: (context, value, child) {
+              return LinearProgressIndicator(
+                value: value,
+                minHeight: 16,
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                backgroundColor: AppColors.chineseSilver,
+                valueColor: const AlwaysStoppedAnimation<Color>(AppColors.iluminatingEmerald),
+              );
+            },
           ),
         ],
       ),
