@@ -3,7 +3,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
-import '../mapper/tile_content_mapper.dart';
+import '../../mapper/tile_content_mapper.dart';
 
 class TileDetailsWidget extends StatelessWidget {
   final Tile tile;

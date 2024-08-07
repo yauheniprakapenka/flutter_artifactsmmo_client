@@ -18,4 +18,4 @@ Replace `ENTER_YOUR_TOKEN` with your authorization token.
 
 Use `.vscode/launch.json` to launch the project.
 
-![image](https://github.com/user-attachments/assets/032df8c2-b2ae-4af4-ad76-bffeddd86060)
+![image](https://github.com/user-attachments/assets/bce96d0e-f95f-4e65-9226-2e7086354653)

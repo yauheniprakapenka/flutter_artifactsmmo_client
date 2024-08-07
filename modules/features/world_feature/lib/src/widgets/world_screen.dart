@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 import '../bloc/world_bloc.dart';
 import '../utils/world_map_calculator.dart';
-import 'character_experience_widget.dart';
-import 'character_selection_widget/character_selection_widget.dart';
-import 'random_tiled_background.dart';
-import 'small_button.dart';
+import 'buttons/small_button.dart';
+import 'character/character_experience_widget.dart';
+import 'character/character_selection_widget/characters_control.dart';
+import 'tile/random_tiled_background.dart';
 import 'world_map.dart';
 
 class WorldScreen extends StatelessWidget {
@@ -83,7 +83,7 @@ class _WorldScreenState extends State<_WorldScreen> {
                 const Positioned(
                   bottom: Dimensions.edgeInset,
                   left: Dimensions.edgeInset,
-                  child: CharacterSelectionWidget(),
+                  child: CharactersControl(),
                 ),
                 selectedCharacter == null
                     ? const SizedBox()

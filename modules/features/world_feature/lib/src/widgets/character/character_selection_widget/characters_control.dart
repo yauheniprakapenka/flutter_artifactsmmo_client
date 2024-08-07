@@ -2,12 +2,11 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
-import '../../bloc/world_bloc.dart';
-import 'add_character_button.dart';
+import '../../../bloc/world_bloc.dart';
 import 'character_info.dart';
 
-class CharacterSelectionWidget extends StatelessWidget {
-  const CharacterSelectionWidget();
+class CharactersControl extends StatelessWidget {
+  const CharactersControl();
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +32,9 @@ class CharacterSelectionWidget extends StatelessWidget {
                 );
               },
             ),
-            AddCharacterButton(
-              onPressed: () {},
-            ),
+            // AddCharacterButton(
+            //   onPressed: () {},
+            // ),
           ],
         );
       },
