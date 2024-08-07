@@ -2,12 +2,12 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
-class CharacterInfo extends StatelessWidget {
+class CharacterButton extends StatelessWidget {
   final Character character;
   final bool isSelected;
   final VoidCallback onPressed;
 
-  const CharacterInfo({
+  const CharacterButton({
     required this.character,
     required this.isSelected,
     required this.onPressed,
@@ -17,10 +17,12 @@ class CharacterInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
         width: 140,
-        height: 140,
-        padding: const EdgeInsets.all(Dimensions.p16),
+        height: 92,
+        padding: const EdgeInsets.all(Dimensions.p8).copyWith(bottom: 0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Dimensions.radius),
           color: isSelected
@@ -32,13 +34,20 @@ class CharacterInfo extends StatelessWidget {
             Text(
               character.name,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 16,
                 color: AppColors.white,
               ),
             ),
-            const AppSpacing.h8(),
-            Image.asset(
-              GameAssets.characterPath(character.skin),
+            Expanded(
+              child: ClipRect(
+                child: SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Image.asset(
+                    GameAssets.characterPath(character.skin),
+                    scale: isSelected ? 0.9 : 1.2,
+                  ),
+                ),
+              ),
             ),
           ],
         ),

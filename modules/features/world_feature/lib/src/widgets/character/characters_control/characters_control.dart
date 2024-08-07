@@ -3,7 +3,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../../../bloc/world_bloc.dart';
-import 'character_info.dart';
+import 'character_button.dart';
 
 class CharactersControl extends StatelessWidget {
   const CharactersControl();
@@ -23,7 +23,7 @@ class CharactersControl extends StatelessWidget {
 
                 return Padding(
                   padding: const EdgeInsets.only(right: Dimensions.p16),
-                  child: CharacterInfo(
+                  child: CharacterButton(
                       character: character,
                       isSelected: state.selectedCharacter?.name == character.name,
                       onPressed: () {
