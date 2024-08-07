@@ -24,7 +24,7 @@ extension CharacterDtoMapper on CharacterDto {
       cookingMaxXp: cookingMaxXp,
       cookingXp: cookingXp,
       cooldown: cooldown,
-      cooldownExpiration: cooldownExpiration,
+      cooldownExpiration: cooldownExpiration.toLocal(),
       criticalStrike: criticalStrike,
       dmgAir: dmgAir,
       dmgEarth: dmgEarth,

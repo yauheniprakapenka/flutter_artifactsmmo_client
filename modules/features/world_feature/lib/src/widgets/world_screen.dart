@@ -7,7 +7,7 @@ import '../bloc/world_bloc.dart';
 import '../utils/world_map_calculator.dart';
 import 'buttons/small_button.dart';
 import 'character/character_experience_widget.dart';
-import 'character/character_selection_widget/characters_control.dart';
+import 'character/characters_control/characters_control.dart';
 import 'tile/random_tiled_background.dart';
 import 'world_map.dart';
 
@@ -84,7 +84,7 @@ class _WorldScreenState extends State<_WorldScreen> {
                     ? const SizedBox()
                     : Positioned(
                         left: Dimensions.edgeInset,
-                        bottom: 180,
+                        bottom: 132,
                         child: CharacterExperienceWidget(
                           experience: selectedCharacter.asCharacterExperience,
                         ),
@@ -93,7 +93,7 @@ class _WorldScreenState extends State<_WorldScreen> {
                     ? const SizedBox()
                     : Positioned(
                         left: 436,
-                        bottom: 208,
+                        bottom: 132,
                         child: SmallButton(
                           assetPath: AppIcons.focus.assetPath,
                           onPressed: () {

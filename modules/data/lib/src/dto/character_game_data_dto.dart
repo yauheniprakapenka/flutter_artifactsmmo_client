@@ -3,23 +3,23 @@ import 'cooldown_dto.dart';
 import 'destination_dto.dart';
 import 'fight_dto.dart';
 
-class GameDataDto {
+class CharacterGameDataDto {
   final CharacterDto character;
   final CooldownDto cooldown;
   final DestinationDto? destination;
   final FightDto? fight;
 
-  const GameDataDto({
+  const CharacterGameDataDto({
     required this.character,
     required this.cooldown,
     required this.destination,
     required this.fight,
   });
 
-  factory GameDataDto.fromJson(Map<String, dynamic> json) {
+  factory CharacterGameDataDto.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic>? destination = json['destination'];
 
-    return GameDataDto(
+    return CharacterGameDataDto(
       cooldown: CooldownDto.fromJson(json['cooldown']),
       destination: destination == null ? null : DestinationDto.fromJson(destination),
       fight: FightDto.fromJson(json['fight']),

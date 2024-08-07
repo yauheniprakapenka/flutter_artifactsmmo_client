@@ -5,10 +5,10 @@ import '../dto/cooldown_dto.dart';
 extension CooldownDtoMapper on CooldownDto {
   Cooldown get asDomain {
     return Cooldown(
-      expiration: expiration,
+      expiration: expiration.toLocal(),
       reason: reason,
       remainingSeconds: remainingSeconds,
-      startedAt: startedAt,
+      startedAt: startedAt.toLocal(),
       totalSeconds: totalSeconds,
     );
   }

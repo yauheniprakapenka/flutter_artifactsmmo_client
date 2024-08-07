@@ -66,7 +66,7 @@ class TileDetailsWidget extends StatelessWidget {
                   case TileContentType.monster:
                     return FightActionWidget(
                       onFightPressed: () {
-                        context.read<WorldBloc>().add(const FightEvent());
+                        context.read<WorldBloc>().add(const ActionFightEvent());
                       },
                     );
                   default:

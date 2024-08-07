@@ -17,13 +17,13 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
   })  : _myCharacterRepository = myCharacterRepository,
         _mapsRepository = mapsRepository,
         super(WorldState.initial()) {
-    on<ChangePositionEvent>(_changePositionMove);
+    on<ActionMoveEvent>(_actionMove);
     on<InitialEvent>(_initial);
     on<SelectCharacterEvent>(_selectCharacter);
     on<FocusToSelectedCharacterEvent>(_focusToSelectedCharacter);
     on<SelectTileEvent>(_selectTile);
     on<ShowGridEvent>(_showGrid);
-    on<FightEvent>(_fight);
+    on<ActionFightEvent>(_actionFight);
     add(const InitialEvent());
   }
 
@@ -44,13 +44,10 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     }
   }
 
-  Future<void> _changePositionMove(ChangePositionEvent event, Emitter emit) async {
+  Future<void> _actionMove(ActionMoveEvent event, Emitter emit) async {
     emit(state.copyWith(isChangingPositon: true));
     try {
-      await _myCharacterRepository.actionMove(
-        event.characterName,
-        event.position,
-      );
+      await _myCharacterRepository.actionMove(event.characterName, event.position);
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {
@@ -58,16 +55,16 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     }
   }
 
-  Future<void> _fight(FightEvent event, Emitter emit) async {
+  Future<void> _actionFight(ActionFightEvent event, Emitter emit) async {
     final String? selectedCharacterName = state.selectedCharacter?.name;
     if (selectedCharacterName == null) {
       return;
     }
     try {
-      final GameData gameData = await _myCharacterRepository.actionFight(selectedCharacterName);
+      final CharacterGameData gameData =
+          await _myCharacterRepository.actionFight(selectedCharacterName);
       print(gameData);
-    }
-     on Exception catch (e) {
+    } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {
       emit(state.copyWith(error: () => null));

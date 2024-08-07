@@ -138,7 +138,7 @@ class _CharacterPositionWidgetState extends State<CharacterPositionWidget> {
                         : AppElevatedButton(
                             title: 'MOVE',
                             onPressed: () {
-                              final ChangePositionEvent changePositionEvent = ChangePositionEvent(
+                              final ActionMoveEvent changePositionEvent = ActionMoveEvent(
                                 state.selectedCharacter?.name ?? '',
                                 _newPosition,
                               );

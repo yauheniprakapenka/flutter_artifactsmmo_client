@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
 
 import '../../../../dto/character_dto.dart';
-import '../../../../dto/game_data_dto.dart';
+import '../../../../dto/character_game_data_dto.dart';
 
 final class MyCharactersRemoteProvider {
   final Dio _dio;
@@ -17,7 +17,7 @@ final class MyCharactersRemoteProvider {
   })  : _dio = dio,
         _baseUrl = baseUrl;
 
-  Future<GameDataDto> actionMove(String characterName, Point<int> position) async {
+  Future<CharacterGameDataDto> actionMove(String characterName, Point<int> position) async {
     final String url = '$_baseUrl/my/$characterName/action/move';
 
     try {
@@ -25,7 +25,7 @@ final class MyCharactersRemoteProvider {
         url,
         data: {'x': position.x, 'y': position.y},
       );
-      return GameDataDto.fromJson(response.data['data']);
+      return CharacterGameDataDto.fromJson(response.data['data']);
     } on DioException catch (e) {
       final String message = e.response?.data['error']['message'] ?? '';
       final int? statusCode = e.response?.statusCode;
@@ -49,12 +49,12 @@ final class MyCharactersRemoteProvider {
     }
   }
 
-  Future<GameDataDto> actionFight(String characterName) async {
+  Future<CharacterGameDataDto> actionFight(String characterName) async {
     final String url = '$_baseUrl/my/$characterName/action/fight';
 
     try {
       final Response response = await _dio.post(url);
-      return GameDataDto.fromJson(response.data['data']);
+      return CharacterGameDataDto.fromJson(response.data['data']);
     } on DioException catch (e) {
       final String message = e.response?.data['error']['message'] ?? '';
       final int? statusCode = e.response?.statusCode;

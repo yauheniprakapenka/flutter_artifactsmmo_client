@@ -3,6 +3,7 @@ import '../../my_characters/entities/inventory_item.dart';
 import 'character_experience.dart';
 
 class Character {
+  /// `DateTime` in the local time zone.
   final DateTime cooldownExpiration;
   final int attackAir;
   final int attackEarth;

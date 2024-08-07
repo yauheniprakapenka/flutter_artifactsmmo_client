@@ -3,13 +3,13 @@ import 'cooldown.dart';
 import 'destination.dart';
 import 'fight.dart';
 
-class GameData {
+class CharacterGameData {
   final Character? character;
   final Cooldown? cooldown;
   final Destination? destination;
   final Fight? fight;
 
-  const GameData({
+  const CharacterGameData({
     required this.character,
     required this.cooldown,
     required this.destination,

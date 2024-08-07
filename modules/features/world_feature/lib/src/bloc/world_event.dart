@@ -8,11 +8,11 @@ final class InitialEvent implements WorldEvent {
   const InitialEvent();
 }
 
-final class ChangePositionEvent implements WorldEvent {
+final class ActionMoveEvent implements WorldEvent {
   final String characterName;
   final Point<int> position;
 
-  const ChangePositionEvent(this.characterName, this.position);
+  const ActionMoveEvent(this.characterName, this.position);
 }
 
 final class SelectCharacterEvent implements WorldEvent {
@@ -39,6 +39,6 @@ final class ShowGridEvent implements WorldEvent {
   const ShowGridEvent();
 }
 
-final class FightEvent implements WorldEvent {
-  const FightEvent();
+final class ActionFightEvent implements WorldEvent {
+  const ActionFightEvent();
 }
