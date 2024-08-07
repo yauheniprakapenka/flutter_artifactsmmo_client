@@ -3,7 +3,6 @@ import 'package:domain/domain.dart';
 import '../datasources/remote/rest/providers/maps_remote_provider.dart';
 import '../dto/tile_dto.dart';
 import '../mappers/map_details_dto_mapper.dart';
-import '../utils/run_catching.dart';
 
 final class MapsRepositoryImpl implements MapsRepository {
   final MapsRemoteProvider _remoteDataSource;
@@ -14,10 +13,7 @@ final class MapsRepositoryImpl implements MapsRepository {
 
   @override
   Future<MapDetails> getAllMaps() async {
-    final MapDetailsDto mapDetailsDto = await runCatching(() async {
-      final MapDetailsDto mapDetailsDto = await _remoteDataSource.getAllMaps();
-      return mapDetailsDto;
-    });
+    final MapDetailsDto mapDetailsDto = await _remoteDataSource.getAllMaps();
     return mapDetailsDto.asDomain;
   }
 }

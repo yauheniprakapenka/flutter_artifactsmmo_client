@@ -1,4 +1,7 @@
+import 'dart:developer' show log;
+
 import 'package:dio/dio.dart';
+import 'package:domain/domain.dart';
 
 import '../../../../dto/character_dto.dart';
 
@@ -14,8 +17,23 @@ final class CharactersRemoteProvider {
 
   Future<CharacterDto> getCharactersByName(String characterName) async {
     final String url = '$_baseUrl/characters/$characterName';
-    final Response response = await _dio.get(url);
-    final CharacterDto characterDto = CharacterDto.fromJson(response.data['data']);
-    return characterDto;
+
+    try {
+      final Response response = await _dio.get(url);
+      final CharacterDto characterDto = CharacterDto.fromJson(response.data['data']);
+      return characterDto;
+    } on DioException catch (e) {
+      final String message = e.response?.data['error']['message'] ?? '';
+      final int? statusCode = e.response?.statusCode;
+      switch (statusCode) {
+        case 404:
+          throw CharacterNotFoundException(message);
+        default:
+          rethrow;
+      }
+    } on Exception catch (e) {
+      log(e.toString());
+      rethrow;
+    }
   }
 }
