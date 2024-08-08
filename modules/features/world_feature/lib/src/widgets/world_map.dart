@@ -34,10 +34,12 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    _initControllers();
+    _initControllers().then((_) {
+      if (mounted) setState(() {});
+    });
   }
 
-  void _initControllers() {
+  Future<void> _initControllers() async {
     _verticalController = ScrollController();
     _horizontalController = ScrollController();
     _animationController = AnimationController(
@@ -47,6 +49,9 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
         _scale = _animation.value;
         setState(() {});
       });
+    await Future.delayed(Duration.zero); // delay to make sure the widget is built
+    _horizontalController.jumpTo(WorldMapConstants.initialMapPositionX);
+    _verticalController.jumpTo(WorldMapConstants.initialMapPositionY);
   }
 
   @override

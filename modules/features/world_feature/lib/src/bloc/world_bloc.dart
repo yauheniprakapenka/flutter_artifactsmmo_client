@@ -31,12 +31,7 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     try {
       final MapDetails mapDetails = await _mapsRepository.getAllMaps();
       final List<Character> characters = await _myCharacterRepository.getAllMyCharacters();
-      final Character? selectedCharacter = characters.isEmpty ? null : characters.first;
-      emit(state.copyWith(
-        characters: characters,
-        selectedCharacter: () => selectedCharacter,
-        mapDetails: () => mapDetails,
-      ));
+      emit(state.copyWith(characters: characters, mapDetails: () => mapDetails));
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {
