@@ -3,6 +3,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../../../bloc/world_bloc.dart';
+import '../../cooldown_decorator.dart';
 import 'character_button.dart';
 
 class CharactersControl extends StatelessWidget {
@@ -26,12 +27,19 @@ class CharactersControl extends StatelessWidget {
 
                 return Padding(
                   padding: const EdgeInsets.only(right: Dimensions.p16),
-                  child: CharacterButton(
+                  child: CooldownDecorator(
+                    lockoutEndTime: character.cooldownExpiration,
+                    child: CharacterButton(
                       character: character,
                       isSelected: state.selectedCharacter?.name == character.name,
                       onPressed: () {
                         context.read<WorldBloc>().add(SelectCharacterEvent(character));
-                      }),
+                      },
+                    ),
+                    onPressed: () {
+                      context.read<WorldBloc>().add(SelectCharacterEvent(character));
+                    },
+                  ),
                 );
               },
             ),

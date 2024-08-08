@@ -8,7 +8,7 @@ import '../bloc/world_bloc.dart';
 import '../utils/world_map_calculator.dart';
 import '../utils/world_map_constants.dart';
 import 'buttons/zoom_controls.dart';
-import 'character/character_widget.dart';
+import 'character/character_on_map_widget.dart';
 import 'tile/tile_widget.dart';
 import 'tile_details/tile_details_widget.dart';
 
@@ -136,7 +136,7 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
                                     child: Align(
                                       alignment: Alignment.bottomCenter,
                                       child: IgnorePointer(
-                                        child: CharacterWidget(
+                                        child: CharacterOnMapWidget(
                                           tile: tile,
                                           isSelected: state.selectedCharacter?.name == tile.name,
                                         ),

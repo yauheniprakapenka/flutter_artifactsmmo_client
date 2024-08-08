@@ -2,11 +2,11 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
-class CharacterWidget extends StatelessWidget {
+class CharacterOnMapWidget extends StatelessWidget {
   final Tile tile;
   final bool isSelected;
 
-  const CharacterWidget({
+  const CharacterOnMapWidget({
     required this.tile,
     required this.isSelected,
   });

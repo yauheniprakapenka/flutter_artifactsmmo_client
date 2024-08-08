@@ -61,8 +61,6 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
         characterGameDataList: characterGameDataList,
         selectedCharacter: () => characterGameData.character,
       ));
-    } on Error catch (e) {
-      emit(state.copyWith(error: () => e.toString()));
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {
@@ -76,8 +74,17 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
       return;
     }
     try {
-      final CharacterGameData gameData = await _myCharacterRepository.actionFight(selectedCharacterName);
-      print(gameData);
+      final CharacterGameData characterGameData =
+          await _myCharacterRepository.actionFight(selectedCharacterName);
+      final List<CharacterGameData> characterGameDataList = [...state.characterGameDataList];
+      final int index = characterGameDataList.indexWhere((gameData) {
+        return gameData.character?.name == characterGameData.character?.name;
+      });
+      characterGameDataList[index] = characterGameData;
+      emit(state.copyWith(
+        characterGameDataList: characterGameDataList,
+        selectedCharacter: () => characterGameData.character,
+      ));
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {

@@ -19,7 +19,7 @@
 ## Roadmap
 
 - [x] Action move
-- [ ] Action fight
+- [x] Action fight
 
 ## Getting Started
 

@@ -29,7 +29,7 @@ class FightActionWidget extends StatelessWidget {
             ),
             const AppSpacing.w4(),
             SvgPicture.asset(
-              AppIcons.fight.assetPath,
+              AppIcons.fight,
               width: 22,
               // ignore: deprecated_member_use
               color: AppColors.white,

@@ -29,7 +29,7 @@ class MoveActionWidget extends StatelessWidget {
             ),
             const AppSpacing.w4(),
             SvgPicture.asset(
-              AppIcons.move.assetPath,
+              AppIcons.move,
               width: 22,
               // ignore: deprecated_member_use
               color: AppColors.white,

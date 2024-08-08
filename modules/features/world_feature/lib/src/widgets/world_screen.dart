@@ -95,7 +95,7 @@ class _WorldScreenState extends State<_WorldScreen> {
                         left: 436,
                         bottom: 132,
                         child: SmallButton(
-                          assetPath: AppIcons.focus.assetPath,
+                          assetPath: AppIcons.focus,
                           onPressed: () {
                             context.read<WorldBloc>().add(const FocusToSelectedCharacterEvent());
                           },
@@ -110,7 +110,7 @@ class _WorldScreenState extends State<_WorldScreen> {
                   right: Dimensions.edgeInset,
                   bottom: Dimensions.edgeInset,
                   child: SmallButton(
-                    assetPath: AppIcons.grid.assetPath,
+                    assetPath: AppIcons.grid,
                     onPressed: () {
                       context.read<WorldBloc>().add(const ShowGridEvent());
                     },

@@ -22,7 +22,7 @@ void showToast(BuildContext context, String message) {
     boxShadow: const [
       BoxShadow(color: Color(0x07000000), blurRadius: 16, offset: Offset(0, 16)),
     ],
-    showProgressBar: true,
+    showProgressBar: false,
     progressBarTheme: const ProgressIndicatorThemeData(
       color: AppColors.white,
       linearTrackColor: AppColors.eerieBlack,

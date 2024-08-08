@@ -20,11 +20,11 @@ class GameAssets {
   }
 
   static List<String> allMapPaths() {
-    return _allMapAssetPaths;
+    return _background;
   }
 }
 
-final List<String> _allMapAssetPaths = [
+final List<String> _background = [
   GameAssets.mapPath('forest_1'),
   GameAssets.mapPath('forest_2'),
   GameAssets.mapPath('forest_3'),
@@ -49,28 +49,11 @@ final List<String> _allMapAssetPaths = [
   GameAssets.mapPath('forest_greenslime2'),
   GameAssets.mapPath('forest_ironore1'),
   GameAssets.mapPath('forest_jewelrycrafting1'),
-  GameAssets.mapPath('forest_lake1'),
-  GameAssets.mapPath('forest_lake2'),
-  GameAssets.mapPath('forest_lake3'),
-  GameAssets.mapPath('forest_lake4'),
   GameAssets.mapPath('forest_miningstation1'),
   GameAssets.mapPath('forest_mushmush1'),
   GameAssets.mapPath('forest_mushmush2'),
-  GameAssets.mapPath('forest_ogre1'),
-  GameAssets.mapPath('forest_ogre2'),
   GameAssets.mapPath('forest_pig1'),
   GameAssets.mapPath('forest_portal'),
-  GameAssets.mapPath('forest_redslime1'),
-  GameAssets.mapPath('forest_redslime2'),
-  GameAssets.mapPath('forest_skeleton1'),
-  GameAssets.mapPath('forest_skeleton2'),
-  GameAssets.mapPath('forest_skeleton3'),
-  GameAssets.mapPath('forest_skeleton4'),
-  GameAssets.mapPath('forest_skeleton5'),
-  GameAssets.mapPath('forest_skeleton6'),
-  GameAssets.mapPath('forest_skeleton7'),
-  GameAssets.mapPath('forest_skeleton8'),
-  GameAssets.mapPath('forest_skeleton9'),
   GameAssets.mapPath('forest_sprucetree1'),
   GameAssets.mapPath('forest_sprucetree2'),
   GameAssets.mapPath('forest_village1'),
