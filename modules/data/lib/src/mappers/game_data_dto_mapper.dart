@@ -9,9 +9,9 @@ import 'fight_dto_mapper.dart';
 extension GameDataDtoMapper on CharacterGameDataDto {
   CharacterGameData get asDomain {
     return CharacterGameData(
-      cooldown: cooldown.asDomain,
+      cooldown: cooldown?.asDomain,
       destination: destination?.asDomain,
-      character: character.asDomain,
+      character: character?.asDomain,
       fight: fight?.asDomain,
     );
   }

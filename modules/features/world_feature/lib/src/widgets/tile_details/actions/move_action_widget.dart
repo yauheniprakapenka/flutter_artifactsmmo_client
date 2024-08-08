@@ -1,10 +1,10 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
-class FightActionWidget extends StatelessWidget {
+class MoveActionWidget extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const FightActionWidget({
+  const MoveActionWidget({
     required this.onPressed,
   });
 
@@ -24,12 +24,12 @@ class FightActionWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              'Fight',
+              'Move',
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             const AppSpacing.w4(),
             SvgPicture.asset(
-              AppIcons.fight.assetPath,
+              AppIcons.move.assetPath,
               width: 22,
               // ignore: deprecated_member_use
               color: AppColors.white,

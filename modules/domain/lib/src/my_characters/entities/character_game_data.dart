@@ -11,8 +11,8 @@ class CharacterGameData {
 
   const CharacterGameData({
     required this.character,
-    required this.cooldown,
-    required this.destination,
-    required this.fight,
+    this.cooldown,
+    this.destination,
+    this.fight,
   });
 }

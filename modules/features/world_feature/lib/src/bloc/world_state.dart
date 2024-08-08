@@ -6,13 +6,13 @@ class WorldState {
   final bool isLoading;
   final bool showGrid;
   final Character? selectedCharacter;
-  final List<Character> characters;
+  final List<CharacterGameData> characterGameDataList;
   final MapDetails? mapDetails;
   final String? error;
   final Tile? selectedTile;
 
   const WorldState({
-    required this.characters,
+    required this.characterGameDataList,
     required this.error,
     required this.focusToSelectedCharacter,
     required this.isChangingPositon,
@@ -25,7 +25,7 @@ class WorldState {
 
   factory WorldState.initial() {
     return const WorldState(
-      characters: [],
+      characterGameDataList: [],
       error: null,
       focusToSelectedCharacter: false,
       isChangingPositon: false,
@@ -43,7 +43,7 @@ class WorldState {
     bool? isLoading,
     bool? showGrid,
     ValueGetter<Character?>? selectedCharacter,
-    List<Character>? characters,
+    List<CharacterGameData>? characterGameDataList,
     ValueGetter<MapDetails?>? mapDetails,
     ValueGetter<String?>? error,
     ValueGetter<Tile?>? selectedTile,
@@ -54,7 +54,7 @@ class WorldState {
       isLoading: isLoading ?? this.isLoading,
       showGrid: showGrid ?? this.showGrid,
       selectedCharacter: selectedCharacter != null ? selectedCharacter() : this.selectedCharacter,
-      characters: characters ?? this.characters,
+      characterGameDataList: characterGameDataList ?? this.characterGameDataList,
       mapDetails: mapDetails != null ? mapDetails() : this.mapDetails,
       error: error != null ? error() : this.error,
       selectedTile: selectedTile != null ? selectedTile() : this.selectedTile,

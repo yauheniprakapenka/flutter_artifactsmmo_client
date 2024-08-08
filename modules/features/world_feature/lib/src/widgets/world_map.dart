@@ -72,7 +72,16 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
       },
       child: BlocBuilder<WorldBloc, WorldState>(
         builder: (BuildContext context, WorldState state) {
-          final List<Tile> characterTiles = state.characters.map((Character character) {
+          final List<CharacterGameData> characterGameDataList = state.characterGameDataList;
+
+          final List<Character> characters = [];
+          for (final CharacterGameData gameData in characterGameDataList) {
+            if (gameData.character != null) {
+              characters.add(gameData.character!);
+            }
+          }
+
+          final List<Tile> characterTiles = characters.map((Character character) {
             return character.asTile;
           }).toList();
 
@@ -150,6 +159,7 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
                                     height: AssetSize.mapTileSize,
                                     child: TileDetailsWidget(
                                       tile: state.selectedTile!,
+                                      selectedCharacter: state.selectedCharacter,
                                       onPressed: () {
                                         context
                                             .read<WorldBloc>()

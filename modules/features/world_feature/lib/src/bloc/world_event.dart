@@ -10,9 +10,9 @@ final class InitialEvent implements WorldEvent {
 
 final class ActionMoveEvent implements WorldEvent {
   final String characterName;
-  final Point<int> position;
+  final Tile selectedTile;
 
-  const ActionMoveEvent(this.characterName, this.position);
+  const ActionMoveEvent(this.characterName, this.selectedTile);
 }
 
 final class SelectCharacterEvent implements WorldEvent {

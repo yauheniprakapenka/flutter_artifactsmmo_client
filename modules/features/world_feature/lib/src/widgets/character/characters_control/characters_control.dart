@@ -17,9 +17,12 @@ class CharactersControl extends StatelessWidget {
           children: [
             const AppSpacing.h16(),
             ...List.generate(
-              state.characters.length,
+              state.characterGameDataList.length,
               (int index) {
-                final Character character = state.characters[index];
+                final Character? character = state.characterGameDataList[index].character;
+                if (character == null) {
+                  return const SizedBox();
+                }
 
                 return Padding(
                   padding: const EdgeInsets.only(right: Dimensions.p16),

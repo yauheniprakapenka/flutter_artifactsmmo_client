@@ -17,13 +17,13 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
   })  : _myCharacterRepository = myCharacterRepository,
         _mapsRepository = mapsRepository,
         super(WorldState.initial()) {
-    on<ActionMoveEvent>(_actionMove);
     on<InitialEvent>(_initial);
-    on<SelectCharacterEvent>(_selectCharacter);
+    on<ActionFightEvent>(_actionFight);
+    on<ActionMoveEvent>(_actionMove);
     on<FocusToSelectedCharacterEvent>(_focusToSelectedCharacter);
+    on<SelectCharacterEvent>(_selectCharacter);
     on<SelectTileEvent>(_selectTile);
     on<ShowGridEvent>(_showGrid);
-    on<ActionFightEvent>(_actionFight);
     add(const InitialEvent());
   }
 
@@ -31,7 +31,13 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     try {
       final MapDetails mapDetails = await _mapsRepository.getAllMaps();
       final List<Character> characters = await _myCharacterRepository.getAllMyCharacters();
-      emit(state.copyWith(characters: characters, mapDetails: () => mapDetails));
+      final List<CharacterGameData> characterGameDataList = [
+        ...characters.map((Character character) => CharacterGameData(character: character)),
+      ];
+      emit(state.copyWith(
+        characterGameDataList: characterGameDataList,
+        mapDetails: () => mapDetails,
+      ));
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {
@@ -42,7 +48,21 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
   Future<void> _actionMove(ActionMoveEvent event, Emitter emit) async {
     emit(state.copyWith(isChangingPositon: true));
     try {
-      await _myCharacterRepository.actionMove(event.characterName, event.position);
+      final CharacterGameData characterGameData = await _myCharacterRepository.actionMove(
+        event.characterName,
+        Point<int>(event.selectedTile.x, event.selectedTile.y),
+      );
+      final List<CharacterGameData> characterGameDataList = [...state.characterGameDataList];
+      final int index = characterGameDataList.indexWhere((gameData) {
+        return gameData.character?.name == characterGameData.character?.name;
+      });
+      characterGameDataList[index] = characterGameData;
+      emit(state.copyWith(
+        characterGameDataList: characterGameDataList,
+        selectedCharacter: () => characterGameData.character,
+      ));
+    } on Error catch (e) {
+      emit(state.copyWith(error: () => e.toString()));
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {
@@ -56,8 +76,7 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
       return;
     }
     try {
-      final CharacterGameData gameData =
-          await _myCharacterRepository.actionFight(selectedCharacterName);
+      final CharacterGameData gameData = await _myCharacterRepository.actionFight(selectedCharacterName);
       print(gameData);
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
