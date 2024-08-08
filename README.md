@@ -1,8 +1,6 @@
 <div align="center">
  <img src="images/screen-1.png" width="400">
 
-  </a>
-
   <h3 align="center">Flutter Artifacts MMORPG client</h3>
 
   <p align="center">
@@ -12,9 +10,9 @@
     <br />
     <br />
     <!-- <a href="https://artifactsmmo.com/client">View Demo</a> -->
-    <a href="https://github.com/yauheniprakapenka/flutter_artifactsmmo_client/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/yauheniprakapenka/flutter_artifactsmmo_client/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=">Report Bug</a>
     ·
-    <a href="https://github.com/yauheniprakapenka/flutter_artifactsmmo_client/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/yauheniprakapenka/flutter_artifactsmmo_client/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=">Request Feature</a>
   </p>
 </div>
 

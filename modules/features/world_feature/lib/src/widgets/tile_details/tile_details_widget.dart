@@ -67,6 +67,11 @@ class TileDetailsWidget extends StatelessWidget {
                 ? const SizedBox()
                 : Builder(
                     builder: (BuildContext context) {
+                      final TileContent? tileContent = tile.content;
+                      if (tileContent == null) {
+                        return const SizedBox();
+                      }
+
                       final bool needMove = !(tile.x == selectedCharacter?.x && tile.y == selectedCharacter?.y);
                       if (needMove) {
                         return MoveActionWidget(
@@ -78,7 +83,7 @@ class TileDetailsWidget extends StatelessWidget {
                         );
                       }
 
-                      switch (tile.content?.type) {
+                      switch (tileContent.type) {
                         case TileContentType.monster:
                           return FightActionWidget(
                             onPressed: () {
