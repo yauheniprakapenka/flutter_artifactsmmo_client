@@ -66,3 +66,26 @@ enum TileContentType {
   workshop,
   unknown;
 }
+
+/// Group the `Tile` objects by the same values of `x` and `y`.
+List<List<Tile>> groupTilesByPosition(List<Tile> tiles) {
+  final List<List<Tile>> groupedTiles = [];
+
+  for (final Tile tile in tiles) {
+    bool foundGroup = false;
+
+    for (final List<Tile> group in groupedTiles) {
+      if (group.isNotEmpty && group.first.x == tile.x && group.first.y == tile.y) {
+        group.add(tile);
+        foundGroup = true;
+        break;
+      }
+    }
+
+    if (!foundGroup) {
+      groupedTiles.add([tile]);
+    }
+  }
+
+  return groupedTiles;
+}

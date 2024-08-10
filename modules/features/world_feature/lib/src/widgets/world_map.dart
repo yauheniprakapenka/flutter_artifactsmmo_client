@@ -8,7 +8,8 @@ import '../bloc/world_bloc.dart';
 import '../utils/world_map_calculator.dart';
 import '../utils/world_map_constants.dart';
 import 'buttons/zoom_controls.dart';
-import 'character/character_on_map_widget.dart';
+import 'character/character_image_on_map_widget.dart';
+import 'character/character_name_on_map.dart';
 import 'tile/tile_widget.dart';
 import 'tile_details/tile_details_widget.dart';
 
@@ -29,7 +30,13 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
   late final AnimationController _animationController;
   late Animation<double> _animation;
 
-  double _scale = WorldMapConstants.minScale;
+  double _scale = _minScale;
+
+  static const double _minScale = 1.0;
+  static const double _maxScale = 2.0;
+  static const double _scaleIncrement = 0.2;
+  static const double _initialMapPositionX = 1000.0;
+  static const double _initialMapPositionY = 1180.0;
 
   @override
   void initState() {
@@ -49,9 +56,9 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
         _scale = _animation.value;
         setState(() {});
       });
-    await Future.delayed(Duration.zero); // delay to make sure the widget is built
-    _horizontalController.jumpTo(WorldMapConstants.initialMapPositionX);
-    _verticalController.jumpTo(WorldMapConstants.initialMapPositionY);
+    await Future.delayed(Duration.zero); // delay zero to make sure the widget is built
+    _horizontalController.jumpTo(_initialMapPositionX);
+    _verticalController.jumpTo(_initialMapPositionY);
   }
 
   @override
@@ -89,8 +96,8 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: _calculatePadding(screenSize.width, _scale),
-                  vertical: _calculatePadding(screenSize.height, _scale),
+                  horizontal: _calculateEdgeScreenPadding(screenSize.width, _scale),
+                  vertical: _calculateEdgeScreenPadding(screenSize.height, _scale),
                 ),
                 child: Transform(
                   transform: Matrix4.identity()..scale(_scale),
@@ -105,14 +112,14 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
                         height: widget.worldMapCalculator.getMapHeight(),
                         child: Stack(
                           children: [
+                            /// Map tiles
+
                             ...widget.worldMapCalculator.mapTiles.map((Tile tile) {
                               return Positioned(
-                                left: (tile.x - widget.worldMapCalculator.getMinX()) *
-                                    AssetSize.mapTileSize,
-                                top: (tile.y - widget.worldMapCalculator.getMinY()) *
-                                    AssetSize.mapTileSize,
-                                width: AssetSize.mapTileSize,
-                                height: AssetSize.mapTileSize,
+                                left: (tile.x - widget.worldMapCalculator.getMinX()) * WorldMapConstants.mapTileSize,
+                                top: (tile.y - widget.worldMapCalculator.getMinY()) * WorldMapConstants.mapTileSize,
+                                width: WorldMapConstants.mapTileSize,
+                                height: WorldMapConstants.mapTileSize,
                                 child: TileWidget(
                                   tile: tile,
                                   showGrid: state.showGrid,
@@ -122,48 +129,98 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
                                 ),
                               );
                             }),
-                            ...characterTiles.map((Tile tile) {
-                              return Positioned(
-                                left: (tile.x - widget.worldMapCalculator.getMinX()) *
-                                    AssetSize.mapTileSize,
-                                top: (tile.y - widget.worldMapCalculator.getMinY()) *
-                                    AssetSize.mapTileSize,
-                                width: AssetSize.mapTileSize,
-                                height: AssetSize.mapTileSize,
-                                child: Center(
+
+                            /// Character images
+
+                            ...groupTilesByPosition(characterTiles).expand((List<Tile> groupedCharacterTiles) {
+                              return List.generate(groupedCharacterTiles.length, (int index) {
+                                final Tile tile = groupedCharacterTiles[index];
+                                final int characterLength = groupedCharacterTiles.length;
+
+                                final List<List<double>> paddingValues = [
+                                  [89], // Length 1
+                                  [74, 104], // Length 2
+                                  [59, 89, 119], // Length 3
+                                  [44, 74, 104, 134], // Length 4
+                                  [29, 59, 89, 119, 149], // Length 5
+                                ];
+
+                                double leftCharacterPadding = 0;
+                                if (characterLength > paddingValues.length) {
+                                  debugPrint('Unsupported character length: $characterLength');
+                                  leftCharacterPadding = 0;
+                                } else {
+                                  leftCharacterPadding = paddingValues[characterLength - 1][index];
+                                }
+
+                                return Positioned(
+                                  left: (tile.x - widget.worldMapCalculator.getMinX()) * WorldMapConstants.mapTileSize,
+                                  top: (tile.y - widget.worldMapCalculator.getMinY()) * WorldMapConstants.mapTileSize,
+                                  width: WorldMapConstants.mapTileSize,
+                                  height: WorldMapConstants.mapTileSize,
+                                  child: IgnorePointer(
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                          left: leftCharacterPadding,
+                                          bottom: 22,
+                                          child: CharacterImageOnMapWidget(
+                                            tile: tile,
+                                            isSelected: state.selectedCharacter?.name == tile.name,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              });
+                            }),
+
+                            /// Character names
+
+                            ...groupTilesByPosition(characterTiles).expand((List<Tile> groupedCharacterTiles) {
+                              return List.generate(groupedCharacterTiles.length, (int index) {
+                                final Tile tile = groupedCharacterTiles[index];
+                                const double bottomPadding = 54.0;
+                                const double spaceBetweenTiles = 2.0;
+                                final double nameVerticalPadding = ((CharacterNameOnMapWidget.height + spaceBetweenTiles) * index) + bottomPadding;
+
+                                return Positioned(
+                                  left: (tile.x - widget.worldMapCalculator.getMinX()) * WorldMapConstants.mapTileSize,
+                                  top: (tile.y - widget.worldMapCalculator.getMinY()) * WorldMapConstants.mapTileSize,
+                                  width: WorldMapConstants.mapTileSize,
+                                  height: WorldMapConstants.mapTileSize,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 18),
-                                    child: Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: IgnorePointer(
-                                        child: CharacterOnMapWidget(
-                                          tile: tile,
+                                    padding: EdgeInsets.zero,
+                                    child: IgnorePointer(
+                                      child: Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: CharacterNameOnMapWidget(
+                                          characterName: tile.name,
                                           isSelected: state.selectedCharacter?.name == tile.name,
+                                          nameVerticalPadding: nameVerticalPadding,
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
+                                );
+                              });
                             }),
+
+                            /// Selected tile
+
                             state.selectedTile == null
                                 ? const SizedBox()
                                 : Positioned(
-                                    left: (state.selectedTile!.x -
-                                            widget.worldMapCalculator.getMinX()) *
-                                        AssetSize.mapTileSize,
-                                    top: (state.selectedTile!.y -
-                                            widget.worldMapCalculator.getMinY()) *
-                                        AssetSize.mapTileSize,
-                                    width: AssetSize.mapTileSize,
-                                    height: AssetSize.mapTileSize,
+                                    left: (state.selectedTile!.x - widget.worldMapCalculator.getMinX()) * WorldMapConstants.mapTileSize,
+                                    top: (state.selectedTile!.y - widget.worldMapCalculator.getMinY()) * WorldMapConstants.mapTileSize,
+                                    width: WorldMapConstants.mapTileSize,
+                                    height: WorldMapConstants.mapTileSize,
                                     child: TileDetailsWidget(
                                       tile: state.selectedTile!,
                                       selectedCharacter: state.selectedCharacter,
                                       onPressed: () {
-                                        context
-                                            .read<WorldBloc>()
-                                            .add(SelectTileEvent(state.selectedTile));
+                                        context.read<WorldBloc>().add(SelectTileEvent(state.selectedTile));
                                       },
                                     ),
                                   ),
@@ -195,25 +252,21 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
       return;
     }
 
-    _scale = WorldMapConstants.minScale;
+    _scale = _minScale;
     final Point<double> characterPosition = _calculateCharacterPosition(character);
     final Point<double> scrollPosition = _calculateScrollPosition(characterPosition, screenSize);
     _animateToPosition(scrollPosition, screenSize);
   }
 
   Point<double> _calculateCharacterPosition(Character character) {
-    final double characterX =
-        (character.asTile.x - widget.worldMapCalculator.getMinX()) * AssetSize.mapTileSize;
-    final double characterY =
-        (character.asTile.y - widget.worldMapCalculator.getMinY()) * AssetSize.mapTileSize;
+    final double characterX = (character.asTile.x - widget.worldMapCalculator.getMinX()) * WorldMapConstants.mapTileSize;
+    final double characterY = (character.asTile.y - widget.worldMapCalculator.getMinY()) * WorldMapConstants.mapTileSize;
     return Point(characterX, characterY);
   }
 
   Point<double> _calculateScrollPosition(Point characterPosition, Size screenSize) {
-    final double scrollX =
-        characterPosition.x - (screenSize.width / 2) + (AssetSize.mapTileSize / 2);
-    final double scrollY =
-        characterPosition.y - (screenSize.height / 2) + (AssetSize.mapTileSize / 2);
+    final double scrollX = characterPosition.x - (screenSize.width / 2) + (WorldMapConstants.mapTileSize / 2);
+    final double scrollY = characterPosition.y - (screenSize.height / 2) + (WorldMapConstants.mapTileSize / 2);
     return Point(scrollX, scrollY);
   }
 
@@ -236,22 +289,19 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
   }
 
   void _zoomIn() {
-    _animateScale(_scale + WorldMapConstants.scaleIncrement);
+    _animateScale(_scale + _scaleIncrement);
   }
 
   void _zoomOut() {
-    _animateScale(_scale - WorldMapConstants.scaleIncrement);
+    _animateScale(_scale - _scaleIncrement);
   }
 
   void _animateScale(double targetScale) {
-    _animation = Tween<double>(
-            begin: _scale,
-            end: targetScale.clamp(WorldMapConstants.minScale, WorldMapConstants.maxScale))
-        .animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
+    _animation = Tween<double>(begin: _scale, end: targetScale.clamp(_minScale, _maxScale)).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOut));
     _animationController.forward(from: 0);
   }
 
-  double _calculatePadding(double screenSideSize, double scale) {
+  double _calculateEdgeScreenPadding(double screenSideSize, double scale) {
     return (screenSideSize * (scale - 1)) / (2 * scale);
   }
 }

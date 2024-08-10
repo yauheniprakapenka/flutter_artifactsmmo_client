@@ -53,7 +53,6 @@ final List<String> _background = [
   GameAssets.mapPath('forest_mushmush1'),
   GameAssets.mapPath('forest_mushmush2'),
   GameAssets.mapPath('forest_pig1'),
-  GameAssets.mapPath('forest_portal'),
   GameAssets.mapPath('forest_sprucetree1'),
   GameAssets.mapPath('forest_sprucetree2'),
   GameAssets.mapPath('forest_village1'),

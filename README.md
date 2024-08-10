@@ -4,7 +4,7 @@
   <h3 align="center">Flutter Artifacts MMORPG client</h3>
 
   <p align="center">
-    Artifacts is a Sandbox MMORPG where you can use any programming language to control your characters with our API.
+    Artifacts is a Sandbox MMORPG.
     <br />
     <a href="https://docs.artifactsmmo.com/"><strong>Explore the docs »</strong></a>
     <br />

@@ -1,5 +1,6 @@
-import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
+
+import 'world_map_constants.dart';
 
 final class WorldMapCalculator {
   final List<Tile> mapTiles;
@@ -57,7 +58,7 @@ final class WorldMapCalculator {
     if (_mapWidth != null) {
       return _mapWidth!;
     }
-    final double mapWidth = (getMaxX() - getMinX() + _one) * AssetSize.mapTileSize;
+    final double mapWidth = (getMaxX() - getMinX() + _one) * WorldMapConstants.mapTileSize;
     _mapWidth = mapWidth;
     return mapWidth;
   }
@@ -67,7 +68,7 @@ final class WorldMapCalculator {
     if (_mapHeight != null) {
       return _mapHeight!;
     }
-    final double mapHeight = _mapHeight = (getMaxY() - getMinY() + _one) * AssetSize.mapTileSize;
+    final double mapHeight = _mapHeight = (getMaxY() - getMinY() + _one) * WorldMapConstants.mapTileSize;
     _mapHeight = mapHeight;
     return mapHeight;
   }

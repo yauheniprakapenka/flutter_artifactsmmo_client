@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../bloc/world_bloc.dart';
 import '../utils/world_map_calculator.dart';
+import '../utils/world_map_constants.dart';
 import 'buttons/small_button.dart';
 import 'character/character_experience_widget.dart';
 import 'character/characters_control/characters_control.dart';
@@ -44,8 +45,8 @@ class _WorldScreenState extends State<_WorldScreen> {
     // Герерируется фон один раз и затем переиспользуется.
     _randomTiledBackground = RandomTiledBackground(
       tileAssetPaths: GameAssets.allMapPaths(),
-      tileWidth: AssetSize.mapTileSize,
-      tileHeight: AssetSize.mapTileSize,
+      tileWidth: WorldMapConstants.mapTileSize,
+      tileHeight: WorldMapConstants.mapTileSize,
       stackChildren: const [
         Positioned.fill(child: AppProgressIndicator()),
       ],
