@@ -46,7 +46,6 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
   }
 
   Future<void> _actionMove(ActionMoveEvent event, Emitter emit) async {
-    emit(state.copyWith(isChangingPositon: true));
     try {
       final CharacterGameData characterGameData = await _myCharacterRepository.actionMove(
         event.characterName,
@@ -64,7 +63,7 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {
-      emit(state.copyWith(isChangingPositon: false, error: () => null, selectedTile: () => null));
+      emit(state.copyWith(error: () => null));
     }
   }
 
@@ -96,7 +95,7 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
       emit(state.copyWith(selectedCharacter: () => null));
       return;
     }
-    emit(state.copyWith(selectedCharacter: () => event.character));
+    emit(state.copyWith(selectedCharacter: () => event.character, selectedTile: () => null));
   }
 
   void _focusToSelectedCharacter(FocusToSelectedCharacterEvent event, Emitter emit) {

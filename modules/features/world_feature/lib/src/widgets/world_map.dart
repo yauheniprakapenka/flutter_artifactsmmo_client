@@ -217,6 +217,7 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
                                     width: WorldMapConstants.mapTileSize,
                                     height: WorldMapConstants.mapTileSize,
                                     child: TileDetailsWidget(
+                                      key: ValueKey(state.selectedCharacter?.cooldownExpiration),
                                       tile: state.selectedTile!,
                                       selectedCharacter: state.selectedCharacter,
                                       onPressed: () {

@@ -9,10 +9,13 @@ class CharacterGameData {
   final Destination? destination;
   final Fight? fight;
 
+  final bool isActionAvailable;
+
   const CharacterGameData({
     required this.character,
     this.cooldown,
     this.destination,
     this.fight,
+    this.isActionAvailable = true,
   });
 }

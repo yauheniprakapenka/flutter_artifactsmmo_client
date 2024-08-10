@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
@@ -8,22 +10,60 @@ import '../../mapper/tile_content_mapper.dart';
 import 'actions/fight_action_widget.dart';
 import 'actions/move_action_widget.dart';
 
-class TileDetailsWidget extends StatelessWidget {
+class TileDetailsWidget extends StatefulWidget {
   final Tile tile;
   final Character? selectedCharacter;
   final VoidCallback onPressed;
 
   const TileDetailsWidget({
+    super.key,
     required this.tile,
     required this.selectedCharacter,
     required this.onPressed,
   });
 
   @override
+  State<TileDetailsWidget> createState() => _TileDetailsWidgetState();
+}
+
+class _TileDetailsWidgetState extends State<TileDetailsWidget> {
+  Timer? _timer;
+  Duration _remainingTime = Duration.zero;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    if (_timer != null) {
+      _timer?.cancel();
+    }
+    super.dispose();
+  }
+
+  void _startTimer() {
+    final DateTime? dateTime = widget.selectedCharacter?.cooldownExpiration;
+    if (dateTime == null) {
+      return;
+    }
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      setState(() {
+        _remainingTime = dateTime.difference(DateTime.now());
+        if (_remainingTime.inSeconds <= -1) {
+          timer.cancel();
+        }
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        onPressed();
+        widget.onPressed();
       },
       child: Container(
         decoration: BoxDecoration(
@@ -36,18 +76,18 @@ class TileDetailsWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  tile.name,
+                  widget.tile.name,
                   style: const TextStyle(color: AppColors.chineseSilver, fontSize: 16),
                 ),
                 Text(
-                  '(${tile.x}, ${tile.y})',
+                  '(${widget.tile.x}, ${widget.tile.y})',
                   style: const TextStyle(color: AppColors.chineseSilver, fontSize: 16),
                 ),
               ],
             ),
             const AppSpacing.h16(),
             Text(
-              tile.content?.type.name.capitalizeFirstLetter.replaceUnderscoresWithSpaces() ?? '',
+              widget.tile.content?.type.name.capitalizeFirstLetter.replaceUnderscoresWithSpaces() ?? '',
               style: const TextStyle(
                 color: AppColors.white,
                 fontSize: 14,
@@ -56,29 +96,36 @@ class TileDetailsWidget extends StatelessWidget {
             ),
             const AppSpacing.h8(),
             Text(
-              tile.content?.asLocalizeCode ?? '',
+              widget.tile.content?.asLocalizeCode ?? '',
               style: const TextStyle(
                 color: AppColors.white,
                 fontSize: 14,
               ),
             ),
             const AppSpacing.h16(),
-            selectedCharacter == null
+            widget.selectedCharacter == null
                 ? const SizedBox()
                 : Builder(
                     builder: (BuildContext context) {
-                      final TileContent? tileContent = tile.content;
+                      final TileContent? tileContent = widget.tile.content;
                       if (tileContent == null) {
                         return const SizedBox();
                       }
 
-                      final bool needMove = !(tile.x == selectedCharacter?.x && tile.y == selectedCharacter?.y);
+                      final Character? character = widget.selectedCharacter;
+                      if (character == null) {
+                        return const SizedBox();
+                      }
+
+                      if (_remainingTime.inSeconds >= 0) {
+                        return const SizedBox();
+                      }
+
+                      final bool needMove = !(widget.tile.x == character.x && widget.tile.y == character.y);
                       if (needMove) {
                         return MoveActionWidget(
                           onPressed: () {
-                            context
-                                .read<WorldBloc>()
-                                .add(ActionMoveEvent(selectedCharacter?.name ?? '', tile));
+                            context.read<WorldBloc>().add(ActionMoveEvent(character.name, widget.tile));
                           },
                         );
                       }

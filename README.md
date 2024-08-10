@@ -38,3 +38,11 @@ Replace `ENTER_YOUR_TOKEN` with your authorization token.
 ### Launch
 
 Use `.vscode/launch.json` to launch the project.
+
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+## Contact
+
+Yauheni Prakapenka - [telegram](https://t.me/yauheniprakapenka) - yauheni.prakapenka@gmail.com

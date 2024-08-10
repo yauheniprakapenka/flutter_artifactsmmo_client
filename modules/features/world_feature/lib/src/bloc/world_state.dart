@@ -2,7 +2,6 @@ part of 'world_bloc.dart';
 
 class WorldState {
   final bool focusToSelectedCharacter;
-  final bool isChangingPositon;
   final bool isLoading;
   final bool showGrid;
   final Character? selectedCharacter;
@@ -15,7 +14,6 @@ class WorldState {
     required this.characterGameDataList,
     required this.error,
     required this.focusToSelectedCharacter,
-    required this.isChangingPositon,
     required this.isLoading,
     required this.mapDetails,
     required this.selectedCharacter,
@@ -28,7 +26,6 @@ class WorldState {
       characterGameDataList: [],
       error: null,
       focusToSelectedCharacter: false,
-      isChangingPositon: false,
       isLoading: true,
       mapDetails: null,
       selectedCharacter: null,
@@ -39,7 +36,6 @@ class WorldState {
 
   WorldState copyWith({
     bool? focusToSelectedCharacter,
-    bool? isChangingPositon,
     bool? isLoading,
     bool? showGrid,
     ValueGetter<Character?>? selectedCharacter,
@@ -50,7 +46,6 @@ class WorldState {
   }) {
     return WorldState(
       focusToSelectedCharacter: focusToSelectedCharacter ?? this.focusToSelectedCharacter,
-      isChangingPositon: isChangingPositon ?? this.isChangingPositon,
       isLoading: isLoading ?? this.isLoading,
       showGrid: showGrid ?? this.showGrid,
       selectedCharacter: selectedCharacter != null ? selectedCharacter() : this.selectedCharacter,
