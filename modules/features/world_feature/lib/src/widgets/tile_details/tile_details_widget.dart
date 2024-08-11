@@ -28,7 +28,7 @@ class TileDetailsWidget extends StatefulWidget {
 
 class _TileDetailsWidgetState extends State<TileDetailsWidget> {
   Timer? _timer;
-  Duration _remainingTime = Duration.zero;
+  Duration? _remainingTime;
 
   @override
   void initState() {
@@ -49,10 +49,15 @@ class _TileDetailsWidgetState extends State<TileDetailsWidget> {
     if (dateTime == null) {
       return;
     }
-    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+
+    setState(() {
+      _remainingTime = dateTime.difference(DateTime.now());
+    });
+
+    _timer = Timer.periodic(const Duration(milliseconds: 900), (Timer timer) {
       setState(() {
         _remainingTime = dateTime.difference(DateTime.now());
-        if (_remainingTime.inSeconds <= -1) {
+        if (_remainingTime!.inSeconds <= 0) {
           timer.cancel();
         }
       });
@@ -117,7 +122,11 @@ class _TileDetailsWidgetState extends State<TileDetailsWidget> {
                         return const SizedBox();
                       }
 
-                      if (_remainingTime.inSeconds >= 0) {
+                      if (_remainingTime == null) {
+                        return const SizedBox();
+                      }
+
+                      if (_remainingTime!.inSeconds > 0) {
                         return const SizedBox();
                       }
 
