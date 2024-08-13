@@ -21,6 +21,7 @@ class WorldScreen extends StatelessWidget {
       create: (BuildContext context) {
         return WorldBloc(
           myCharacterRepository: getIt<MyCharacterRepository>(),
+          charactersRepository: getIt<CharactersRepository>(),
           mapsRepository: getIt<MapsRepository>(),
         );
       },

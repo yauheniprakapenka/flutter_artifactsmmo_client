@@ -7,18 +7,19 @@ import 'package:flutter/material.dart';
 
 import '../../bloc/world_bloc.dart';
 import '../../mapper/tile_content_mapper.dart';
-import 'actions/fight_action_widget.dart';
-import 'actions/move_action_widget.dart';
+import 'actions/action_widget.dart';
 
 class TileDetailsWidget extends StatefulWidget {
   final Tile tile;
   final Character? selectedCharacter;
+  final bool isAutoFight;
   final VoidCallback onPressed;
 
   const TileDetailsWidget({
     super.key,
     required this.tile,
     required this.selectedCharacter,
+    required this.isAutoFight,
     required this.onPressed,
   });
 
@@ -72,7 +73,7 @@ class _TileDetailsWidgetState extends State<TileDetailsWidget> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.black.withOpacity(0.6),
+          color: AppColors.black.withOpacity(0.7),
         ),
         padding: const EdgeInsets.all(Dimensions.p16),
         child: Column(
@@ -107,7 +108,7 @@ class _TileDetailsWidgetState extends State<TileDetailsWidget> {
                 fontSize: 14,
               ),
             ),
-            const AppSpacing.h16(),
+            const Spacer(),
             widget.selectedCharacter == null
                 ? const SizedBox()
                 : Builder(
@@ -126,13 +127,22 @@ class _TileDetailsWidgetState extends State<TileDetailsWidget> {
                         return const SizedBox();
                       }
 
+                      if (widget.isAutoFight) {
+                        return ActionWidget(
+                          title: 'Disable auto fight',
+                          onPressed: () {
+                            context.read<WorldBloc>().add(AutoFightEvent(widget.selectedCharacter!.name));
+                          },
+                        );
+                      }
+
                       if (_remainingTime!.inSeconds > 0) {
                         return const SizedBox();
                       }
 
                       final bool needMove = !(widget.tile.x == character.x && widget.tile.y == character.y);
                       if (needMove) {
-                        return MoveActionWidget(
+                        return ActionWidget.move(
                           onPressed: () {
                             context.read<WorldBloc>().add(ActionMoveEvent(character.name, widget.tile));
                           },
@@ -141,10 +151,21 @@ class _TileDetailsWidgetState extends State<TileDetailsWidget> {
 
                       switch (tileContent.type) {
                         case TileContentType.monster:
-                          return FightActionWidget(
-                            onPressed: () {
-                              context.read<WorldBloc>().add(const ActionFightEvent());
-                            },
+                          return Row(
+                            children: [
+                              ActionWidget.fight(
+                                onPressed: () {
+                                  context.read<WorldBloc>().add(ActionFightEvent(widget.selectedCharacter!.name));
+                                },
+                              ),
+                              const AppSpacing.w8(),
+                              ActionWidget(
+                                title: 'Auto',
+                                onPressed: () {
+                                  context.read<WorldBloc>().add(AutoFightEvent(widget.selectedCharacter!.name));
+                                },
+                              ),
+                            ],
                           );
                         default:
                           return const SizedBox();

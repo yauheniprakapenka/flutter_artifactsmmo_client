@@ -19,7 +19,7 @@
 ## Roadmap
 
 - [x] Action move
-- [x] Action fight
+- [x] Action fight | Auto fight
 
 ## Getting Started
 
@@ -41,8 +41,8 @@ Use `.vscode/launch.json` to launch the project.
 
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Yauheni Prakapenka - [telegram](https://t.me/yauheniprakapenka) - yauheni.prakapenka@gmail.com
+Yauheni Prakapenka - [telegram](https://t.me/yauheniprakapenka) - [linkedin](https://www.linkedin.com/in/yauheni-prakapenka/) -  yauheni.prakapenka@gmail.com

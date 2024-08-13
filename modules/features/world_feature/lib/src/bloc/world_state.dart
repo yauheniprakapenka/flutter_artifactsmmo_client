@@ -10,7 +10,15 @@ class WorldState {
   final String? error;
   final Tile? selectedTile;
 
+  /// `String` - name of character.
+  final Map<String, AutoFightController> autoFightControllers;
+
+  AutoFightController? getAutoFightController(String characterName) {
+    return autoFightControllers[characterName];
+  }
+
   const WorldState({
+    required this.autoFightControllers,
     required this.characterGameDataList,
     required this.error,
     required this.focusToSelectedCharacter,
@@ -31,6 +39,7 @@ class WorldState {
       selectedCharacter: null,
       selectedTile: null,
       showGrid: false,
+      autoFightControllers: {},
     );
   }
 
@@ -43,6 +52,7 @@ class WorldState {
     ValueGetter<MapDetails?>? mapDetails,
     ValueGetter<String?>? error,
     ValueGetter<Tile?>? selectedTile,
+    Map<String, AutoFightController>? autoFightControllers,
   }) {
     return WorldState(
       focusToSelectedCharacter: focusToSelectedCharacter ?? this.focusToSelectedCharacter,
@@ -53,6 +63,7 @@ class WorldState {
       mapDetails: mapDetails != null ? mapDetails() : this.mapDetails,
       error: error != null ? error() : this.error,
       selectedTile: selectedTile != null ? selectedTile() : this.selectedTile,
+      autoFightControllers: autoFightControllers ?? this.autoFightControllers,
     );
   }
 }

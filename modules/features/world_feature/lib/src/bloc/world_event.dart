@@ -40,5 +40,13 @@ final class ShowGridEvent implements WorldEvent {
 }
 
 final class ActionFightEvent implements WorldEvent {
-  const ActionFightEvent();
+  final String characterName;
+
+  const ActionFightEvent(this.characterName);
+}
+
+final class AutoFightEvent implements WorldEvent {
+  final String characterName;
+
+  const AutoFightEvent(this.characterName);
 }

@@ -209,22 +209,33 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
 
                             /// Selected tile
 
-                            state.selectedTile == null
-                                ? const SizedBox()
-                                : Positioned(
-                                    left: (state.selectedTile!.x - widget.worldMapCalculator.getMinX()) * WorldMapConstants.mapTileSize,
-                                    top: (state.selectedTile!.y - widget.worldMapCalculator.getMinY()) * WorldMapConstants.mapTileSize,
-                                    width: WorldMapConstants.mapTileSize,
-                                    height: WorldMapConstants.mapTileSize,
-                                    child: TileDetailsWidget(
-                                      key: ValueKey(state.selectedCharacter?.cooldownExpiration),
-                                      tile: state.selectedTile!,
-                                      selectedCharacter: state.selectedCharacter,
-                                      onPressed: () {
-                                        context.read<WorldBloc>().add(SelectTileEvent(state.selectedTile));
-                                      },
-                                    ),
+                            Builder(
+                              builder: (BuildContext context) {
+                                final Tile? selectedTile = state.selectedTile;
+                                if (selectedTile == null) {
+                                  return const SizedBox();
+                                }
+
+                                final Character? selectedCharacter = state.selectedCharacter;
+                                final bool isAutoFight = state.autoFightControllers[selectedCharacter?.name]?.isAutoFight ?? false;
+
+                                return Positioned(
+                                  left: (selectedTile.x - widget.worldMapCalculator.getMinX()) * WorldMapConstants.mapTileSize,
+                                  top: (selectedTile.y - widget.worldMapCalculator.getMinY()) * WorldMapConstants.mapTileSize,
+                                  width: WorldMapConstants.mapTileSize,
+                                  height: WorldMapConstants.mapTileSize,
+                                  child: TileDetailsWidget(
+                                    key: ValueKey('${selectedCharacter?.cooldownExpiration}$isAutoFight'),
+                                    tile: selectedTile,
+                                    isAutoFight: isAutoFight,
+                                    selectedCharacter: selectedCharacter,
+                                    onPressed: () {
+                                      context.read<WorldBloc>().add(SelectTileEvent(state.selectedTile));
+                                    },
                                   ),
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ),
