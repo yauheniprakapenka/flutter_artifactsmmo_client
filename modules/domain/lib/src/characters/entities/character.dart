@@ -1,6 +1,8 @@
 import '../../maps/entities/map_details.dart';
 import '../../my_characters/entities/inventory_item.dart';
+import '../../my_characters/entities/task_content_type.dart';
 import 'character_experience.dart';
+import 'chatacter_task.dart';
 
 class Character {
   /// `DateTime` in the local time zone.
@@ -73,7 +75,7 @@ class Character {
   final String shieldSlot;
   final String skin;
   final String task;
-  final String taskType;
+  final TaskContentType taskType;
   final String weaponSlot;
 
   const Character({
@@ -158,5 +160,14 @@ extension CharacterMapper on Character {
 
   CharacterExperience get asCharacterExperience {
     return CharacterExperience(level: level, xp: xp, maxXp: maxXp);
+  }
+
+  ChatacterTask get asCharacterTask {
+    return ChatacterTask(
+      task: task,
+      taskType: taskType,
+      taskProgress: taskProgress,
+      taskTotal: taskTotal,
+    );
   }
 }

@@ -1,5 +1,4 @@
 class AppIcons {
-  static const String automation = 'assets/icons/automation.svg';
   static const String bank = 'assets/icons/bank.svg';
   static const String buy = 'assets/icons/buy.svg';
   static const String clock = 'assets/icons/clock.svg';
@@ -17,6 +16,7 @@ class AppIcons {
   static const String moves = 'assets/icons/moves.svg';
   static const String question = 'assets/icons/question.svg';
   static const String sell = 'assets/icons/sell.svg';
+  static const String target = 'assets/icons/target.svg';
   static const String task = 'assets/icons/task.svg';
   static const String unequip = 'assets/icons/unequip.svg';
 }

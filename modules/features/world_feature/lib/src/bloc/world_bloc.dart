@@ -25,11 +25,11 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     on<InitialEvent>(_initial);
     on<ActionFightEvent>(_actionFight);
     on<ActionMoveEvent>(_actionMove);
+    on<AutoFightEvent>(_autoFight);
     on<FocusToSelectedCharacterEvent>(_focusToSelectedCharacter);
     on<SelectCharacterEvent>(_selectCharacter);
     on<SelectTileEvent>(_selectTile);
     on<ShowGridEvent>(_showGrid);
-    on<AutoFightEvent>(_autoFight);
     add(const InitialEvent());
   }
 

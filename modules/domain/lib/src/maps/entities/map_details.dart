@@ -1,3 +1,5 @@
+import 'tile_content_type.dart';
+
 class MapDetails {
   final List<Tile> tiles;
   final int total;
@@ -33,12 +35,7 @@ class Tile {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Tile &&
-        other.name == name &&
-        other.skin == skin &&
-        other.x == x &&
-        other.y == y &&
-        other.content == content;
+    return other is Tile && other.name == name && other.skin == skin && other.x == x && other.y == y && other.content == content;
   }
 
   @override
@@ -55,16 +52,6 @@ class TileContent {
     required this.type,
     required this.code,
   });
-}
-
-enum TileContentType {
-  bank,
-  grand_exchange,
-  monster,
-  resource,
-  tasks_master,
-  workshop,
-  unknown;
 }
 
 /// Group the `Tile` objects by the same values of `x` and `y`.

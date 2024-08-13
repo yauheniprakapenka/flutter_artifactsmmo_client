@@ -1,4 +1,5 @@
 import 'inventory_item_dto.dart';
+import 'task_content_type_dto.dart';
 
 class CharacterDto {
   final DateTime cooldownExpiration;
@@ -70,7 +71,7 @@ class CharacterDto {
   final String shieldSlot;
   final String skin;
   final String task;
-  final String taskType;
+  final TaskContentTypeDto taskType;
   final String weaponSlot;
 
   const CharacterDto({
@@ -215,7 +216,7 @@ class CharacterDto {
       consumable2Slot: json['consumable2_slot'],
       consumable2SlotQuantity: json['consumable2_slot_quantity'],
       task: json['task'],
-      taskType: json['task_type'],
+      taskType: TaskContentTypeDto.fromType(json['task_type']),
       taskProgress: json['task_progress'],
       taskTotal: json['task_total'],
       inventoryMaxItems: json['inventory_max_items'],

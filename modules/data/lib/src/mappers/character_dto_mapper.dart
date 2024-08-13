@@ -2,6 +2,7 @@ import 'package:domain/domain.dart';
 
 import '../dto/character_dto.dart';
 import '../dto/inventory_item_dto.dart';
+import 'task_content_type_dto_mapper.dart';
 
 extension CharacterDtoMapper on CharacterDto {
   Character get asDomain {
@@ -64,7 +65,7 @@ extension CharacterDtoMapper on CharacterDto {
       task: task,
       taskProgress: taskProgress,
       taskTotal: taskTotal,
-      taskType: taskType,
+      taskType: taskType.asDomain,
       totalXp: totalXp,
       weaponcraftingLevel: weaponcraftingLevel,
       weaponcraftingMaxXp: weaponcraftingMaxXp,

@@ -3,6 +3,7 @@ import 'dart:developer' show log;
 import 'package:dio/dio.dart';
 import 'package:domain/domain.dart';
 
+import '../../../../dto/map_details_dto.dart';
 import '../../../../dto/tile_dto.dart';
 
 final class MapsRemoteProvider {

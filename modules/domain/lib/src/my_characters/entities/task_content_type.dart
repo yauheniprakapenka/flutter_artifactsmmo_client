@@ -1,0 +1,4 @@
+enum TaskContentType {
+  monsters,
+  unknown;
+}

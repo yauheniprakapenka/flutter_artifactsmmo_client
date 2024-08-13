@@ -1,7 +1,7 @@
 import 'package:domain/domain.dart';
 
 import '../datasources/remote/rest/providers/maps_remote_provider.dart';
-import '../dto/tile_dto.dart';
+import '../dto/map_details_dto.dart';
 import '../mappers/map_details_dto_mapper.dart';
 
 final class MapsRepositoryImpl implements MapsRepository {
