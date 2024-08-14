@@ -7,6 +7,8 @@ extension TaskContentTypeDtoMapper on TaskContentTypeDto {
     switch (this) {
       case TaskContentTypeDto.monsters:
         return TaskContentType.monsters;
+      case TaskContentTypeDto.noTask:
+        return TaskContentType.noTask;
       case TaskContentTypeDto.unknown:
         return TaskContentType.unknown;
     }

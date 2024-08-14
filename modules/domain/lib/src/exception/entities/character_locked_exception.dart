@@ -7,3 +7,4 @@ class CharacterLockedException implements Exception {
   @override
   String toString() => message;
 }
+

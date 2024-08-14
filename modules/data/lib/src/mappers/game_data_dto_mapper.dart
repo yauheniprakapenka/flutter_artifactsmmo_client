@@ -5,6 +5,7 @@ import 'character_dto_mapper.dart';
 import 'cooldown_dto_mapper.dart';
 import 'destination_dto_mapper.dart';
 import 'fight_dto_mapper.dart';
+import 'reward_dto_mapper.dart';
 
 extension GameDataDtoMapper on CharacterGameDataDto {
   CharacterGameData get asDomain {
@@ -13,6 +14,7 @@ extension GameDataDtoMapper on CharacterGameDataDto {
       destination: destination?.asDomain,
       character: character?.asDomain,
       fight: fight?.asDomain,
+      reward: reward?.asDomain,
     );
   }
 }

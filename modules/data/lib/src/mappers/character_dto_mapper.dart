@@ -65,7 +65,7 @@ extension CharacterDtoMapper on CharacterDto {
       task: task,
       taskProgress: taskProgress,
       taskTotal: taskTotal,
-      taskType: taskType.asDomain,
+      type: taskType.asDomain,
       totalXp: totalXp,
       weaponcraftingLevel: weaponcraftingLevel,
       weaponcraftingMaxXp: weaponcraftingMaxXp,

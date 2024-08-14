@@ -75,7 +75,7 @@ class Character {
   final String shieldSlot;
   final String skin;
   final String task;
-  final TaskContentType taskType;
+  final TaskContentType type;
   final String weaponSlot;
 
   const Character({
@@ -145,7 +145,7 @@ class Character {
     required this.consumable2Slot,
     required this.consumable2SlotQuantity,
     required this.task,
-    required this.taskType,
+    required this.type,
     required this.taskProgress,
     required this.taskTotal,
     required this.inventoryMaxItems,
@@ -165,7 +165,7 @@ extension CharacterMapper on Character {
   ChatacterTask get asCharacterTask {
     return ChatacterTask(
       task: task,
-      taskType: taskType,
+      type: type,
       taskProgress: taskProgress,
       taskTotal: taskTotal,
     );

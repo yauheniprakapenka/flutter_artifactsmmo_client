@@ -5,6 +5,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../bloc/world_bloc.dart';
+import '../controllers/auto_fight_controller.dart';
 import '../utils/world_map_calculator.dart';
 import '../utils/world_map_constants.dart';
 import 'buttons/zoom_controls.dart';
@@ -217,7 +218,8 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
                                 }
 
                                 final Character? selectedCharacter = state.selectedCharacter;
-                                final bool isAutoFight = state.autoFightControllers[selectedCharacter?.name]?.isAutoFight ?? false;
+                                final AutoFightController? autoFightController = state.autoFightControllers[selectedCharacter?.name];
+                                final bool isTaskCompleted = selectedCharacter?.asCharacterTask.isTaskCompleted ?? false;
 
                                 return Positioned(
                                   left: (selectedTile.x - widget.worldMapCalculator.getMinX()) * WorldMapConstants.mapTileSize,
@@ -225,9 +227,9 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
                                   width: WorldMapConstants.mapTileSize,
                                   height: WorldMapConstants.mapTileSize,
                                   child: TileDetailsWidget(
-                                    key: ValueKey('${selectedCharacter?.cooldownExpiration}$isAutoFight'),
+                                    key: ValueKey('${selectedCharacter?.cooldownExpiration}${autoFightController?.isAutoFight}$isTaskCompleted'),
                                     tile: selectedTile,
-                                    isAutoFight: isAutoFight,
+                                    autoFightController: autoFightController,
                                     selectedCharacter: selectedCharacter,
                                     onPressed: () {
                                       context.read<WorldBloc>().add(SelectTileEvent(state.selectedTile));

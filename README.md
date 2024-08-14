@@ -19,7 +19,13 @@
 ## Roadmap
 
 - [x] Action move
-- [x] Action fight | Auto fight
+- [x] Fight
+  - [x] One time fight
+  - [x] Auto fight
+- [ ] Task master
+  - [x] Get new task
+  - [x] Complete task
+  - [ ] Exchange coins
 
 ## Getting Started
 

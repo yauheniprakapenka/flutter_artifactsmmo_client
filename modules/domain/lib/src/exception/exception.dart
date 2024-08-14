@@ -1,7 +1,11 @@
 export 'entities/character_already_at_destination_exception.dart';
+export 'entities/character_already_has_task.dart';
 export 'entities/character_cooldown_exception.dart';
+export 'entities/character_has_no_task_exception.dart';
+export 'entities/character_has_not_completed_task_exception.dart';
 export 'entities/character_locked_exception.dart';
 export 'entities/character_not_found_exception.dart';
 export 'entities/inventory_full_exception.dart';
 export 'entities/map_not_found_exception.dart';
 export 'entities/monster_not_found_exception.dart';
+export 'entities/tasks_master_not_found_on_map_exception.dart';

@@ -12,6 +12,12 @@ abstract interface class MyCharacterRepository {
   /// Start a fight against a monster on the character's map.
   Future<CharacterGameData> actionFight(String characterName);
 
+  /// Action Accept New Task.
+  Future<CharacterGameData> actionTaskNew(String characterName);
+
+  /// Complete a task.
+  Future<CharacterGameData> actionTaskComplete(String characterName);
+
   /// List of your characters.
   Future<List<Character>> getAllMyCharacters();
 }

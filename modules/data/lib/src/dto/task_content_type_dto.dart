@@ -2,6 +2,7 @@ import 'dart:developer';
 
 enum TaskContentTypeDto {
   monsters('monsters'),
+  noTask(''),
   unknown('unknown');
 
   final String type;

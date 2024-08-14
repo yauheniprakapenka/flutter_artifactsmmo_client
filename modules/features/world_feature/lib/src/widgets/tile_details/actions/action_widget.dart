@@ -32,6 +32,26 @@ class ActionWidget extends StatelessWidget {
     );
   }
 
+  factory ActionWidget.completeTask({
+    required VoidCallback onPressed,
+  }) {
+    return ActionWidget(
+      onPressed: onPressed,
+      title: 'Complete task',
+      iconAssetPath: AppIcons.complete,
+    );
+  }
+
+  factory ActionWidget.newTask({
+    required VoidCallback onPressed,
+  }) {
+    return ActionWidget(
+      onPressed: onPressed,
+      title: 'New task',
+      iconAssetPath: AppIcons.question,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -49,16 +69,16 @@ class ActionWidget extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
             ),
             iconAssetPath.isEmpty
                 ? const SizedBox()
                 : Row(
                     children: [
-                      const AppSpacing.w4(),
+                      const AppSpacing.w8(),
                       SvgPicture.asset(
                         iconAssetPath,
-                        width: 22,
+                        width: 18,
                         // ignore: deprecated_member_use
                         color: AppColors.white,
                       ),

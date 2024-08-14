@@ -4,14 +4,15 @@ class ChatacterTask {
   final String task;
   final int taskProgress;
   final int taskTotal;
-  final TaskContentType taskType;
+  final TaskContentType type;
 
   int get leftToComplete => taskTotal - taskProgress;
+  bool get isTaskCompleted => taskProgress >= taskTotal;
 
   const ChatacterTask({
     required this.task,
     required this.taskProgress,
     required this.taskTotal,
-    required this.taskType,
+    required this.type,
   });
 }

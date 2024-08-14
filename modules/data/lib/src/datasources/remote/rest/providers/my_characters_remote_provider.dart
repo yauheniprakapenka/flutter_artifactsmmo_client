@@ -78,6 +78,68 @@ final class MyCharactersRemoteProvider {
     }
   }
 
+  Future<CharacterGameDataDto> actionTaskNew(String characterName) async {
+    final String url = '$_baseUrl/my/$characterName/action/task/new';
+
+    try {
+      final Response response = await _dio.post(url);
+      return CharacterGameDataDto.fromJson(response.data['data']);
+    } on DioException catch (e) {
+      final String message = e.response?.data['error']['message'] ?? '';
+      final int? statusCode = e.response?.statusCode;
+      switch (statusCode) {
+        case 486:
+          throw CharacterLockedException(message);
+        case 489:
+          throw CharacterAlreadyHasTask(message);
+        case 498:
+          throw CharacterNotFoundException(message);
+        case 499:
+          throw CharacterCooldownException(message);
+        case 598:
+          throw TasksMasterNotFoundOnMapException(message);
+        default:
+          rethrow;
+      }
+    } on Exception catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<CharacterGameDataDto> actionTaskComplete(String characterName) async {
+    final String url = '$_baseUrl/my/$characterName/action/task/complete';
+
+    try {
+      final Response response = await _dio.post(url);
+      return CharacterGameDataDto.fromJson(response.data['data']);
+    } on DioException catch (e) {
+      final String message = e.response?.data['error']['message'] ?? '';
+      final int? statusCode = e.response?.statusCode;
+      switch (statusCode) {
+        case 486:
+          throw CharacterLockedException(message);
+        case 487:
+          throw CharacterHasNoTaskException(message);
+        case 488:
+          throw CharacterHasNotCompletedTaskException(message);
+        case 497:
+          throw InventoryFullException(message);
+        case 498:
+          throw CharacterNotFoundException(message);
+        case 499:
+          throw CharacterCooldownException(message);
+        case 598:
+          throw TasksMasterNotFoundOnMapException(message);
+        default:
+          rethrow;
+      }
+    } on Exception catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
   Future<List<CharacterDto>> getAllMyCharacters() async {
     final String url = '$_baseUrl/my/characters';
 

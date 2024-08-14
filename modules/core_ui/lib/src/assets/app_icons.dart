@@ -15,6 +15,7 @@ class AppIcons {
   static const String move = 'assets/icons/move.svg';
   static const String moves = 'assets/icons/moves.svg';
   static const String question = 'assets/icons/question.svg';
+  static const String refresh = 'assets/icons/refresh.svg';
   static const String sell = 'assets/icons/sell.svg';
   static const String target = 'assets/icons/target.svg';
   static const String task = 'assets/icons/task.svg';

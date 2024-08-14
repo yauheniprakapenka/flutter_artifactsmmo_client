@@ -1,27 +1,32 @@
 import 'dart:async';
 
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 class AutoFightController {
+  final VoidCallback _onActionFight;
+
   bool _isAutoFight = false;
   Timer? _timer;
   Duration? _delay;
+  Tile? _autoFightOnTile;
 
   bool get isAutoFight => _isAutoFight;
-
-  final VoidCallback _onActionFight;
+  Tile? get autoFightOnTile => _autoFightOnTile;
 
   AutoFightController({
     required VoidCallback onActionFight,
   }) : _onActionFight = onActionFight;
 
-  void startAutoFight() {
+  void startAutoFight(Tile autoFightOnTile) {
     _isAutoFight = true;
+    _autoFightOnTile = autoFightOnTile;
     _scheduleNextFight();
   }
 
   void stopAutoFight() {
     _isAutoFight = false;
+    _autoFightOnTile = null;
     _timer?.cancel();
   }
 

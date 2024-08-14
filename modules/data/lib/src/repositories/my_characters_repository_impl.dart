@@ -26,8 +26,19 @@ final class MyCharacterRepositoryImpl implements MyCharacterRepository {
 
   @override
   Future<CharacterGameData> actionFight(String characterName) async {
-    final CharacterGameDataDto fetchedGameDataDto =
-        await _remoteDataSource.actionFight(characterName);
+    final CharacterGameDataDto fetchedGameDataDto = await _remoteDataSource.actionFight(characterName);
+    return fetchedGameDataDto.asDomain;
+  }
+
+  @override
+  Future<CharacterGameData> actionTaskNew(String characterName) async {
+    final CharacterGameDataDto fetchedGameDataDto = await _remoteDataSource.actionTaskNew(characterName);
+    return fetchedGameDataDto.asDomain;
+  }
+
+  @override
+  Future<CharacterGameData> actionTaskComplete(String characterName) async {
+    final CharacterGameDataDto fetchedGameDataDto = await _remoteDataSource.actionTaskComplete(characterName);
     return fetchedGameDataDto.asDomain;
   }
 
