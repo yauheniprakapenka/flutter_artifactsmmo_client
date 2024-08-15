@@ -1,4 +1,3 @@
-import 'map_details_dto.dart';
 import 'tile_content_dto.dart';
 
 class TileDto {

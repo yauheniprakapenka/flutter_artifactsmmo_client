@@ -5,6 +5,7 @@ class WorldState {
   final bool isLoading;
   final bool showGrid;
   final Character? selectedCharacter;
+  final CharacterAttribute selectedCharacterAttribute;
   final List<CharacterGameData> characterGameDataList;
   final MapDetails? mapDetails;
   final String? error;
@@ -25,6 +26,7 @@ class WorldState {
     required this.isLoading,
     required this.mapDetails,
     required this.selectedCharacter,
+    required this.selectedCharacterAttribute,
     required this.selectedTile,
     required this.showGrid,
   });
@@ -40,6 +42,7 @@ class WorldState {
       selectedTile: null,
       showGrid: false,
       autoFightControllers: {},
+      selectedCharacterAttribute: CharacterAttribute.none,
     );
   }
 
@@ -53,6 +56,7 @@ class WorldState {
     ValueGetter<String?>? error,
     ValueGetter<Tile?>? selectedTile,
     Map<String, AutoFightController>? autoFightControllers,
+    CharacterAttribute? selectedCharacterAttribute,
   }) {
     return WorldState(
       focusToSelectedCharacter: focusToSelectedCharacter ?? this.focusToSelectedCharacter,
@@ -64,6 +68,7 @@ class WorldState {
       error: error != null ? error() : this.error,
       selectedTile: selectedTile != null ? selectedTile() : this.selectedTile,
       autoFightControllers: autoFightControllers ?? this.autoFightControllers,
+      selectedCharacterAttribute: selectedCharacterAttribute ?? this.selectedCharacterAttribute,
     );
   }
 }

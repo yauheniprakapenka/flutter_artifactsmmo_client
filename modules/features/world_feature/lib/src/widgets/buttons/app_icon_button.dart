@@ -1,11 +1,11 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
-class SmallButton extends StatelessWidget {
+class AppIconButton extends StatelessWidget {
   final String assetPath;
   final VoidCallback onPressed;
 
-  const SmallButton({
+  const AppIconButton({
     required this.assetPath,
     required this.onPressed,
   });

@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import '../bloc/world_bloc.dart';
 import '../utils/world_map_calculator.dart';
 import '../utils/world_map_constants.dart';
-import 'buttons/small_button.dart';
+import 'buttons/app_icon_button.dart';
 import 'character/character_experience_widget.dart';
 import 'character/characters_control/characters_control.dart';
+import 'character_attribute_control/character_attribute_control.dart';
 import 'task_widget.dart';
 import 'tile/random_tiled_background.dart';
 import 'world_map.dart';
@@ -44,12 +45,11 @@ class _WorldScreenState extends State<_WorldScreen> {
   @override
   void initState() {
     super.initState();
-    // Герерируется фон один раз и затем переиспользуется.
-    _randomTiledBackground = RandomTiledBackground(
-      tileAssetPaths: GameAssets.allMapPaths(),
+    // The background is generated once and then reused.
+    _randomTiledBackground = const RandomTiledBackground(
       tileWidth: WorldMapConstants.mapTileSize,
       tileHeight: WorldMapConstants.mapTileSize,
-      stackChildren: const [
+      stackChildren: [
         Positioned.fill(child: AppProgressIndicator()),
       ],
     );
@@ -97,7 +97,7 @@ class _WorldScreenState extends State<_WorldScreen> {
                     : Positioned(
                         left: 436,
                         bottom: 132,
-                        child: SmallButton(
+                        child: AppIconButton(
                           assetPath: AppIcons.focus,
                           onPressed: () {
                             context.read<WorldBloc>().add(const FocusToSelectedCharacterEvent());
@@ -108,23 +108,14 @@ class _WorldScreenState extends State<_WorldScreen> {
                 Positioned(
                   right: Dimensions.edgeInset,
                   bottom: Dimensions.edgeInset,
-                  child: SmallButton(
+                  child: AppIconButton(
                     assetPath: AppIcons.grid,
                     onPressed: () {
                       context.read<WorldBloc>().add(const ShowGridEvent());
                     },
                   ),
                 ),
-                // Positioned(
-                //   right: 80,
-                //   bottom: Dimensions.edgeInset,
-                //   child: SmallButton(
-                //     assetPath: AppIcons.refresh,
-                //     onPressed: () {
-                //       context.read<WorldBloc>().add(const GetGameDataEvent());
-                //     },
-                //   ),
-                // ),
+                const CharacterAttributeControl(),
               ],
             );
           },

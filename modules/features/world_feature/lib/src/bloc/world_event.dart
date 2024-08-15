@@ -66,6 +66,8 @@ final class ShowGridEvent implements WorldEvent {
   const ShowGridEvent();
 }
 
-// final class GetGameDataEvent implements WorldEvent {
-//   const GetGameDataEvent();
-// }
+final class SelectCharacterAttributeEvent implements WorldEvent {
+  final CharacterAttribute selectedCharacterAttribute;
+
+  const SelectCharacterAttributeEvent(this.selectedCharacterAttribute);
+}

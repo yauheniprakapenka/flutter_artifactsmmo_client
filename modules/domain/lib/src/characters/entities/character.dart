@@ -2,6 +2,7 @@ import '../../maps/entities/map_details.dart';
 import '../../my_characters/entities/inventory_item.dart';
 import '../../my_characters/entities/task_content_type.dart';
 import 'character_experience.dart';
+import 'character_stats.dart';
 import 'chatacter_task.dart';
 
 class Character {
@@ -168,6 +169,25 @@ extension CharacterMapper on Character {
       type: type,
       taskProgress: taskProgress,
       taskTotal: taskTotal,
+    );
+  }
+
+  CharacterStats get asCharacterStats {
+    return CharacterStats(
+      attackAir: attackAir,
+      attackEarth: attackEarth,
+      attackFire: attackFire,
+      attackWater: attackWater,
+      dmgAir: dmgAir,
+      dmgEarth: dmgEarth,
+      dmgFire: dmgFire,
+      dmgWater: dmgWater,
+      haste: haste,
+      hp: hp,
+      resAir: resAir,
+      resEarth: resEarth,
+      resFire: resFire,
+      resWater: resWater,
     );
   }
 }

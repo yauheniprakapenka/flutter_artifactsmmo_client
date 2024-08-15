@@ -5,6 +5,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../controllers/auto_fight_controller.dart';
+import '../models/character_attribute.dart';
 
 part 'world_state.dart';
 part 'world_event.dart';
@@ -28,8 +29,8 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     on<ActionTaskNewEvent>(_actionTaskNew);
     on<AutoFightEvent>(_autoFight);
     on<FocusToSelectedCharacterEvent>(_focusToSelectedCharacter);
-    // on<GetGameDataEvent>(_getGameData);
     on<InitialEvent>(_initial);
+    on<SelectCharacterAttributeEvent>(_selectCharacterAttributeEvent);
     on<SelectCharacterEvent>(_selectCharacter);
     on<SelectTileEvent>(_selectTile);
     on<ShowGridEvent>(_showGrid);
@@ -214,5 +215,13 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
 
   void _showGrid(ShowGridEvent event, Emitter emit) {
     emit(state.copyWith(showGrid: !state.showGrid));
+  }
+
+  void _selectCharacterAttributeEvent(SelectCharacterAttributeEvent event, Emitter emit) {
+    if (state.selectedCharacterAttribute == event.selectedCharacterAttribute) {
+      emit(state.copyWith(selectedCharacterAttribute: CharacterAttribute.none));
+      return;
+    }
+    emit(state.copyWith(selectedCharacterAttribute: event.selectedCharacterAttribute));
   }
 }

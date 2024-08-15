@@ -24,10 +24,16 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/maps/
+    - assets/icons/
     - assets/images/characters/
     - assets/images/items/
+    - assets/images/maps/
     - assets/images/monsters/
     - assets/images/resources/
-    - assets/icons/
+    - assets/images/stats/
     - .env_prod
+
+  fonts:
+    - family: upheaval
+      fonts:
+        - asset: assets/fonts/upheaval/upheaval.ttf
