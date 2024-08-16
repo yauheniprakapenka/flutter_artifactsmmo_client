@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../bloc/world_bloc.dart';
 import '../../controllers/auto_fight_controller.dart';
 import '../../mapper/tile_content_mapper.dart';
-import 'actions/action_widget.dart';
+import 'action_widget.dart';
 
 class TileDetailsWidget extends StatefulWidget {
   final Tile tile;
@@ -225,7 +225,9 @@ class _TasksMasterWidget extends StatelessWidget {
 
     if (task.isTaskCompleted) {
       return ActionWidget.completeTask(
-        onPressed: () {},
+        onPressed: () {
+          context.read<WorldBloc>().add(ActionTaskCompleteEvent(characterName));
+        },
       );
     }
 

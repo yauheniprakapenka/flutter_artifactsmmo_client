@@ -22,4 +22,8 @@ class GameAssets {
   static String statsPath(String skin) {
     return 'assets/images/stats/$skin.png';
   }
+
+  static String skillPath(String skin) {
+    return 'assets/images/skills/$skin.png';
+  }
 }

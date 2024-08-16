@@ -30,6 +30,7 @@ flutter:
     - assets/images/maps/
     - assets/images/monsters/
     - assets/images/resources/
+    - assets/images/skills/
     - assets/images/stats/
     - .env_prod
 

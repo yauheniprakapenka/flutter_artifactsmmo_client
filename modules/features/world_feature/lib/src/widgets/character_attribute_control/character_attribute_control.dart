@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import '../../bloc/world_bloc.dart';
 import '../../models/character_attribute.dart';
 import '../buttons/app_text_button.dart';
-import 'character_stats_widget.dart';
+import 'skills/character_skills_widget.dart';
+import 'stats/character_stats_widget.dart';
 
 class CharacterAttributeControl extends StatelessWidget {
   const CharacterAttributeControl();
@@ -22,6 +23,7 @@ class CharacterAttributeControl extends StatelessWidget {
       return Stack(
         fit: StackFit.expand,
         children: [
+          // Stats
           Positioned(
             right: 80,
             bottom: Dimensions.edgeInset,
@@ -35,6 +37,23 @@ class CharacterAttributeControl extends StatelessWidget {
           ),
           state.selectedCharacterAttribute == CharacterAttribute.stats
               ? CharacterStatsWidget(selectedCharacter.asCharacterStats)
+              : const SizedBox(),
+
+          // Skills
+
+          Positioned(
+            right: 160,
+            bottom: Dimensions.edgeInset,
+            child: AppTextButton(
+              title: 'Skills',
+              isSelected: state.selectedCharacterAttribute == CharacterAttribute.skills,
+              onPressed: () {
+                context.read<WorldBloc>().add(const SelectCharacterAttributeEvent(CharacterAttribute.skills));
+              },
+            ),
+          ),
+          state.selectedCharacterAttribute == CharacterAttribute.skills
+              ? CharacterSkillsWidget(selectedCharacter.asCharacterSkills)
               : const SizedBox(),
         ],
       );

@@ -1,5 +1,6 @@
 <div align="center">
  <img src="images/screen-1.png" width="400">   <img src="images/screen-2.png" width="400">
+ <img src="images/screen-3.png" width="400">
 
   <h3 align="center">Flutter Artifacts MMORPG client</h3>
 
@@ -27,7 +28,7 @@
   - [x] Complete task
   - [ ] Exchange coins
 - [ ] Character attribute
-  - [ ] Skills
+  - [x] Skills
   - [x] Stats
   - [ ] Equipments
   - [ ] Inventory

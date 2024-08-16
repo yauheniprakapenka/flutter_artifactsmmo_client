@@ -2,6 +2,7 @@ import '../../maps/entities/map_details.dart';
 import '../../my_characters/entities/inventory_item.dart';
 import '../../my_characters/entities/task_content_type.dart';
 import 'character_experience.dart';
+import 'character_skill.dart';
 import 'character_stats.dart';
 import 'chatacter_task.dart';
 
@@ -189,5 +190,59 @@ extension CharacterMapper on Character {
       resFire: resFire,
       resWater: resWater,
     );
+  }
+
+  List<CharacterSkill> get asCharacterSkills {
+    final CharacterSkill mining = CharacterSkill(
+      type: CharacterSkillType.mining,
+      level: miningLevel,
+      maxXp: miningMaxXp,
+      xp: miningXp,
+    );
+    final CharacterSkill woodcutting = CharacterSkill(
+      type: CharacterSkillType.woodcutting,
+      level: woodcuttingLevel,
+      maxXp: woodcuttingMaxXp,
+      xp: woodcuttingXp,
+    );
+    final CharacterSkill fishing = CharacterSkill(
+      type: CharacterSkillType.fishing,
+      level: fishingLevel,
+      maxXp: fishingMaxXp,
+      xp: fishingXp,
+    );
+    final CharacterSkill weaponcrafting = CharacterSkill(
+      type: CharacterSkillType.weaponcrafting,
+      level: weaponcraftingLevel,
+      maxXp: weaponcraftingMaxXp,
+      xp: weaponcraftingXp,
+    );
+    final CharacterSkill gearcrafting = CharacterSkill(
+      type: CharacterSkillType.gearcrafting,
+      level: gearcraftingLevel,
+      maxXp: gearcraftingMaxXp,
+      xp: gearcraftingXp,
+    );
+    final CharacterSkill jewelrycrafting = CharacterSkill(
+      type: CharacterSkillType.jewelrycrafting,
+      level: jewelrycraftingLevel,
+      maxXp: jewelrycraftingMaxXp,
+      xp: jewelrycraftingXp,
+    );
+    final CharacterSkill cooking = CharacterSkill(
+      type: CharacterSkillType.cooking,
+      level: cookingLevel,
+      maxXp: cookingMaxXp,
+      xp: cookingXp,
+    );
+    return [
+      mining,
+      woodcutting,
+      fishing,
+      weaponcrafting,
+      gearcrafting,
+      jewelrycrafting,
+      cooking,
+    ];
   }
 }
