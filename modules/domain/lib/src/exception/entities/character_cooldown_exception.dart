@@ -1,9 +1,18 @@
-/// Character in cooldown.
-class CharacterCooldownException implements Exception {
-  final String message;
+import 'app_exception.dart';
 
-  const CharacterCooldownException(this.message);
+/// Character in cooldown.
+class CharacterCooldownException implements AppException {
+  final String _characterName;
+  final String _message;
 
   @override
-  String toString() => message;
+  String get message {
+    return '$_characterName: $_message';
+  }
+
+  const CharacterCooldownException({
+    required String characterName,
+    required String message,
+  })  : _characterName = characterName,
+        _message = message;
 }

@@ -14,4 +14,9 @@ class Cooldown {
     required this.startedAt,
     required this.totalSeconds,
   });
+
+  @override
+  String toString() {
+    return 'Cooldown(expiration: $expiration, startedAt: $startedAt, remainingSeconds: $remainingSeconds, totalSeconds: $totalSeconds, reason: $reason)';
+  }
 }

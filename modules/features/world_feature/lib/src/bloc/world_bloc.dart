@@ -15,6 +15,10 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
   final CharactersRepository _charactersRepository;
   final MapsRepository _mapsRepository;
 
+  AutoFightController? _autoFightControllerByName(String characterName) {
+    return state.autoFightControllers[characterName];
+  }
+
   WorldBloc({
     required MyCharacterRepository myCharacterRepository,
     required CharactersRepository charactersRepository,
@@ -86,8 +90,14 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
       final CharacterGameData updatedCharacterGameData = await _myCharacterRepository.actionFight(event.characterName);
       _updateCharacters(emit, updatedCharacterGameData);
       _updateAutoFightController(updatedCharacterGameData);
+    } on CharacterCooldownException catch (e) {
+      emit(state.copyWith(error: () => e.message));
+    } on AppException catch (e) {
+      _autoFightControllerByName(event.characterName)?.stopAutoFight();
+      emit(state.copyWith(error: () => '${e.message}\nAuto fight stopped.'));
     } on Exception catch (e) {
-      emit(state.copyWith(error: () => e.toString()));
+      _autoFightControllerByName(event.characterName)?.stopAutoFight();
+      emit(state.copyWith(error: () => '$e\nAuto fight stopped.'));
     } finally {
       emit(state.copyWith(error: () => null));
     }
@@ -95,7 +105,7 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
 
   Future<void> _autoFight(AutoFightEvent event, Emitter emit) async {
     final String characterName = event.characterName;
-    final AutoFightController? autoFightController = state.autoFightControllers[characterName];
+    final AutoFightController? autoFightController = _autoFightControllerByName(characterName);
     if (autoFightController == null) {
       return;
     }
@@ -110,7 +120,9 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     Duration cooldownExpiration = character.cooldownExpiration.difference(DateTime.now());
     if (cooldownExpiration.inSeconds < 1) {
       // A negative value indicates that the action has already occurred the specified amount of time ago.
-      cooldownExpiration = const Duration(seconds: 1); // There is a slight delay before the timer starts. It works stably with a delay of more than 1 second.
+      cooldownExpiration = const Duration(
+          seconds:
+              1); // There is a slight delay before the timer starts. It works stably with a delay of more than 1 second.
     }
     autoFightController.setDelay(cooldownExpiration);
     autoFightController.startAutoFight(event.autoFightOnTile);
@@ -118,7 +130,8 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
 
   Future<void> _actionTaskNew(ActionTaskNewEvent event, Emitter emit) async {
     try {
-      final CharacterGameData updatedCharacterGameData = await _myCharacterRepository.actionTaskNew(event.characterName);
+      final CharacterGameData updatedCharacterGameData =
+          await _myCharacterRepository.actionTaskNew(event.characterName);
       _updateCharacters(emit, updatedCharacterGameData);
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
@@ -129,7 +142,8 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
 
   Future<void> _actionTaskComplete(ActionTaskCompleteEvent event, Emitter emit) async {
     try {
-      final CharacterGameData updatedCharacterGameData = await _myCharacterRepository.actionTaskComplete(event.characterName);
+      final CharacterGameData updatedCharacterGameData =
+          await _myCharacterRepository.actionTaskComplete(event.characterName);
       _updateCharacters(emit, updatedCharacterGameData);
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
@@ -144,31 +158,18 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
       return;
     }
 
-    final AutoFightController? autoFightController = state.autoFightControllers[character.name];
+    final AutoFightController? autoFightController = _autoFightControllerByName(character.name);
     if (autoFightController == null) {
       return;
     }
 
     if (autoFightController.isAutoFight) {
-      const Duration additionalDelay = Duration(seconds: 1); // The server returns an incorrect time, you need to wait some more.
+      // The server returns an incorrect time, we need to wait some more.
+      const Duration additionalDelay = Duration(seconds: 1);
       final Duration delayInSeconds = character.cooldownExpiration.difference(DateTime.now()) + additionalDelay;
       autoFightController.setDelay(delayInSeconds);
     }
   }
-
-  // Future<void> _getGameData(GetGameDataEvent event, Emitter emit) async {
-  //   final MapDetails mapDetails = await _mapsRepository.getAllMaps();
-
-  //   final List<Character> characters = await _myCharacterRepository.getAllMyCharacters();
-  //   final List<CharacterGameData> characterGameDataList = [
-  //     ...characters.map((Character character) => CharacterGameData(character: character)),
-  //   ];
-
-  //   emit(state.copyWith(
-  //     characterGameDataList: characterGameDataList,
-  //     mapDetails: () => mapDetails,
-  //   ));
-  // }
 
   void _updateCharacters(Emitter emit, CharacterGameData updatedCharacterGameData) {
     // Update character list

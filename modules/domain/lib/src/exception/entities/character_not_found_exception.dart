@@ -1,8 +1,17 @@
-class CharacterNotFoundException implements Exception {
-  final String message;
+import 'app_exception.dart';
 
-  const CharacterNotFoundException(this.message);
+class CharacterNotFoundException implements AppException {
+  final String _characterName;
+  final String _message;
 
   @override
-  String toString() => message;
+  String get message {
+    return '$_characterName: $_message';
+  }
+
+  const CharacterNotFoundException({
+    required String characterName,
+    required String message,
+  })  : _characterName = characterName,
+        _message = message;
 }

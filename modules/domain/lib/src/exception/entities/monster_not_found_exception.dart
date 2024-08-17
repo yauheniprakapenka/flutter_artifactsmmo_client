@@ -1,9 +1,9 @@
+import 'app_exception.dart';
+
 /// Monster not found on this map.
-class MonsterNotFoundException implements Exception {
+class MonsterNotFoundException implements AppException {
+  @override
   final String message;
 
   const MonsterNotFoundException(this.message);
-
-  @override
-  String toString() => message;
 }

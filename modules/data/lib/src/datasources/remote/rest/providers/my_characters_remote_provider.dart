@@ -33,13 +33,13 @@ final class MyCharactersRemoteProvider {
         case 404:
           throw MapNotFoundException(message);
         case 486:
-          throw CharacterLockedException(message);
+          throw CharacterLockedException(characterName: characterName, message: message);
         case 490:
-          throw CharacterAlreadyAtDestinationException(message);
+          throw CharacterAlreadyAtDestinationException(characterName: characterName, message: message);
         case 498:
-          throw CharacterNotFoundException(message);
+          throw CharacterNotFoundException(characterName: characterName, message: message);
         case 499:
-          throw CharacterCooldownException(message);
+          throw CharacterCooldownException(characterName: characterName, message: message);
         default:
           rethrow;
       }
@@ -60,13 +60,13 @@ final class MyCharactersRemoteProvider {
       final int? statusCode = e.response?.statusCode;
       switch (statusCode) {
         case 486:
-          throw CharacterLockedException(message);
+          throw CharacterLockedException(characterName: characterName, message: message);
         case 497:
-          throw InventoryFullException(message);
+          throw InventoryFullException(characterName: characterName, message: message);
         case 498:
-          throw CharacterNotFoundException(message);
+          throw CharacterNotFoundException(characterName: characterName, message: message);
         case 499:
-          throw CharacterCooldownException(message);
+          throw CharacterCooldownException(characterName: characterName, message: message);
         case 598:
           throw MonsterNotFoundException(message);
         default:
@@ -89,13 +89,13 @@ final class MyCharactersRemoteProvider {
       final int? statusCode = e.response?.statusCode;
       switch (statusCode) {
         case 486:
-          throw CharacterLockedException(message);
+          throw CharacterLockedException(characterName: characterName, message: message);
         case 489:
-          throw CharacterAlreadyHasTask(message);
+          throw CharacterAlreadyHasTask(characterName: characterName, message: message);
         case 498:
-          throw CharacterNotFoundException(message);
+          throw CharacterNotFoundException(characterName: characterName, message: message);
         case 499:
-          throw CharacterCooldownException(message);
+          throw CharacterCooldownException(characterName: characterName, message: message);
         case 598:
           throw TasksMasterNotFoundOnMapException(message);
         default:
@@ -118,17 +118,17 @@ final class MyCharactersRemoteProvider {
       final int? statusCode = e.response?.statusCode;
       switch (statusCode) {
         case 486:
-          throw CharacterLockedException(message);
+          throw CharacterLockedException(characterName: characterName, message: message);
         case 487:
           throw CharacterHasNoTaskException(message);
         case 488:
           throw CharacterHasNotCompletedTaskException(message);
         case 497:
-          throw InventoryFullException(message);
+          throw InventoryFullException(characterName: characterName, message: message);
         case 498:
-          throw CharacterNotFoundException(message);
+          throw CharacterNotFoundException(characterName: characterName, message: message);
         case 499:
-          throw CharacterCooldownException(message);
+          throw CharacterCooldownException(characterName: characterName, message: message);
         case 598:
           throw TasksMasterNotFoundOnMapException(message);
         default:
@@ -151,7 +151,7 @@ final class MyCharactersRemoteProvider {
       final int? statusCode = e.response?.statusCode;
       switch (statusCode) {
         case 404:
-          throw CharacterNotFoundException(message);
+          throw CharactersNotFoundException(message);
         default:
           rethrow;
       }

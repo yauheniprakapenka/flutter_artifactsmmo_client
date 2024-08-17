@@ -7,9 +7,16 @@ class CharacterStats {
   final int attackFire;
   final int attackWater;
 
+  /// In percent
   final int dmgAir;
+
+  /// In percent
   final int dmgEarth;
+
+  /// In percent
   final int dmgFire;
+
+  /// In percent
   final int dmgWater;
 
   /// In percent

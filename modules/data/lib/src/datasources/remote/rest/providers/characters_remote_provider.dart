@@ -27,7 +27,7 @@ final class CharactersRemoteProvider {
       final int? statusCode = e.response?.statusCode;
       switch (statusCode) {
         case 404:
-          throw CharacterNotFoundException(message);
+          throw CharacterNotFoundException(characterName: characterName, message: message);
         default:
           rethrow;
       }
