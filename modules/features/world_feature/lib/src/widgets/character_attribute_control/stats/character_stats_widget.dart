@@ -3,6 +3,9 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'attack_stats_widget.dart';
+import 'damage_stats_widget.dart';
+import 'res_stats_widget.dart';
 import 'stats_tile.dart';
 
 class CharacterStatsWidget extends StatelessWidget {
@@ -27,120 +30,44 @@ class CharacterStatsWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'STATS',
-                style: const TextStyle(
-                  color: AppColors.white,
-                  fontSize: 20,
-                ).withUpheavalFont,
+              Padding(
+                padding: const EdgeInsets.all(Dimensions.p8),
+                child: Text(
+                  'STATS',
+                  style: const TextStyle(
+                    color: AppColors.white,
+                    fontSize: 20,
+                  ).withUpheavalFont,
+                ),
               ),
               const AppSpacing.h16(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('hp'),
-                        value: stats.hp.toString(),
-                        unit: 'HP',
-                      ),
-                      const AppSpacing.h8(),
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('haste'),
-                        value: stats.haste.toString(),
-                        unit: 'Haste',
-                      ),
-                    ],
-                  ),
                   const AppSpacing.w8(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('air'),
-                        value: stats.attackAir.toString(),
-                        unit: 'Air attack',
-                      ),
-                      const AppSpacing.h8(),
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('earth'),
-                        value: stats.attackEarth.toString(),
-                        unit: 'Earth attack',
-                      ),
-                      const AppSpacing.h8(),
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('fire'),
-                        value: stats.attackFire.toString(),
-                        unit: 'Fire attack',
-                      ),
-                      const AppSpacing.h8(),
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('water'),
-                        value: stats.attackWater.toString(),
-                        unit: 'Water attack',
-                      ),
-                    ],
+                  StatsTile(
+                    assetPath: GameAssets.statsPath('hp'),
+                    value: stats.hp.toString(),
+                    unit: 'HP',
                   ),
+                  const AppSpacing.w16(),
+                  StatsTile(
+                    assetPath: GameAssets.statsPath('haste'),
+                    value: stats.haste.toString(),
+                    unit: 'Haste',
+                  ),
+                ],
+              ),
+              const AppSpacing.h8(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   const AppSpacing.w8(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('fire'),
-                        value: '${stats.dmgFire}%',
-                        unit: 'Fire damage',
-                      ),
-                      const AppSpacing.h8(),
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('earth'),
-                        value: '${stats.dmgEarth}%',
-                        unit: 'Earth damage',
-                      ),
-                      const AppSpacing.h8(),
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('water'),
-                        value: '${stats.dmgWater}%',
-                        unit: 'Water damage',
-                      ),
-                      const AppSpacing.h8(),
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('air'),
-                        value: '${stats.dmgAir}%',
-                        unit: 'Air damage',
-                      ),
-                    ],
-                  ),
+                  AttackStatsWidget(stats: stats),
                   const AppSpacing.w8(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('fire'),
-                        value: '${stats.resFire}%',
-                        unit: 'Res Fire',
-                      ),
-                      const AppSpacing.h8(),
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('earth'),
-                        value: '${stats.resEarth}%',
-                        unit: 'Res Earth',
-                      ),
-                      const AppSpacing.h8(),
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('water'),
-                        value: '${stats.resWater}%',
-                        unit: 'Res Water',
-                      ),
-                      const AppSpacing.h8(),
-                      StatsTile(
-                        assetPath: GameAssets.statsPath('air'),
-                        value: '${stats.resAir}%',
-                        unit: 'Res Air',
-                      ),
-                    ],
-                  ),
+                  DamageStatsWidget(stats: stats),
+                  const AppSpacing.w8(),
+                  ResStatsWidget(stats: stats),
                 ],
               ),
             ],
