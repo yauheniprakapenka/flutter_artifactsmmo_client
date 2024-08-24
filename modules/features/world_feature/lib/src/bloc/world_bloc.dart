@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:core_ui/core_ui.dart';
@@ -5,27 +6,31 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../controllers/auto_fight_controller.dart';
+import '../controllers/game_events_controller.dart';
 import '../models/character_attribute.dart';
 
 part 'world_state.dart';
 part 'world_event.dart';
 
 class WorldBloc extends Bloc<WorldEvent, WorldState> {
-  final MyCharacterRepository _myCharacterRepository;
   final CharactersRepository _charactersRepository;
+  final GameEventsRepository _gameEventsRepository;
   final MapsRepository _mapsRepository;
+  final MyCharacterRepository _myCharacterRepository;
 
   AutoFightController? _autoFightControllerByName(String characterName) {
     return state.autoFightControllers[characterName];
   }
 
   WorldBloc({
-    required MyCharacterRepository myCharacterRepository,
     required CharactersRepository charactersRepository,
+    required GameEventsRepository gameEventsRepository,
     required MapsRepository mapsRepository,
+    required MyCharacterRepository myCharacterRepository,
   })  : _myCharacterRepository = myCharacterRepository,
         _charactersRepository = charactersRepository,
         _mapsRepository = mapsRepository,
+        _gameEventsRepository = gameEventsRepository,
         super(WorldState.initial()) {
     on<ActionFightEvent>(_actionFight);
     on<ActionMoveEvent>(_actionMove);
@@ -38,6 +43,7 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     on<SelectCharacterEvent>(_selectCharacter);
     on<SelectTileEvent>(_selectTile);
     on<ShowGridEvent>(_showGrid);
+    on<GetGameEventsEvent>(_getGameEvents);
     add(const InitialEvent());
   }
 
@@ -59,29 +65,25 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
         );
       });
 
+      final GameEventsController gameDataController = GameEventsController(
+        onGameEvents: () async {
+          add(const GetGameEventsEvent());
+        },
+      );
+
       emit(state.copyWith(
         characterGameDataList: characterGameDataList,
         mapDetails: () => mapDetails,
         autoFightControllers: autoFightControllers,
+        gameEventsController: () => gameDataController,
       ));
+
+      gameDataController.setDelay(const Duration(seconds: 1));
+      gameDataController.startPeriodicGameUpdates();
     } on Exception catch (e) {
       emit(state.copyWith(error: () => e.toString()));
     } finally {
       emit(state.copyWith(isLoading: false, error: () => null));
-    }
-  }
-
-  Future<void> _actionMove(ActionMoveEvent event, Emitter emit) async {
-    try {
-      final CharacterGameData updatedCharacterGameData = await _myCharacterRepository.actionMove(
-        event.characterName,
-        Point<int>(event.selectedTile.x, event.selectedTile.y),
-      );
-      _updateCharacters(emit, updatedCharacterGameData);
-    } on Exception catch (e) {
-      emit(state.copyWith(error: () => e.toString()));
-    } finally {
-      emit(state.copyWith(error: () => null));
     }
   }
 
@@ -103,6 +105,20 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
     }
   }
 
+  Future<void> _actionMove(ActionMoveEvent event, Emitter emit) async {
+    try {
+      final CharacterGameData updatedCharacterGameData = await _myCharacterRepository.actionMove(
+        event.characterName,
+        Point<int>(event.selectedTile.x, event.selectedTile.y),
+      );
+      _updateCharacters(emit, updatedCharacterGameData);
+    } on Exception catch (e) {
+      emit(state.copyWith(error: () => e.toString()));
+    } finally {
+      emit(state.copyWith(error: () => null));
+    }
+  }
+
   Future<void> _autoFight(AutoFightEvent event, Emitter emit) async {
     final String characterName = event.characterName;
     final AutoFightController? autoFightController = _autoFightControllerByName(characterName);
@@ -118,11 +134,11 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
 
     final Character character = await _charactersRepository.getCharactersByName(characterName);
     Duration cooldownExpiration = character.cooldownExpiration.difference(DateTime.now());
+
+    // A negative value indicates that the action has already occurred the specified amount of time ago.
     if (cooldownExpiration.inSeconds < 1) {
-      // A negative value indicates that the action has already occurred the specified amount of time ago.
-      cooldownExpiration = const Duration(
-          seconds:
-              1); // There is a slight delay before the timer starts. It works stably with a delay of more than 1 second.
+      // There is a slight delay before the timer starts. It works stably with a delay of more than 1 second.
+      cooldownExpiration = const Duration(seconds: 1);
     }
     autoFightController.setDelay(cooldownExpiration);
     autoFightController.startAutoFight(event.autoFightOnTile);
@@ -224,5 +240,19 @@ class WorldBloc extends Bloc<WorldEvent, WorldState> {
       return;
     }
     emit(state.copyWith(selectedCharacterAttribute: event.selectedCharacterAttribute));
+  }
+
+  Future<void> _getGameEvents(GetGameEventsEvent event, Emitter emit) async {
+    try {
+      final List<GameEvent> gameEvents = await _gameEventsRepository.getAllEvents();
+      emit(state.copyWith(gameEvents: gameEvents));
+      state.gameEventsController?.setDelay(const Duration(seconds: 60));
+    } on EventsNotFoundException {
+      emit(state.copyWith(gameEvents: []));
+    } on Exception catch (e) {
+      emit(state.copyWith(error: () => e.toString()));
+    } finally {
+      emit(state.copyWith(error: () => null));
+    }
   }
 }

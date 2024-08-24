@@ -8,7 +8,7 @@ final class InitialEvent implements WorldEvent {
   const InitialEvent();
 }
 
-// Actions
+// ACTIONS
 
 final class ActionFightEvent implements WorldEvent {
   final String characterName;
@@ -42,7 +42,7 @@ final class AutoFightEvent implements WorldEvent {
   const AutoFightEvent(this.characterName, this.autoFightOnTile);
 }
 
-// Characters
+// CHARACTERS
 
 final class FocusToSelectedCharacterEvent implements WorldEvent {
   const FocusToSelectedCharacterEvent();
@@ -54,7 +54,7 @@ final class SelectCharacterEvent implements WorldEvent {
   const SelectCharacterEvent(this.character);
 }
 
-// Map
+// MAP
 
 final class SelectTileEvent implements WorldEvent {
   final Tile? tile;
@@ -70,4 +70,8 @@ final class SelectCharacterAttributeEvent implements WorldEvent {
   final CharacterAttribute selectedCharacterAttribute;
 
   const SelectCharacterAttributeEvent(this.selectedCharacterAttribute);
+}
+
+final class GetGameEventsEvent implements WorldEvent {
+  const GetGameEventsEvent();
 }

@@ -7,12 +7,14 @@ class WorldState {
   final Character? selectedCharacter;
   final CharacterAttribute selectedCharacterAttribute;
   final List<CharacterGameData> characterGameDataList;
+  final List<GameEvent> gameEvents;
   final MapDetails? mapDetails;
   final String? error;
   final Tile? selectedTile;
 
   /// `String` - name of character.
   final Map<String, AutoFightController> autoFightControllers;
+  final GameEventsController? gameEventsController;
 
   AutoFightController? getAutoFightController(String characterName) {
     return autoFightControllers[characterName];
@@ -23,6 +25,8 @@ class WorldState {
     required this.characterGameDataList,
     required this.error,
     required this.focusToSelectedCharacter,
+    required this.gameEvents,
+    required this.gameEventsController,
     required this.isLoading,
     required this.mapDetails,
     required this.selectedCharacter,
@@ -33,6 +37,7 @@ class WorldState {
 
   factory WorldState.initial() {
     return const WorldState(
+      gameEventsController: null,
       characterGameDataList: [],
       error: null,
       focusToSelectedCharacter: false,
@@ -43,6 +48,7 @@ class WorldState {
       showGrid: false,
       autoFightControllers: {},
       selectedCharacterAttribute: CharacterAttribute.none,
+      gameEvents: [],
     );
   }
 
@@ -57,6 +63,8 @@ class WorldState {
     ValueGetter<Tile?>? selectedTile,
     Map<String, AutoFightController>? autoFightControllers,
     CharacterAttribute? selectedCharacterAttribute,
+    List<GameEvent>? gameEvents,
+    ValueGetter<GameEventsController?>? gameEventsController,
   }) {
     return WorldState(
       focusToSelectedCharacter: focusToSelectedCharacter ?? this.focusToSelectedCharacter,
@@ -69,6 +77,8 @@ class WorldState {
       selectedTile: selectedTile != null ? selectedTile() : this.selectedTile,
       autoFightControllers: autoFightControllers ?? this.autoFightControllers,
       selectedCharacterAttribute: selectedCharacterAttribute ?? this.selectedCharacterAttribute,
+      gameEvents: gameEvents ?? this.gameEvents,
+      gameEventsController: gameEventsController != null ? gameEventsController() : this.gameEventsController,
     );
   }
 }

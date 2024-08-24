@@ -31,6 +31,10 @@ Future<void> setupDi() async {
     MapsRemoteProvider(dio: dio, baseUrl: getIt<Config>().baseUrl),
   );
 
+  getIt.registerSingleton<GameEventsRemoteProvider>(
+    GameEventsRemoteProvider(dio: dio, baseUrl: getIt<Config>().baseUrl),
+  );
+
   // Repositories
 
   getIt.registerSingleton<MyCharacterRepository>(
@@ -43,5 +47,9 @@ Future<void> setupDi() async {
 
   getIt.registerSingleton<MapsRepository>(
     MapsRepositoryImpl(remoteDataSource: getIt<MapsRemoteProvider>()),
+  );
+
+  getIt.registerSingleton<GameEventsRepository>(
+    GameEventsRepositoryImpl(remoteDataSource: getIt<GameEventsRemoteProvider>()),
   );
 }

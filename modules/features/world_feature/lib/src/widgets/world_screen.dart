@@ -10,7 +10,8 @@ import 'buttons/app_icon_button.dart';
 import 'character/character_experience_widget.dart';
 import 'character/characters_control/characters_control.dart';
 import 'character_attribute_control/character_attribute_control.dart';
-import 'task_widget.dart';
+import 'events/game_events_widget.dart';
+import 'tasks/task_widget.dart';
 import 'tile/random_tiled_background.dart';
 import 'world_map.dart';
 
@@ -22,9 +23,10 @@ class WorldScreen extends StatelessWidget {
     return BlocProvider<WorldBloc>(
       create: (BuildContext context) {
         return WorldBloc(
-          myCharacterRepository: getIt<MyCharacterRepository>(),
           charactersRepository: getIt<CharactersRepository>(),
+          gameEventsRepository: getIt<GameEventsRepository>(),
           mapsRepository: getIt<MapsRepository>(),
+          myCharacterRepository: getIt<MyCharacterRepository>(),
         );
       },
       child: const _WorldScreen(),
@@ -116,6 +118,7 @@ class _WorldScreenState extends State<_WorldScreen> {
                   ),
                 ),
                 const CharacterAttributeControl(),
+                state.gameEvents.isEmpty ? const SizedBox() : const GameEventsWidget(),
               ],
             );
           },
